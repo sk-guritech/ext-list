@@ -243,15 +243,15 @@ class ExList(list[T]):
         if not self:
             return {}
 
-        if isinstance(self[0], dict):
-            return self.__to_dict_from_dict(key)
+        if isinstance(self[0], dict) or isinstance(self[0], list):
+            return self.__to_dict_from_dict_or_list(key)
 
         if isinstance(key, str):
             return self.__to_dict_from_others(key)
 
         raise TypeError
 
-    def __to_dict_from_dict(self, key: Hashable) -> dict[Hashable, T]:
+    def __to_dict_from_dict_or_list(self, key: Hashable) -> dict[Hashable, T]:
         return {element[key]: element for element in self}  # type: ignore[index]
 
     def __to_dict_from_others(self, key: str) -> dict[Hashable, T]:
@@ -261,15 +261,15 @@ class ExList(list[T]):
         if not self:
             return {}
 
-        if isinstance(self[0], dict):
-            return self.__to_dict_with_complex_keys_from_dict(keys)
+        if isinstance(self[0], dict) or isinstance(self[0], list):
+            return self.__to_dict_with_complex_keys_from_dict_or_list(keys)
 
         if all([isinstance(key, str) for key in keys]):
             return self.__to_dict_with_complex_keys_from_others(keys)  # type: ignore[arg-type]
 
         raise TypeError
 
-    def __to_dict_with_complex_keys_from_dict(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
+    def __to_dict_with_complex_keys_from_dict_or_list(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
         return {tuple(element[key] for key in keys): element for element in self}  # type: ignore[index]
 
     def __to_dict_with_complex_keys_from_others(self, keys: list[str]) -> dict[tuple[Any, ...], T]:
