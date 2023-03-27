@@ -1,0 +1,14 @@
+{
+    "name": "Python Project Docker",
+    "dockerFile": "Dockerfile",
+    "extensions": [
+		"TabNine.tabnine-vscode",
+		"njpwerner.autodocstring",
+		"PKief.material-icon-theme",
+		"KevinRose.vsc-python-indent",
+		"ms-python.python",
+		"eamodio.gitlens",
+		"mhutchie.git-graph",
+		"GitHub.vscode-pull-request-github"
+	]
+}

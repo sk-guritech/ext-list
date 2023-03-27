@@ -1,0 +1,30 @@
+{
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.diagnosticMode": "workspace",
+
+    "python.languageServer": "Pylance",
+
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+      "--ignore=E111, E114, E402, E501"
+    ],
+
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+      "--indent-size=4",
+      "--max-line-length",
+      "120",
+      "--ignore=E111, E114, E402, E501"
+    ],
+
+    "[python]": {
+      "editor.tabSize": 4,
+      "editor.formatOnSave": true,
+      "editor.formatOnPaste": false,
+      "editor.formatOnType": false,
+    },
+  }
