@@ -2,3 +2,4 @@ flake8
 autopep8
 pre-commit
 pytest
+typing_extensions
