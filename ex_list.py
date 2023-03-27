@@ -107,7 +107,7 @@ class ExList(list[T]):
 
         super().insert(index, element)
 
-    def extract(self, key: Hashable, execute_callable: bool = True) -> ExList[Any]:
+    def extract(self, key: Hashable, execute_callable: bool = False) -> ExList[Any]:
         if not self:
             return ExList()
 
