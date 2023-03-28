@@ -6,6 +6,7 @@ from typing import Hashable
 from typing import Iterable
 from typing import SupportsIndex
 from typing import TypeVar
+from types import FunctionType
 
 from typing_extensions import override
 
@@ -107,7 +108,7 @@ class ExList(list[T]):
 
         super().insert(index, element)
 
-    def extract(self, key: Hashable, execute_callable: bool = False) -> ExList[Any]:
+    def extract(self, key: FunctionType | property | Hashable) -> ExList[Any]:
         """
         Extracts and returns a list of values associated with the given key from the objects.
 
@@ -157,25 +158,13 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if isinstance(self[0], dict) or isinstance(self[0], list):
-            return self.__extract_from_dict_or_list(key, execute_callable)
+        if isinstance(key, FunctionType):
+            return ExList([key(element) for element in self])
 
-        if isinstance(key, str):
-            return self.__extract_from_others(key, execute_callable)
+        if isinstance(key, property):
+            return ExList([key.fget(element) for element in self])  # type: ignore[arg-type]
 
-        raise TypeError
-
-    def __extract_from_dict_or_list(self, key: Hashable, execute_callable: bool) -> ExList[Any]:
-        if execute_callable:
-            return ExList([element[key]() for element in self])  # type: ignore
-        else:
-            return ExList([element[key] for element in self])  # type: ignore[index]
-
-    def __extract_from_others(self, key: str, execute_callable: bool) -> ExList[Any]:
-        if execute_callable:
-            return ExList([getattr(element, key)() for element in self])
-
-        return ExList([getattr(element, key) for element in self])
+        return ExList([element[key] for element in self])  # type: ignore[attr-defined]
 
     def equals(self, key: Hashable, compare_target: Any) -> ExList[T]:
         """
@@ -458,7 +447,6 @@ class ExList(list[T]):
         tmp_ex_list: ExList[T] = copy.deepcopy(self)
 
         for _ in range(len(tmp_ex_list)):
-            print(tmp_ex_list)
             if tmp_ex_list.pop() in tmp_ex_list:
                 return True
 
