@@ -1,11 +1,22 @@
+from __future__ import annotations
+
 import pytest
+
 from ex_list import ExList
 
 
 class SampleClass:
     def __init__(self, value_1, value_2):
-        self.value_1 = value_1
-        self.value_2 = value_2
+        self.__value_1 = value_1
+        self.__value_2 = value_2
+
+    @property
+    def value_1(self):
+        return self.__value_1
+
+    @property
+    def value_2(self):
+        return self.__value_2
 
 
 def test_init():
@@ -14,7 +25,7 @@ def test_init():
 
 def test_init_raise_type_error_by_assign_multiple_types():
     with pytest.raises(TypeError):
-        ExList([1, "string"])
+        ExList([1, '2'])
 
 
 def test_add():
@@ -28,7 +39,7 @@ def test_add():
 
 def test_add_raise_type_error_by_operating_between_diffent_types():
     ex_list_1 = ExList([1, 2, 3])
-    ex_list_2 = ExList(["4", "5", "6"])
+    ex_list_2 = ExList(['4', '5', '6'])
 
     with pytest.raises(TypeError):
         ex_list_1 + ex_list_2
@@ -46,7 +57,7 @@ def test_iadd():
 
 def test_iadd_raise_type_error_by_operating_between_diffent_types():
     ex_list_1 = ExList([1, 2, 3])
-    ex_list_2 = ExList(["4", "5", "6"])
+    ex_list_2 = ExList(['4', '5', '6'])
 
     with pytest.raises(TypeError):
         ex_list_1 += ex_list_2
@@ -63,7 +74,7 @@ def test_append_raise_type_error_by_assign_different_type():
     ex_list_1 = ExList([1, 2, 3])
 
     with pytest.raises(TypeError):
-        ex_list_1.append("4")
+        ex_list_1.append('4')
 
 
 def test_extend():
@@ -77,7 +88,7 @@ def test_extend_raise_type_error_by_assign_different_type():
     ex_list_1 = ExList([1, 2, 3])
 
     with pytest.raises(TypeError):
-        ex_list_1.extend(["a", "b"])
+        ex_list_1.extend(['a', 'b'])
 
 
 def test_insert():
@@ -91,13 +102,13 @@ def test_insert_raise_type_error_by_assign_different_type():
     ex_list_1 = ExList([1, 2, 3])
 
     with pytest.raises(TypeError):
-        ex_list_1.insert(0, "0")
+        ex_list_1.insert(0, '0')
 
 
 def test_extract_for_dict():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
 
-    assert ex_list_1.extract("a") == [1, 2, 3]
+    assert ex_list_1.extract('a') == [1, 2, 3]
 
 
 def test_extract_for_list():
@@ -109,14 +120,14 @@ def test_extract_for_list():
 def test_extract_for_others():
     ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
 
-    assert ex_list_1.extract("value_1") == [1, 3, 5]
+    assert ex_list_1.extract(SampleClass.value_1) == [1, 3, 5]
 
 
 def test_extract_raise_key_error_by_specific_invalid_key():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
 
     with pytest.raises(KeyError):
-        ex_list_1.extract("b")
+        ex_list_1.extract('b')
 
 
 def test_extract_raise_index_error_by_specific_invalid_index():
@@ -126,35 +137,21 @@ def test_extract_raise_index_error_by_specific_invalid_index():
         ex_list_1.extract(2)
 
 
-def test_extract_raise_attribute_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(AttributeError):
-        ex_list_1.extract("value_3")
-
-
-def test_extract_raise_type_error_by_specific_invalid_type():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(TypeError):
-        ex_list_1.extract(1)
-
-
 def test_equals():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
-    ex_list_2 = ExList([{"a": True}, {"a": False}, {"a": True}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
+    ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
     ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
 
-    assert ex_list_1.equals("a", 1) == [{"a": 1}]
-    assert ex_list_2.equals("a", True) == [{"a": True}, {"a": True}]
-    assert ex_list_3.equals("value_1", 1) == [ex_list_3[0]]
+    assert ex_list_1.equals('a', 1) == [{'a': 1}]
+    assert ex_list_2.equals('a', True) == [{'a': True}, {'a': True}]
+    assert ex_list_3.equals(SampleClass.value_1, 1) == [ex_list_3[0]]
 
 
 def test_equals_raise_key_error_by_specific_invalid_key():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
 
     with pytest.raises(KeyError):
-        ex_list_1.equals("b", 1)
+        ex_list_1.equals('b', 1)
 
 
 def test_equals_raise_index_error_by_specific_invalid_index():
@@ -164,35 +161,21 @@ def test_equals_raise_index_error_by_specific_invalid_index():
         ex_list_1.equals(2, 1)
 
 
-def test_equals_raise_attribute_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(AttributeError):
-        ex_list_1.equals("value_3", 1)
-
-
-def test_equals_raise_type_error_by_specific_invalid_type():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(TypeError):
-        ex_list_1.equals(1, 1)
-
-
 def test_not_equals():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
-    ex_list_2 = ExList([{"a": True}, {"a": False}, {"a": True}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
+    ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
     ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
 
-    assert ex_list_1.not_equals("a", 1) == [{"a": 2}, {"a": 3}]
-    assert ex_list_2.not_equals("a", True) == [{"a": False}]
-    assert ex_list_3.not_equals("value_1", 1) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_1.not_equals('a', 1) == [{'a': 2}, {'a': 3}]
+    assert ex_list_2.not_equals('a', True) == [{'a': False}]
+    assert ex_list_3.not_equals(SampleClass.value_1, 1) == [ex_list_3[1], ex_list_3[2]]
 
 
 def test_not_equals_raise_key_error_by_specific_invalid_key():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
 
     with pytest.raises(KeyError):
-        ex_list_1.not_equals("b", 1)
+        ex_list_1.not_equals('b', 1)
 
 
 def test_not_equals_raise_index_error_by_specific_invalid_index():
@@ -202,35 +185,21 @@ def test_not_equals_raise_index_error_by_specific_invalid_index():
         ex_list_1.not_equals(2, 1)
 
 
-def test_not_equals_raise_attribute_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(AttributeError):
-        ex_list_1.not_equals("value_3", 1)
-
-
-def test_not_equals_raise_type_error_by_specific_invalid_type():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(TypeError):
-        ex_list_1.not_equals(1, 1)
-
-
 def test_in_():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
-    ex_list_2 = ExList([{"a": True}, {"a": False}, {"a": True}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
+    ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
     ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
 
-    assert ex_list_1.in_("a", [1, 2]) == [{"a": 1}, {"a": 2}]
-    assert ex_list_2.in_("a", [True]) == [{"a": True}, {"a": True}]
-    assert ex_list_3.in_("value_1", [1, 2]) == [ex_list_3[0]]
+    assert ex_list_1.in_('a', [1, 2]) == [{'a': 1}, {'a': 2}]
+    assert ex_list_2.in_('a', [True]) == [{'a': True}, {'a': True}]
+    assert ex_list_3.in_(SampleClass.value_1, [1, 2]) == [ex_list_3[0]]
 
 
 def test_in_raise_key_error_by_specific_invalid_key():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
 
     with pytest.raises(KeyError):
-        ex_list_1.in_("b", 1)
+        ex_list_1.in_('b', 1)
 
 
 def test_in_raise_index_error_by_specific_invalid_index():
@@ -240,56 +209,28 @@ def test_in_raise_index_error_by_specific_invalid_index():
         ex_list_1.in_(2, 1)
 
 
-def test_in_raise_attribute_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(AttributeError):
-        ex_list_1.in_("value_3", 1)
-
-
-def test_in_raise_type_error_by_specific_invalid_type():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(TypeError):
-        ex_list_1.in_(1, 1)
-
-
 def test_not_in_():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
-    ex_list_2 = ExList([{"a": True}, {"a": False}, {"a": True}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
+    ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
     ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
 
-    assert ex_list_1.not_in_("a", [1, 2]) == [{"a": 3}]
-    assert ex_list_2.not_in_("a", [True]) == [{"a": False}]
-    assert ex_list_3.not_in_("value_1", [1, 2]) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_1.not_in_('a', [1, 2]) == [{'a': 3}]
+    assert ex_list_2.not_in_('a', [True]) == [{'a': False}]
+    assert ex_list_3.not_in_(SampleClass.value_1, [1, 2]) == [ex_list_3[1], ex_list_3[2]]
 
 
 def test_not_in_raise_key_error_by_specific_invalid_key():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
 
     with pytest.raises(KeyError):
-        ex_list_1.not_in_("b", 1)
+        ex_list_1.not_in_('b', [1])
 
 
 def test_not_in_raise_index_error_by_specific_invalid_index():
     ex_list_1 = ExList([[1, 2], [3, 4], [5, 6]])
 
     with pytest.raises(IndexError):
-        ex_list_1.not_in_(2, 1)
-
-
-def test_not_in_raise_attribute_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(AttributeError):
-        ex_list_1.not_in_("value_3", 1)
-
-
-def test_not_in_raise_type_error_by_specific_invalid_type():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(TypeError):
-        ex_list_1.not_in_(1, 1)
+        ex_list_1.not_in_(2, [1])
 
 
 def test_extract_duplicates():
@@ -332,20 +273,20 @@ def test_first_raise_index_error_by_specific_invalid_index():
 
 
 def test_to_dict():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
     ex_list_2 = ExList([[1, 2], [3, 4], [5, 6]])
     ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
 
-    assert ex_list_1.to_dict("a") == {1: {"a": 1}, 2: {"a": 2}, 3: {"a": 3}}
+    assert ex_list_1.to_dict('a') == {1: {'a': 1}, 2: {'a': 2}, 3: {'a': 3}}
     assert ex_list_2.to_dict(0) == {1: [1, 2], 3: [3, 4], 5: [5, 6]}
-    assert ex_list_3.to_dict("value_1") == {1: ex_list_3[0], 3: ex_list_3[1], 5: ex_list_3[2]}
+    assert ex_list_3.to_dict(SampleClass.value_1) == {1: ex_list_3[0], 3: ex_list_3[1], 5: ex_list_3[2]}
 
 
 def test_to_dict_raise_key_error_by_specific_invalid_key():
-    ex_list_1 = ExList([{"a": 1}, {"a": 2}, {"a": 3}])
+    ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
 
     with pytest.raises(KeyError):
-        ex_list_1.to_dict("b")
+        ex_list_1.to_dict('b')
 
 
 def test_to_dict_raise_index_error_by_specific_invalid_index():
@@ -355,49 +296,35 @@ def test_to_dict_raise_index_error_by_specific_invalid_index():
         ex_list_1.to_dict(2)
 
 
-def test_to_dict_raise_attribute_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(AttributeError):
-        ex_list_1.to_dict("value_3")
-
-
-def test_to_dict_raise_type_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(TypeError):
-        ex_list_1.to_dict(0)
-
-
 def test_to_dict_with_complex_keys():
-    ex_list_1 = ExList([{"a": 1, "b": 2}, {"a": 1, "b": 3}, {"a": 2, "b": 3}])
+    ex_list_1 = ExList([{'a': 1, 'b': 2}, {'a': 1, 'b': 3}, {'a': 2, 'b': 3}])
     ex_list_2 = ExList([[1, 2], [3, 4], [5, 6]])
     ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
 
-    assert ex_list_1.to_dict_with_complex_keys(["a", "b"]) == {
-        (1, 2): {"a": 1, "b": 2},
-        (1, 3): {"a": 1, "b": 3},
-        (2, 3): {"a": 2, "b": 3},
+    assert ex_list_1.to_dict_with_complex_keys(['a', 'b']) == {
+        (1, 2): {'a': 1, 'b': 2},
+        (1, 3): {'a': 1, 'b': 3},
+        (2, 3): {'a': 2, 'b': 3},
     }
 
     assert ex_list_2.to_dict_with_complex_keys([0, 1]) == {
         (1, 2): [1, 2],
         (3, 4): [3, 4],
-        (5, 6): [5, 6]
+        (5, 6): [5, 6],
     }
 
-    assert ex_list_3.to_dict_with_complex_keys(["value_1", "value_2"]) == {
+    assert ex_list_3.to_dict_with_complex_keys([SampleClass.value_1, SampleClass.value_2]) == {
         (1, 2): ex_list_3[0],
         (3, 4): ex_list_3[1],
-        (5, 6): ex_list_3[2]
+        (5, 6): ex_list_3[2],
     }
 
 
 def test_to_dict_with_complex_keys_raise_key_error_by_specific_invalid_key():
-    ex_list_1 = ExList([{"a": 1, "b": 2}, {"a": 1, "b": 3}, {"a": 2, "b": 3}])
+    ex_list_1 = ExList([{'a': 1, 'b': 2}, {'a': 1, 'b': 3}, {'a': 2, 'b': 3}])
 
     with pytest.raises(KeyError):
-        ex_list_1.to_dict_with_complex_keys(["a", "c"])
+        ex_list_1.to_dict_with_complex_keys(['a', 'c'])
 
 
 def test_to_dict_with_complex_keys_raise_index_error_by_specific_invalid_index():
@@ -405,17 +332,3 @@ def test_to_dict_with_complex_keys_raise_index_error_by_specific_invalid_index()
 
     with pytest.raises(IndexError):
         ex_list_1.to_dict_with_complex_keys([1, 2])
-
-
-def test_to_dict_with_complex_keys_raise_attribute_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(AttributeError):
-        ex_list_1.to_dict_with_complex_keys(["value_1", "value_3"])
-
-
-def test_to_dict_with_complex_keys_raise_type_error_by_specific_invalid_attr():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-
-    with pytest.raises(TypeError):
-        ex_list_1.to_dict_with_complex_keys([0, 1])
