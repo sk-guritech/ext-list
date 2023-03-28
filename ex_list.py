@@ -53,6 +53,11 @@ class ExList(list[T]):
                 'Expected all elements to be of the same type.',
             )
 
+    @staticmethod
+    def __validate_ex_list(iterable: Any) -> None:
+        if not isinstance(iterable, ExList):
+            raise TypeError(f'Expected <class \'ExList\'> but got {type(iterable)}')
+
     def __validate_same_type(self, element: T) -> None:
         if not isinstance(element, type(self[0])):
             raise TypeError(
@@ -70,6 +75,8 @@ class ExList(list[T]):
 
     @override
     def __add__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
+        self.__validate_ex_list(other)
+
         if not self:
             return other
 
@@ -82,6 +89,8 @@ class ExList(list[T]):
 
     @override
     def __iadd__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
+        self.__validate_ex_list(other)
+
         if not self:
             super().__iadd__(other)
 
@@ -111,6 +120,9 @@ class ExList(list[T]):
 
     @ override
     def extend(self, other: ExList[T]) -> None:  # type: ignore[override]
+        if not isinstance(other, ExList):  # type: ignore
+            raise TypeError(f'Expected ExList but got {type(other)}')
+
         if not self:
             super().extend(other)
 
