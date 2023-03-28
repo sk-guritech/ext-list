@@ -5,18 +5,24 @@ import pytest
 from ex_list import ExList
 
 
-class SampleClass:
-    def __init__(self, value_1, value_2):
-        self.__value_1 = value_1
-        self.__value_2 = value_2
+class Person:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
 
-    @property
-    def value_1(self):
-        return self.__value_1
+    def introduce(self):
+        return f'{self.name} is {self.age} years old.'
 
-    @property
-    def value_2(self):
-        return self.__value_2
+    @ property
+    def name(self):
+        return self.__name
+
+    @ property
+    def age(self):
+        return self.__age
+
+    def __repr__(self):
+        return f'Person(\'{self.name}\', {self.age})'
 
 
 def test_init():
@@ -118,9 +124,10 @@ def test_extract_for_list():
 
 
 def test_extract_for_others():
-    ex_list_1 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
+    ex_list_1 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
-    assert ex_list_1.extract(SampleClass.value_1) == [1, 3, 5]
+    assert ex_list_1.extract(Person.name) == ['Alice', 'Bob', 'Charlie']
+    assert ex_list_1.extract(Person.introduce) == ['Alice is 25 years old.', 'Bob is 30 years old.', 'Charlie is 35 years old.']
 
 
 def test_extract_raise_key_error_by_specific_invalid_key():
@@ -140,11 +147,11 @@ def test_extract_raise_index_error_by_specific_invalid_index():
 def test_equals():
     ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
     ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
-    ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
+    ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
     assert ex_list_1.equals('a', 1) == [{'a': 1}]
     assert ex_list_2.equals('a', True) == [{'a': True}, {'a': True}]
-    assert ex_list_3.equals(SampleClass.value_1, 1) == [ex_list_3[0]]
+    assert ex_list_3.equals(Person.age, 25) == [ex_list_3[0]]
 
 
 def test_equals_raise_key_error_by_specific_invalid_key():
@@ -164,11 +171,11 @@ def test_equals_raise_index_error_by_specific_invalid_index():
 def test_not_equals():
     ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
     ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
-    ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
+    ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
     assert ex_list_1.not_equals('a', 1) == [{'a': 2}, {'a': 3}]
     assert ex_list_2.not_equals('a', True) == [{'a': False}]
-    assert ex_list_3.not_equals(SampleClass.value_1, 1) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.not_equals(Person.age, 25) == [ex_list_3[1], ex_list_3[2]]
 
 
 def test_not_equals_raise_key_error_by_specific_invalid_key():
@@ -188,11 +195,11 @@ def test_not_equals_raise_index_error_by_specific_invalid_index():
 def test_in_():
     ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
     ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
-    ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
+    ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
     assert ex_list_1.in_('a', [1, 2]) == [{'a': 1}, {'a': 2}]
     assert ex_list_2.in_('a', [True]) == [{'a': True}, {'a': True}]
-    assert ex_list_3.in_(SampleClass.value_1, [1, 2]) == [ex_list_3[0]]
+    assert ex_list_3.in_(Person.age, [30, 35]) == [ex_list_3[1], ex_list_3[2]]
 
 
 def test_in_raise_key_error_by_specific_invalid_key():
@@ -212,11 +219,11 @@ def test_in_raise_index_error_by_specific_invalid_index():
 def test_not_in_():
     ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
     ex_list_2 = ExList([{'a': True}, {'a': False}, {'a': True}])
-    ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
+    ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
     assert ex_list_1.not_in_('a', [1, 2]) == [{'a': 3}]
     assert ex_list_2.not_in_('a', [True]) == [{'a': False}]
-    assert ex_list_3.not_in_(SampleClass.value_1, [1, 2]) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.not_in_(Person.age, [30, 35]) == [ex_list_3[0]]
 
 
 def test_not_in_raise_key_error_by_specific_invalid_key():
@@ -236,8 +243,8 @@ def test_not_in_raise_index_error_by_specific_invalid_index():
 def test_extract_duplicates():
     ex_list_1 = ExList([1, 2, 3])
     ex_list_2 = ExList([2, 3, 4])
-    ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
-    ex_list_4 = ExList([SampleClass(3, 4), SampleClass(5, 6), SampleClass(7, 8)])
+    ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
+    ex_list_4 = ExList([Person('Alice', 35), Person('Bob', 40), Person('Charlie', 45)])
 
     assert ex_list_1.extract_duplicates(ex_list_2) == [2, 3]
     assert ex_list_3.extract_duplicates(ex_list_4) == []
@@ -275,11 +282,11 @@ def test_first_raise_index_error_by_specific_invalid_index():
 def test_to_dict():
     ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
     ex_list_2 = ExList([[1, 2], [3, 4], [5, 6]])
-    ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
+    ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
     assert ex_list_1.to_dict('a') == {1: {'a': 1}, 2: {'a': 2}, 3: {'a': 3}}
     assert ex_list_2.to_dict(0) == {1: [1, 2], 3: [3, 4], 5: [5, 6]}
-    assert ex_list_3.to_dict(SampleClass.value_1) == {1: ex_list_3[0], 3: ex_list_3[1], 5: ex_list_3[2]}
+    assert ex_list_3.to_dict(Person.name) == {'Alice': ex_list_3[0], 'Bob': ex_list_3[1], 'Charlie': ex_list_3[2]}
 
 
 def test_to_dict_raise_key_error_by_specific_invalid_key():
@@ -299,7 +306,7 @@ def test_to_dict_raise_index_error_by_specific_invalid_index():
 def test_to_dict_with_complex_keys():
     ex_list_1 = ExList([{'a': 1, 'b': 2}, {'a': 1, 'b': 3}, {'a': 2, 'b': 3}])
     ex_list_2 = ExList([[1, 2], [3, 4], [5, 6]])
-    ex_list_3 = ExList([SampleClass(1, 2), SampleClass(3, 4), SampleClass(5, 6)])
+    ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
     assert ex_list_1.to_dict_with_complex_keys(['a', 'b']) == {
         (1, 2): {'a': 1, 'b': 2},
@@ -313,10 +320,10 @@ def test_to_dict_with_complex_keys():
         (5, 6): [5, 6],
     }
 
-    assert ex_list_3.to_dict_with_complex_keys([SampleClass.value_1, SampleClass.value_2]) == {
-        (1, 2): ex_list_3[0],
-        (3, 4): ex_list_3[1],
-        (5, 6): ex_list_3[2],
+    assert ex_list_3.to_dict_with_complex_keys([Person.name, Person.age]) == {
+        ('Alice', 25): ex_list_3[0],
+        ('Bob', 30): ex_list_3[1],
+        ('Charlie', 35): ex_list_3[2],
     }
 
 
