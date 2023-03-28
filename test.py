@@ -142,6 +142,7 @@ def test_extract_for_others():
     ex_list_1 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 
     assert ex_list_1.extract(Person.name) == ['Alice', 'Bob', 'Charlie']
+    assert ex_list_1.extract("name") == ['Alice', 'Bob', 'Charlie']
     assert ex_list_1.extract(Person.introduce) == ['Alice is 25 years old.', 'Bob is 30 years old.', 'Charlie is 35 years old.']
 
 
@@ -167,6 +168,7 @@ def test_equals():
     assert ex_list_1.equals('a', 1) == [{'a': 1}]
     assert ex_list_2.equals('a', True) == [{'a': True}, {'a': True}]
     assert ex_list_3.equals(Person.age, 25) == [ex_list_3[0]]
+    assert ex_list_3.equals("age", 25) == [ex_list_3[0]]
 
 
 def test_equals_raise_key_error_by_specific_invalid_key():
@@ -191,6 +193,7 @@ def test_not_equals():
     assert ex_list_1.not_equals('a', 1) == [{'a': 2}, {'a': 3}]
     assert ex_list_2.not_equals('a', True) == [{'a': False}]
     assert ex_list_3.not_equals(Person.age, 25) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.not_equals("age", 25) == [ex_list_3[1], ex_list_3[2]]
 
 
 def test_not_equals_raise_key_error_by_specific_invalid_key():
@@ -215,6 +218,7 @@ def test_in_():
     assert ex_list_1.in_('a', [1, 2]) == [{'a': 1}, {'a': 2}]
     assert ex_list_2.in_('a', [True]) == [{'a': True}, {'a': True}]
     assert ex_list_3.in_(Person.age, [30, 35]) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.in_("age", [30, 35]) == [ex_list_3[1], ex_list_3[2]]
 
 
 def test_in_raise_key_error_by_specific_invalid_key():
@@ -239,6 +243,7 @@ def test_not_in_():
     assert ex_list_1.not_in_('a', [1, 2]) == [{'a': 3}]
     assert ex_list_2.not_in_('a', [True]) == [{'a': False}]
     assert ex_list_3.not_in_(Person.age, [30, 35]) == [ex_list_3[0]]
+    assert ex_list_3.not_in_("age", [30, 35]) == [ex_list_3[0]]
 
 
 def test_not_in_raise_key_error_by_specific_invalid_key():
@@ -302,6 +307,7 @@ def test_to_dict():
     assert ex_list_1.to_dict('a') == {1: {'a': 1}, 2: {'a': 2}, 3: {'a': 3}}
     assert ex_list_2.to_dict(0) == {1: [1, 2], 3: [3, 4], 5: [5, 6]}
     assert ex_list_3.to_dict(Person.name) == {'Alice': ex_list_3[0], 'Bob': ex_list_3[1], 'Charlie': ex_list_3[2]}
+    assert ex_list_3.to_dict("name") == {'Alice': ex_list_3[0], 'Bob': ex_list_3[1], 'Charlie': ex_list_3[2]}
 
 
 def test_to_dict_raise_key_error_by_specific_invalid_key():
@@ -339,6 +345,18 @@ def test_to_dict_with_complex_keys():
         ('Alice', 25): ex_list_3[0],
         ('Bob', 30): ex_list_3[1],
         ('Charlie', 35): ex_list_3[2],
+    }
+
+    assert ex_list_3.to_dict_with_complex_keys(["name", Person.age]) == {
+        ('Alice', 25): ex_list_3[0],
+        ('Bob', 30): ex_list_3[1],
+        ('Charlie', 35): ex_list_3[2],
+    }
+
+    assert ex_list_3.to_dict_with_complex_keys(["name", Person.introduce, Person.age]) == {
+        ('Alice', 'Alice is 25 years old.', 25): ex_list_3[0],
+        ('Bob', 'Bob is 30 years old.', 30): ex_list_3[1],
+        ('Charlie', 'Charlie is 35 years old.', 35): ex_list_3[2],
     }
 
 
