@@ -69,6 +69,14 @@ def test_iadd_raise_type_error_by_operating_between_diffent_types():
         ex_list_1 += ex_list_2
 
 
+def test_iadd_raise_type_error_by_assign_invalid_object():
+    ex_list_1 = ExList([1, 2, 3])
+    ex_list_2 = [4, 5, 6]
+
+    with pytest.raises(TypeError):
+        ex_list_1 += ex_list_2
+
+
 def test_append():
     ex_list_1 = ExList([1, 2, 3])
     ex_list_1.append(4)
@@ -85,9 +93,16 @@ def test_append_raise_type_error_by_assign_different_type():
 
 def test_extend():
     ex_list_1 = ExList([1, 2, 3])
-    ex_list_1.extend([4])
+    ex_list_1.extend(ExList([4]))
 
     assert ex_list_1 == [1, 2, 3, 4]
+
+
+def test_extend_raise_type_error_by_assign_invalid_object():
+    ex_list_1 = ExList([1, 2, 3])
+
+    with pytest.raises(TypeError):
+        ex_list_1.extend([4])
 
 
 def test_extend_raise_type_error_by_assign_different_type():
