@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import copy
 from types import FunctionType
-from typing import Any, Sequence, Callable
+from typing import Any
+from typing import Callable
 from typing import Hashable
 from typing import SupportsIndex
 from typing import TypeVar
@@ -83,7 +84,7 @@ class ExList(list[T]):
 
     @staticmethod
     def __get_value_by_property(element: T, prop: property) -> Any:
-        return prop.fget(element)  # type: ignore[attr-defined]
+        return prop.fget(element)  # type: ignore[misc]
 
     @staticmethod
     def __get_value_by_attr_name(element: T, attr_name: str) -> Any:
@@ -544,7 +545,7 @@ class ExList(list[T]):
                     tupled_key += (key(element),)
 
                 case property():
-                    tupled_key += (key.fget(element),)  # type: ignore[attr-defined]
+                    tupled_key += (key.fget(element),)  # type: ignore[misc]
 
                 case str():
                     tupled_key += (getattr(element, key),)
