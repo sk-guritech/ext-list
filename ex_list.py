@@ -145,7 +145,7 @@ class ExList(list[T]):
 
         super().insert(index, element)
 
-    def extract(self, key: FunctionType | property | Hashable) -> ExList[Any]:
+    def extract(self, key: FunctionType | property | str | Hashable) -> ExList[Any]:
         """
         Extracts and returns a list of values associated with the given key from the objects.
 
@@ -184,9 +184,12 @@ class ExList(list[T]):
         if isinstance(key, FunctionType):
             return ExList([key(element) for element in self])
 
-        return ExList([key.fget(element) for element in self])  # type: ignore[attr-defined]
+        if isinstance(key, property):
+            return ExList([key.fget(element) for element in self])  # type: ignore[attr-defined]
 
-    def equals(self, key: FunctionType | property | Hashable, compare_target: Any) -> ExList[T]:
+        return ExList([getattr(element, key) for element in self])  # type: ignore[arg-type]
+
+    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to the given value.
 
@@ -228,10 +231,16 @@ class ExList(list[T]):
 
             return ExList([element for element in self if key(element) == compare_target])
 
-        if compare_target in {None, False, True}:
-            return ExList([element for element in self if key.fget(element) is compare_target])  # type: ignore[attr-defined]
+        if isinstance(key, property):
+            if compare_target in {None, False, True}:
+                return ExList([element for element in self if key.fget(element) is compare_target])  # type: ignore[attr-defined]
 
-        return ExList([element for element in self if key.fget(element) == compare_target])  # type: ignore[attr-defined]
+            return ExList([element for element in self if key.fget(element) == compare_target])  # type: ignore[attr-defined]
+
+        if compare_target in {None, False, True}:
+            return ExList([element for element in self if getattr(element, key) is compare_target])  # type: ignore[arg-type]
+
+        return ExList([element for element in self if getattr(element, key) == compare_target])  # type: ignore[arg-type]
 
     def __equals_from_indexable_object(self, key: Hashable, compare_target: Any) -> ExList[T]:
         if compare_target in {None, True, False}:
@@ -281,10 +290,16 @@ class ExList(list[T]):
 
             return ExList([element for element in self if key(element) != compare_target])
 
-        if compare_target in {None, False, True}:
-            return ExList([element for element in self if key.fget(element) is not compare_target])  # type: ignore[attr-defined]
+        if isinstance(key, property):
+            if compare_target in {None, False, True}:
+                return ExList([element for element in self if key.fget(element) is not compare_target])  # type: ignore[attr-defined]
 
-        return ExList([element for element in self if key.fget(element) != compare_target])  # type: ignore[attr-defined]
+            return ExList([element for element in self if key.fget(element) != compare_target])  # type: ignore[attr-defined]
+
+        if compare_target in {None, False, True}:
+            return ExList([element for element in self if getattr(element, key) is not compare_target])  # type: ignore[arg-type]
+
+        return ExList([element for element in self if getattr(element, key) != compare_target])  # type: ignore[arg-type]
 
     def __not_equals_from_indexable_object(self, key: Hashable, compare_target: Any) -> ExList[T]:
         if compare_target in {None, True, False}:
@@ -292,7 +307,7 @@ class ExList(list[T]):
 
         return ExList([element for element in self if element[key] != compare_target])  # type: ignore[index]
 
-    def in_(self, key: FunctionType | property | Hashable, compare_targets: list[Any]) -> ExList[T]:
+    def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any]) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to one of the given values.
 
@@ -331,9 +346,12 @@ class ExList(list[T]):
         if isinstance(key, FunctionType):
             return ExList([element for element in self if key(element) in compare_targets])
 
-        return ExList([element for element in self if key.fget(element) in compare_targets])  # type: ignore[attr-defined]
+        if isinstance(key, property):
+            return ExList([element for element in self if key.fget(element) in compare_targets])  # type: ignore[attr-defined]
 
-    def not_in_(self, key: FunctionType | property | Hashable, compare_targets: list[Any]) -> ExList[T]:
+        return ExList([element for element in self if getattr(element, key) in compare_targets])  # type: ignore[arg-type]
+
+    def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any]) -> ExList[T]:
         """
         Returns a list of objects that do not have the given key set to any of the given values.
 
@@ -372,7 +390,10 @@ class ExList(list[T]):
         if isinstance(key, FunctionType):
             return ExList([element for element in self if key(element) not in compare_targets])
 
-        return ExList([element for element in self if key.fget(element) not in compare_targets])  # type: ignore[attr-defined]
+        if isinstance(key, property):
+            return ExList([element for element in self if key.fget(element) not in compare_targets])  # type: ignore[attr-defined]
+
+        return ExList([element for element in self if getattr(element, key) not in compare_targets])  # type: ignore[arg-type]
 
     def extract_duplicates(self, other: ExList[T]) -> ExList[T]:
         """
@@ -469,7 +490,7 @@ class ExList(list[T]):
         """
         return self[0]
 
-    def to_dict(self, key: FunctionType | property | Hashable) -> dict[Hashable, T]:
+    def to_dict(self, key: FunctionType | property | str | Hashable) -> dict[Hashable, T]:
         """
         Converts the current object to a dictionary, using the given key as the dictionary key.
 
@@ -510,12 +531,15 @@ class ExList(list[T]):
         if isinstance(key, FunctionType):
             return {key(element): element for element in self}
 
-        return {key.fget(element): element for element in self}  # type: ignore[attr-defined]
+        if isinstance(key, property):
+            return {key.fget(element): element for element in self}  # type: ignore[attr-defined]
+
+        return {getattr(element, key): element for element in self}  # type: ignore[arg-type]
 
     def __to_dict_from_indexable_object(self, key: Hashable) -> dict[Hashable, T]:
         return {element[key]: element for element in self}  # type: ignore[index]
 
-    def to_dict_with_complex_keys(self, keys: list[FunctionType] | list[property] | list[Hashable]) -> dict[tuple[Any, ...], T]:
+    def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable]) -> dict[tuple[Any, ...], T]:
         """
         Returns a dictionary of the elements in the `ExList` with complex keys.
 
@@ -547,5 +571,30 @@ class ExList(list[T]):
     def __to_dict_with_complex_keys_from_indexable_object(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
         return {tuple(element[key] for key in keys): element for element in self}  # type: ignore[index]
 
-    def __to_dict_with_complex_keys_from_others(self, keys: list[FunctionType | property]) -> dict[tuple[Any, ...], T]:
-        return {tuple([key(element) if isinstance(key, FunctionType) else key.fget(element) for key in keys]): element for element in self}  # type: ignore[misc]
+    def __to_dict_with_complex_keys_from_others(self, keys: list[FunctionType | property | str]) -> dict[tuple[Any, ...], T]:
+        result: dict[tuple[Any, ...], T] = {}
+
+        for element in self:
+            tupled_key: tuple[Any, ...] = self.__generate_tupled_key(keys, element)
+            result[tupled_key] = element
+
+        return result
+
+    def __generate_tupled_key(self, keys: list[FunctionType | property | str], element: T) -> tuple[Any, ...]:
+        tupled_key: tuple[Any, ...] = tuple()
+
+        for key in keys:
+            match key:
+                case FunctionType():
+                    tupled_key += (key(element),)
+
+                case property():
+                    tupled_key += (key.fget(element),)  # type: ignore[attr-defined]
+
+                case str():
+                    tupled_key += (getattr(element, key),)
+
+                case _:
+                    raise RuntimeError
+
+        return tupled_key
