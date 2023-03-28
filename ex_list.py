@@ -150,7 +150,7 @@ class ExList(list[T]):
         Extracts and returns a list of values associated with the given key from the objects.
 
         Args:
-            key (FunctionType | property | Hashable): The key to extract values for. If the key is function,
+            key (FunctionType | property | str | Hashable): The key to extract values for. If the key is function,
                 the callable will be executed and its result will be returned.
 
         Returns:
@@ -194,7 +194,7 @@ class ExList(list[T]):
         Returns a list of objects that have the given key set to the given value.
 
         Args:
-            key (FunctionType | property | Hashable): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to search for.
             compare_target (Any): The value to compare the objects' values to.
 
         Returns:
@@ -253,7 +253,7 @@ class ExList(list[T]):
         Returns a list of objects that do not have the given key set to the given value.
 
         Args:
-            key (FunctionType | property | Hashable): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to search for.
             compare_target (Any): The value to compare the objects' values to.
 
         Returns:
@@ -312,7 +312,7 @@ class ExList(list[T]):
         Returns a list of objects that have the given key set to one of the given values.
 
         Args:
-            key (FunctionType | property | Hashable): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to search for.
             compare_targets (list): A list of values to compare the objects' values to.
 
         Returns:
@@ -356,7 +356,7 @@ class ExList(list[T]):
         Returns a list of objects that do not have the given key set to any of the given values.
 
         Args:
-            key (Hashable or str): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to search for.
             compare_targets (list): A list of values to compare the objects' values to.
 
         Returns:
@@ -495,7 +495,7 @@ class ExList(list[T]):
         Converts the current object to a dictionary, using the given key as the dictionary key.
 
         Args:
-            key (FunctionType | property | Hashable): The key to use as the dictionary key.
+            key (FunctionType | property | str | Hashable): The key to use as the dictionary key.
 
         Returns:
             dict: A dictionary of objects, using the given key as the dictionary key.
@@ -544,7 +544,7 @@ class ExList(list[T]):
         Returns a dictionary of the elements in the `ExList` with complex keys.
 
         Args:
-            keys (list[Hashable]): A list of the keys for the dictionary.
+            keys (list[FunctionType | property | str] | list[Hashable]): A list of the keys for the dictionary.
 
         Returns:
             dict[tuple[Any, ...], T]: A dictionary of the elements in the `ExList` with complex keys.
