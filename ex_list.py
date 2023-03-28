@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import copy
+from types import FunctionType
 from typing import Any
 from typing import Hashable
-from typing import Iterable
 from typing import SupportsIndex
 from typing import TypeVar
-from types import FunctionType
 
 from typing_extensions import override
 
@@ -15,11 +14,11 @@ T = TypeVar('T')
 
 class ExList(list[T]):
     def __init__(self, iterable: list[T] = []) -> None:
-        ExList.__is_all_elements_single_type(iterable)
+        ExList.__validate_all_elements_are_single_type(iterable)
         super().__init__(iterable)
 
-    @ staticmethod
-    def __is_all_elements_single_type(iterable: list[Any]) -> None:
+    @staticmethod
+    def __validate_all_elements_are_single_type(iterable: list[Any]) -> None:
         if not iterable:
             return
 
@@ -30,6 +29,21 @@ class ExList(list[T]):
                 'Expected all elements to be of the same type.',
             )
 
+    def __validate_same_type(self, element: T) -> None:
+        if not isinstance(element, type(self[0])):
+            raise TypeError(
+                f'Expected {type(self[0])} but got {type(element)}.',
+            )
+
+    def __validate_same_type_ex_list(self, other: ExList[T]):
+        if not isinstance(self[0], type(other[0])):  # type: ignore[index]
+            raise TypeError(
+                f'Expected ExList[{type(self[0])}] but got ExList[{type(other[0])}].',  # type: ignore[index]
+            )
+
+    def __is_indexable(self) -> bool:
+        return hasattr(self[0], '__getitem__')
+
     @override
     def __add__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
         if not self:
@@ -38,10 +52,7 @@ class ExList(list[T]):
         if not other:
             return self
 
-        if not isinstance(self[0], type(other[0])):
-            raise TypeError(
-                f'Expected ExList[{type(self[0])}] but got ExList[{type(other[0])}].',
-            )
+        self.__validate_same_type_ex_list(other)
 
         return ExList(super().__add__(other))
 
@@ -57,10 +68,7 @@ class ExList(list[T]):
 
             return self
 
-        if not isinstance(self[0], type(other[0])):
-            raise TypeError(
-                f'Expected ExList[{type(self[0])}] but got ExList[{type(other[0])}].',
-            )
+        self.__validate_same_type_ex_list(other)
 
         super().__iadd__(other)
 
@@ -70,30 +78,26 @@ class ExList(list[T]):
     def append(self, element: T) -> None:
         if not self:
             super().append(element)
+
             return
 
-        if not isinstance(element, type(self[0])):
-            raise TypeError(
-                f'Expected {type(self[0])} but got {type(element)}.',
-            )
+        self.__validate_same_type(element)
 
         super().append(element)
 
     @ override
-    def extend(self, iterable: Iterable[T]) -> None:
+    def extend(self, other: ExList[T]) -> None:  # type: ignore[override]
         if not self:
-            super().extend(iterable)
+            super().extend(other)
+
             return
 
-        if not iterable:
+        if not other:
             return
 
-        if not isinstance(self[0], type(iterable[0])):  # type: ignore[index]
-            raise TypeError(
-                f'Expected ExList[{type(self[0])}] but got ExList[{type(iterable[0])}].',  # type: ignore[index]
-            )
+        self.__validate_same_type_ex_list(other)
 
-        super().extend(iterable)
+        super().extend(other)
 
     @ override
     def insert(self, index: SupportsIndex, element: T) -> None:
@@ -101,10 +105,7 @@ class ExList(list[T]):
             super().insert(index, element)
             return
 
-        if not isinstance(element, type(self[0])):
-            raise TypeError(
-                f'Expected {type(self[0])} but got {type(element)}.',
-            )
+        self.__validate_same_type(element)
 
         super().insert(index, element)
 
@@ -158,15 +159,15 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
+        if self.__is_indexable():
+            return ExList([element[key] for element in self])  # type: ignore[index]
+
         if isinstance(key, FunctionType):
             return ExList([key(element) for element in self])
 
-        if isinstance(key, property):
-            return ExList([key.fget(element) for element in self])  # type: ignore[arg-type]
+        return ExList([key.fget(element) for element in self])  # type: ignore[attr-defined]
 
-        return ExList([element[key] for element in self])  # type: ignore[attr-defined]
-
-    def equals(self, key: Hashable, compare_target: Any) -> ExList[T]:
+    def equals(self, key: FunctionType | property | Hashable, compare_target: Any) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to the given value.
 
@@ -208,27 +209,27 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if isinstance(self[0], dict) or isinstance(self[0], list):
-            return self.__equals_from_dict_or_list(key, compare_target)
+        if self.__is_indexable():
+            return self.__equals_from_indexable_object(key, compare_target)
 
-        if isinstance(key, str):
-            return self.__equals_from_others(key, compare_target)
+        if isinstance(key, FunctionType):
+            if compare_target in {None, False, True}:
+                return ExList([element for element in self if key(element) is compare_target])
 
-        raise TypeError
+            return ExList([element for element in self if key(element) == compare_target])
 
-    def __equals_from_dict_or_list(self, key: Hashable, compare_target: Any) -> ExList[T]:
+        if compare_target in {None, False, True}:
+            return ExList([element for element in self if key.fget(element) is compare_target])  # type: ignore[attr-defined]
+
+        return ExList([element for element in self if key.fget(element) == compare_target])  # type: ignore[attr-defined]
+
+    def __equals_from_indexable_object(self, key: Hashable, compare_target: Any) -> ExList[T]:
         if compare_target in {None, True, False}:
             return ExList([element for element in self if element[key] is compare_target])  # type: ignore[index]
 
         return ExList([element for element in self if element[key] == compare_target])  # type: ignore[index]
 
-    def __equals_from_others(self, key: str, compare_target: Any) -> ExList[T]:
-        if compare_target in {None, True, False}:
-            return ExList([element for element in self if getattr(element, key) is compare_target])
-
-        return ExList([element for element in self if getattr(element, key) == compare_target])
-
-    def not_equals(self, key: Hashable, compare_target: Any) -> ExList[T]:
+    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any) -> ExList[T]:
         """
         Returns a list of objects that do not have the given key set to the given value.
 
@@ -270,27 +271,27 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if isinstance(self[0], dict) or isinstance(self[0], list):
-            return self.__not_equals_from_dict_or_list(key, compare_target)
+        if self.__is_indexable():
+            return self.__not_equals_from_indexable_object(key, compare_target)
 
-        if isinstance(key, str):
-            return self.__not_equals_from_others(key, compare_target)
+        if isinstance(key, FunctionType):
+            if compare_target in {None, False, True}:
+                return ExList([element for element in self if key(element) is not compare_target])
 
-        raise TypeError
+            return ExList([element for element in self if key(element) != compare_target])
 
-    def __not_equals_from_dict_or_list(self, key: Hashable, compare_target: Any) -> ExList[T]:
+        if compare_target in {None, False, True}:
+            return ExList([element for element in self if key.fget(element) is not compare_target])  # type: ignore[attr-defined]
+
+        return ExList([element for element in self if key.fget(element) != compare_target])  # type: ignore[attr-defined]
+
+    def __not_equals_from_indexable_object(self, key: Hashable, compare_target: Any) -> ExList[T]:
         if compare_target in {None, True, False}:
             return ExList([element for element in self if element[key] is not compare_target])  # type: ignore[index]
 
         return ExList([element for element in self if element[key] != compare_target])  # type: ignore[index]
 
-    def __not_equals_from_others(self, key: str, compare_target: Any) -> ExList[T]:
-        if compare_target in {None, True, False}:
-            return ExList([element for element in self if getattr(element, key) is not compare_target])
-
-        return ExList([element for element in self if getattr(element, key) != compare_target])
-
-    def in_(self, key: Hashable, compare_targets: list[Any]) -> ExList[T]:
+    def in_(self, key: FunctionType | property | Hashable, compare_targets: list[Any]) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to one of the given values.
 
@@ -332,21 +333,15 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if isinstance(self[0], dict) or isinstance(self[0], list):
-            return self.__in_from_dict_or_list(key, compare_targets)
+        if self.__is_indexable():
+            return ExList([element for element in self if element[key] in compare_targets])  # type: ignore[index]
 
-        if isinstance(key, str):
-            return self.__in_from_others(key, compare_targets)
+        if isinstance(key, FunctionType):
+            return ExList([element for element in self if key(element) in compare_targets])
 
-        raise TypeError
+        return ExList([element for element in self if key.fget(element) in compare_targets])  # type: ignore[attr-defined]
 
-    def __in_from_dict_or_list(self, key: Hashable, compare_targets: list[Any]) -> ExList[T]:
-        return ExList([element for element in self if element[key] in compare_targets])  # type: ignore[index]
-
-    def __in_from_others(self, key: str, compare_targets: list[Any]) -> ExList[T]:
-        return ExList([element for element in self if getattr(element, key) in compare_targets])
-
-    def not_in_(self, key: Hashable | str, compare_targets: list[Any]) -> ExList[T]:
+    def not_in_(self, key: FunctionType | property | Hashable, compare_targets: list[Any]) -> ExList[T]:
         """
         Returns a list of objects that do not have the given key set to any of the given values.
 
@@ -388,21 +383,15 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if isinstance(self[0], dict) or isinstance(self[0], list):
-            return self.__not_in_from_dict_or_list(key, compare_targets)
+        if self.__is_indexable():
+            return ExList([element for element in self if element[key] not in compare_targets])  # type: ignore[index]
 
-        if isinstance(key, str):
-            return self.__not_in_from_others(key, compare_targets)
+        if isinstance(key, FunctionType):
+            return ExList([element for element in self if key(element) not in compare_targets])
 
-        raise TypeError
+        return ExList([element for element in self if key.fget(element) not in compare_targets])  # type: ignore[attr-defined]
 
-    def __not_in_from_dict_or_list(self, key: Hashable, compare_targets: list[Any]) -> ExList[T]:
-        return ExList([element for element in self if element[key] not in compare_targets])  # type: ignore[index]
-
-    def __not_in_from_others(self, key: str, compare_targets: list[Any]) -> ExList[T]:
-        return ExList([element for element in self if getattr(element, key) not in compare_targets])
-
-    def extract_duplicates(self, compare_ex_list: ExList[T]) -> ExList[T]:
+    def extract_duplicates(self, other: ExList[T]) -> ExList[T]:
         """
         Returns a list of objects that are in both the current object and the given object.
 
@@ -421,7 +410,7 @@ class ExList(list[T]):
             >>> ex_list_1.extract_duplicates(ex_list_2)
             [{'name': 'Bob', 'age': 30}]
         """
-        return ExList([element for element in self if element in compare_ex_list])
+        return ExList([element for element in self if element in other])
 
     def is_duplicate(self) -> bool:
         """
@@ -497,7 +486,7 @@ class ExList(list[T]):
         """
         return self[0]
 
-    def to_dict(self, key: Hashable) -> dict[Hashable, T]:
+    def to_dict(self, key: FunctionType | property | Hashable) -> dict[Hashable, T]:
         """
         Converts the current object to a dictionary, using the given key as the dictionary key.
 
@@ -543,21 +532,18 @@ class ExList(list[T]):
         if not self:
             return {}
 
-        if isinstance(self[0], dict) or isinstance(self[0], list):
-            return self.__to_dict_from_dict_or_list(key)
+        if self.__is_indexable():
+            return self.__to_dict_from_indexable_object(key)
 
-        if isinstance(key, str):
-            return self.__to_dict_from_others(key)
+        if isinstance(key, FunctionType):
+            return {key(element): element for element in self}
 
-        raise TypeError
+        return {key.fget(element): element for element in self}  # type: ignore[attr-defined]
 
-    def __to_dict_from_dict_or_list(self, key: Hashable) -> dict[Hashable, T]:
+    def __to_dict_from_indexable_object(self, key: Hashable) -> dict[Hashable, T]:
         return {element[key]: element for element in self}  # type: ignore[index]
 
-    def __to_dict_from_others(self, key: str) -> dict[Hashable, T]:
-        return {getattr(element, key): element for element in self}
-
-    def to_dict_with_complex_keys(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
+    def to_dict_with_complex_keys(self, keys: list[FunctionType] | list[property] | list[Hashable]) -> dict[tuple[Any, ...], T]:
         """
         Returns a dictionary of the elements in the `ExList` with complex keys based on multiple attributes.
 
@@ -595,16 +581,13 @@ class ExList(list[T]):
         if not self:
             return {}
 
-        if isinstance(self[0], dict) or isinstance(self[0], list):
-            return self.__to_dict_with_complex_keys_from_dict_or_list(keys)
+        if self.__is_indexable():
+            return self.__to_dict_with_complex_keys_from_indexable_object(keys)  # type: ignore[arg-type]
 
-        if all([isinstance(key, str) for key in keys]):
-            return self.__to_dict_with_complex_keys_from_others(keys)  # type: ignore[arg-type]
+        return self.__to_dict_with_complex_keys_from_others(keys)  # type: ignore[arg-type]
 
-        raise TypeError
-
-    def __to_dict_with_complex_keys_from_dict_or_list(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
+    def __to_dict_with_complex_keys_from_indexable_object(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
         return {tuple(element[key] for key in keys): element for element in self}  # type: ignore[index]
 
-    def __to_dict_with_complex_keys_from_others(self, keys: list[str]) -> dict[tuple[Any, ...], T]:
-        return {tuple(getattr(element, key) for key in keys): element for element in self}
+    def __to_dict_with_complex_keys_from_others(self, keys: list[FunctionType | property]) -> dict[tuple[Any, ...], T]:
+        return {tuple([key(element) if isinstance(key, FunctionType) else key.fget(element) for key in keys]): element for element in self}  # type: ignore[misc]
