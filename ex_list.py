@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from types import FunctionType
 from typing import Any
+from typing import Callable
 from typing import Hashable
 from typing import SupportsIndex
 from typing import TypeVar
@@ -38,11 +39,11 @@ class ExList(list[T]):
     """
 
     def __init__(self, iterable: list[T] = []) -> None:
-        ExList.__validate_all_elements_are_single_type(iterable)
+        ExList.__validate_all_elements_are_same_type(iterable)
         super().__init__(iterable)
 
     @staticmethod
-    def __validate_all_elements_are_single_type(iterable: list[Any]) -> None:
+    def __validate_all_elements_are_same_type(iterable: list[Any]) -> None:
         if not iterable:
             return
 
@@ -58,7 +59,7 @@ class ExList(list[T]):
         if not isinstance(iterable, ExList):
             raise TypeError(f'Expected <class \'ExList\'> but got {type(iterable)}')
 
-    def __validate_same_type(self, element: T) -> None:
+    def __validate_same_type_element(self, element: T) -> None:
         if not isinstance(element, type(self[0])):
             raise TypeError(
                 f'Expected {type(self[0])} but got {type(element)}.',
@@ -72,6 +73,34 @@ class ExList(list[T]):
 
     def __is_indexable(self) -> bool:
         return hasattr(self[0], '__getitem__')
+
+    @staticmethod
+    def __get_value_by_function(element: T, func: FunctionType) -> Any:
+        return func(element)
+
+    @staticmethod
+    def __get_value_by_index(element: T, index: SupportsIndex | Hashable) -> Any:
+        return element[index]  # type: ignore
+
+    @staticmethod
+    def __get_value_by_property(element: T, prop: property) -> Any:
+        return prop.fget(element)  # type: ignore[misc]
+
+    @staticmethod
+    def __get_value_by_attr_name(element: T, attr_name: str) -> Any:
+        return getattr(element, attr_name)
+
+    def __determine_get_value_method(self, key: FunctionType | property | str | Hashable) -> Callable[[T, Any], Any]:
+        if self.__is_indexable():
+            return ExList.__get_value_by_index
+
+        if isinstance(key, FunctionType):
+            return ExList.__get_value_by_function
+
+        if isinstance(key, property):
+            return ExList.__get_value_by_property
+
+        return ExList.__get_value_by_attr_name
 
     @override
     def __add__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
@@ -93,12 +122,10 @@ class ExList(list[T]):
 
         if not self:
             super().__iadd__(other)
-
             return other
 
         if not other:
             super().__iadd__(other)
-
             return self
 
         self.__validate_same_type_ex_list(other)
@@ -111,10 +138,9 @@ class ExList(list[T]):
     def append(self, element: T) -> None:
         if not self:
             super().append(element)
-
             return
 
-        self.__validate_same_type(element)
+        self.__validate_same_type_element(element)
 
         super().append(element)
 
@@ -125,7 +151,6 @@ class ExList(list[T]):
 
         if not self:
             super().extend(other)
-
             return
 
         if not other:
@@ -141,7 +166,7 @@ class ExList(list[T]):
             super().insert(index, element)
             return
 
-        self.__validate_same_type(element)
+        self.__validate_same_type_element(element)
 
         super().insert(index, element)
 
@@ -178,16 +203,9 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if self.__is_indexable():
-            return ExList([element[key] for element in self])  # type: ignore[index]
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        if isinstance(key, FunctionType):
-            return ExList([key(element) for element in self])
-
-        if isinstance(key, property):
-            return ExList([key.fget(element) for element in self])  # type: ignore[attr-defined]
-
-        return ExList([getattr(element, key) for element in self])  # type: ignore[arg-type]
+        return ExList([get_value_method(element, key) for element in self])  # type: ignore[arg-type]
 
     def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any) -> ExList[T]:
         """
@@ -222,31 +240,12 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if self.__is_indexable():
-            return self.__equals_from_indexable_object(key, compare_target)
-
-        if isinstance(key, FunctionType):
-            if compare_target in {None, False, True}:
-                return ExList([element for element in self if key(element) is compare_target])
-
-            return ExList([element for element in self if key(element) == compare_target])
-
-        if isinstance(key, property):
-            if compare_target in {None, False, True}:
-                return ExList([element for element in self if key.fget(element) is compare_target])  # type: ignore[attr-defined]
-
-            return ExList([element for element in self if key.fget(element) == compare_target])  # type: ignore[attr-defined]
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
         if compare_target in {None, False, True}:
-            return ExList([element for element in self if getattr(element, key) is compare_target])  # type: ignore[arg-type]
+            return ExList([element for element in self if get_value_method(element, key) is compare_target])  # type: ignore[arg-type]
 
-        return ExList([element for element in self if getattr(element, key) == compare_target])  # type: ignore[arg-type]
-
-    def __equals_from_indexable_object(self, key: Hashable, compare_target: Any) -> ExList[T]:
-        if compare_target in {None, True, False}:
-            return ExList([element for element in self if element[key] is compare_target])  # type: ignore[index]
-
-        return ExList([element for element in self if element[key] == compare_target])  # type: ignore[index]
+        return ExList([element for element in self if get_value_method(element, key) == compare_target])  # type: ignore[arg-type]
 
     def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any) -> ExList[T]:
         """
@@ -281,31 +280,12 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if self.__is_indexable():
-            return self.__not_equals_from_indexable_object(key, compare_target)
-
-        if isinstance(key, FunctionType):
-            if compare_target in {None, False, True}:
-                return ExList([element for element in self if key(element) is not compare_target])
-
-            return ExList([element for element in self if key(element) != compare_target])
-
-        if isinstance(key, property):
-            if compare_target in {None, False, True}:
-                return ExList([element for element in self if key.fget(element) is not compare_target])  # type: ignore[attr-defined]
-
-            return ExList([element for element in self if key.fget(element) != compare_target])  # type: ignore[attr-defined]
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
         if compare_target in {None, False, True}:
-            return ExList([element for element in self if getattr(element, key) is not compare_target])  # type: ignore[arg-type]
+            return ExList([element for element in self if get_value_method(element, key) is not compare_target])  # type: ignore[arg-type]
 
-        return ExList([element for element in self if getattr(element, key) != compare_target])  # type: ignore[arg-type]
-
-    def __not_equals_from_indexable_object(self, key: Hashable, compare_target: Any) -> ExList[T]:
-        if compare_target in {None, True, False}:
-            return ExList([element for element in self if element[key] is not compare_target])  # type: ignore[index]
-
-        return ExList([element for element in self if element[key] != compare_target])  # type: ignore[index]
+        return ExList([element for element in self if get_value_method(element, key) != compare_target])  # type: ignore[arg-type]
 
     def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any]) -> ExList[T]:
         """
@@ -340,16 +320,9 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if self.__is_indexable():
-            return ExList([element for element in self if element[key] in compare_targets])  # type: ignore[index]
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        if isinstance(key, FunctionType):
-            return ExList([element for element in self if key(element) in compare_targets])
-
-        if isinstance(key, property):
-            return ExList([element for element in self if key.fget(element) in compare_targets])  # type: ignore[attr-defined]
-
-        return ExList([element for element in self if getattr(element, key) in compare_targets])  # type: ignore[arg-type]
+        return ExList([element for element in self if get_value_method(element, key) in compare_targets])  # type: ignore[arg-type]
 
     def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any]) -> ExList[T]:
         """
@@ -384,16 +357,9 @@ class ExList(list[T]):
         if not self:
             return ExList()
 
-        if self.__is_indexable():
-            return ExList([element for element in self if element[key] not in compare_targets])  # type: ignore[index]
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        if isinstance(key, FunctionType):
-            return ExList([element for element in self if key(element) not in compare_targets])
-
-        if isinstance(key, property):
-            return ExList([element for element in self if key.fget(element) not in compare_targets])  # type: ignore[attr-defined]
-
-        return ExList([element for element in self if getattr(element, key) not in compare_targets])  # type: ignore[arg-type]
+        return ExList([element for element in self if get_value_method(element, key) not in compare_targets])  # type: ignore[arg-type]
 
     def extract_duplicates(self, other: ExList[T]) -> ExList[T]:
         """
@@ -525,19 +491,9 @@ class ExList(list[T]):
         if not self:
             return {}
 
-        if self.__is_indexable():
-            return self.__to_dict_from_indexable_object(key)
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        if isinstance(key, FunctionType):
-            return {key(element): element for element in self}
-
-        if isinstance(key, property):
-            return {key.fget(element): element for element in self}  # type: ignore[attr-defined]
-
-        return {getattr(element, key): element for element in self}  # type: ignore[arg-type]
-
-    def __to_dict_from_indexable_object(self, key: Hashable) -> dict[Hashable, T]:
-        return {element[key]: element for element in self}  # type: ignore[index]
+        return {get_value_method(element, key): element for element in self}  # type: ignore[arg-type]
 
     def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable]) -> dict[tuple[Any, ...], T]:
         """
@@ -589,7 +545,7 @@ class ExList(list[T]):
                     tupled_key += (key(element),)
 
                 case property():
-                    tupled_key += (key.fget(element),)  # type: ignore[attr-defined]
+                    tupled_key += (key.fget(element),)  # type: ignore[misc]
 
                 case str():
                     tupled_key += (getattr(element, key),)
