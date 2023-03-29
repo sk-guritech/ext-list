@@ -26,6 +26,9 @@ class ExList(list[T]):
             ...     def introduce(self):
             ...         return f'{self.name} is {self.age} years old.'
             ...
+            ...     def get_age_n_years_ago(self, n: int) -> int:
+            ...        return self.age - n
+            ...
             ...     @property
             ...     def name(self):
             ...         return self.__name
@@ -182,6 +185,7 @@ class ExList(list[T]):
         Args:
             key (FunctionType | property | str | Hashable): The key to extract values for. If the key is function,
                 the callable will be executed and its result will be returned.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of values associated with the given key. If no values are found or the object
@@ -204,6 +208,9 @@ class ExList(list[T]):
 
             >>> ex_list_3.extract(Person.introduce)
             ['Alice is 25 years old.', 'Bob is 30 years old.', 'Charlie is 35 years old.']
+
+            >>> ex_list_3.extract(Person.get_age_n_years_ago, 5)
+            [20, 25, 30]
         """
         if not self:
             return ExList()
@@ -219,6 +226,7 @@ class ExList(list[T]):
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_target (Any): The value to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that have the given key set to the given value. If no objects are found or the object
@@ -241,6 +249,9 @@ class ExList(list[T]):
 
             >>> ex_list_3.equals(Person.introduce, 'Alice is 25 years old.')
             [Person('Alice', 25)]
+
+            >>> ex_list_3.equals(Person.get_age_n_years_ago, 20, 5)
+            [Person('Alice', 25)]
         """
         if not self:
             return ExList()
@@ -259,6 +270,7 @@ class ExList(list[T]):
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_target (Any): The value to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that do not have the given key set to the given value. If no objects are found or the
@@ -281,6 +293,9 @@ class ExList(list[T]):
 
             >>> ex_list_3.not_equals(Person.introduce, 'Alice is 25 years old.')
             [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
+
+            >>> ex_list_3.not_equals(Person.get_age_n_years_ago, 20, 5)
+            [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
         """
         if not self:
             return ExList()
@@ -299,6 +314,7 @@ class ExList(list[T]):
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_targets (list): A list of values to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that have the given key set to one of the given values. If no objects are found or
@@ -321,6 +337,9 @@ class ExList(list[T]):
 
             >>> ex_list_3.in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
             [Person('Alice', 25), Person('Charlie', 35)]
+
+            >>> ex_list_3.in_(Person.get_age_n_years_ago, [20, 30], 5)
+            [Person('Alice', 25), Person('Charlie', 35)]
         """
         if not self:
             return ExList()
@@ -336,6 +355,7 @@ class ExList(list[T]):
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_targets (list): A list of values to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that do not have the given key set to any of the given values. If no objects are
@@ -357,6 +377,9 @@ class ExList(list[T]):
             [Person(Bob, 30)]
 
             >>> ex_list_3.not_in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
+            [Person('Bob', 30)]
+
+            >>> ex_list_3.not_in_(Person.get_age_n_years_ago, [20, 30], 5)
             [Person('Bob', 30)]
         """
         if not self:
@@ -467,6 +490,7 @@ class ExList(list[T]):
 
         Args:
             key (FunctionType | property | str | Hashable): The key to use as the dictionary key.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             dict: A dictionary of objects, using the given key as the dictionary key.
@@ -492,6 +516,9 @@ class ExList(list[T]):
             >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30)])
             >>> ex_list_3.to_dict(Person.name)
             {'Alice': Person('Alice', 25), 'Bob': Person('Bob', 30)}
+
+            >>> ex_list_3.to_dict(Person.get_age_n_years_ago, 5)
+            {20: Person('Alice', 25), 25: Person('Bob', 30)}
         """
         if not self:
             return {}
@@ -506,6 +533,7 @@ class ExList(list[T]):
 
         Args:
             keys (list[FunctionType | property | str] | list[Hashable]): A list of the keys for the dictionary.
+            arg_tuples (tuple[tuple[Any,...],...]): A list of tuples of the arguments. If key is a function, the arguments will be passed to the function.
 
         Returns:
             dict[tuple[Any, ...], T]: A dictionary of the elements in the `ExList` with complex keys.
@@ -513,12 +541,18 @@ class ExList(list[T]):
         Examples:
             The following example demonstrates how to use the `to_dict_with_complex_keys` method.
 
-            >>> people = ExList([Person('Alice', 30), Person('Bob', 25), Person('Charlie', 35), Person('David', 30)])
-            >>> people.to_dict_with_complex_keys([Person.name, Person.age])
+            >>> ex_list_1 = ExList([Person('Alice', 30), Person('Bob', 25), Person('Charlie', 35), Person('David', 30)])
+            >>> ex_list_1.to_dict_with_complex_keys([Person.name, Person.age])
             {('Alice', 30): Person('Alice', 30),
-            ('Bob', 25): Person('Bob', 25),
-            ('Charlie', 35): Person('Charlie', 35),
-            ('David', 30): Person('David', 30)}
+             ('Bob', 25): Person('Bob', 25),
+             ('Charlie', 35): Person('Charlie', 35),
+             ('David', 30): Person('David', 30)}
+
+            >>> ex_list_1.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,)))
+            {('Alice', 'Alice is 30 years old.', 25): Person('Alice', 30),
+             ('Bob', 'Bob is 25 years old.', 20): Person('Bob', 25),
+             ('Charlie', 'Charlie is 35 years old.', 30): Person('Charlie', 35),
+             ('David', 'David is 30 years old.', 25): Person('David', 30)}
         """
 
         if not self:
