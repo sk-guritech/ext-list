@@ -26,6 +26,9 @@ class ExList(list[T]):
             ...     def introduce(self):
             ...         return f'{self.name} is {self.age} years old.'
             ...
+            ...     def get_age_n_years_ago(self, n: int) -> int:
+            ...        return self.age - n
+            ...
             ...     @property
             ...     def name(self):
             ...         return self.__name
@@ -75,8 +78,8 @@ class ExList(list[T]):
         return hasattr(self[0], '__getitem__')
 
     @staticmethod
-    def __get_value_by_function(element: T, func: FunctionType) -> Any:
-        return func(element)
+    def __get_value_by_function(element: T, func: FunctionType, *args: Any) -> Any:
+        return func(element, *args)
 
     @staticmethod
     def __get_value_by_index(element: T, index: SupportsIndex | Hashable) -> Any:
@@ -87,8 +90,13 @@ class ExList(list[T]):
         return prop.fget(element)  # type: ignore[misc]
 
     @staticmethod
-    def __get_value_by_attr_name(element: T, attr_name: str) -> Any:
-        return getattr(element, attr_name)
+    def __get_value_by_attr_name(element: T, attr_name: str, *args: Any) -> Any:
+        object = getattr(element, attr_name)
+
+        if callable(object):
+            return object(*args)
+
+        return object
 
     def __determine_get_value_method(self, key: FunctionType | property | str | Hashable) -> Callable[[T, Any], Any]:
         if self.__is_indexable():
@@ -102,7 +110,7 @@ class ExList(list[T]):
 
         return ExList.__get_value_by_attr_name
 
-    @override
+    @ override
     def __add__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
         self.__validate_ex_list(other)
 
@@ -116,7 +124,7 @@ class ExList(list[T]):
 
         return ExList(super().__add__(other))
 
-    @override
+    @ override
     def __iadd__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
         self.__validate_ex_list(other)
 
@@ -170,13 +178,14 @@ class ExList(list[T]):
 
         super().insert(index, element)
 
-    def extract(self, key: FunctionType | property | str | Hashable) -> ExList[Any]:
+    def extract(self, key: FunctionType | property | str | Hashable, *args: Any) -> ExList[Any]:
         """
         Extracts and returns a list of values associated with the given key from the objects.
 
         Args:
             key (FunctionType | property | str | Hashable): The key to extract values for. If the key is function,
                 the callable will be executed and its result will be returned.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of values associated with the given key. If no values are found or the object
@@ -199,21 +208,25 @@ class ExList(list[T]):
 
             >>> ex_list_3.extract(Person.introduce)
             ['Alice is 25 years old.', 'Bob is 30 years old.', 'Charlie is 35 years old.']
+
+            >>> ex_list_3.extract(Person.get_age_n_years_ago, 5)
+            [20, 25, 30]
         """
         if not self:
             return ExList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        return ExList([get_value_method(element, key) for element in self])  # type: ignore[arg-type]
+        return ExList([get_value_method(element, key, *args) for element in self])  # type: ignore[arg-type]
 
-    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any) -> ExList[T]:
+    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to the given value.
 
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_target (Any): The value to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that have the given key set to the given value. If no objects are found or the object
@@ -236,6 +249,9 @@ class ExList(list[T]):
 
             >>> ex_list_3.equals(Person.introduce, 'Alice is 25 years old.')
             [Person('Alice', 25)]
+
+            >>> ex_list_3.equals(Person.get_age_n_years_ago, 20, 5)
+            [Person('Alice', 25)]
         """
         if not self:
             return ExList()
@@ -243,17 +259,18 @@ class ExList(list[T]):
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
         if compare_target in {None, False, True}:
-            return ExList([element for element in self if get_value_method(element, key) is compare_target])  # type: ignore[arg-type]
+            return ExList([element for element in self if get_value_method(element, key, *args) is compare_target])  # type: ignore[arg-type]
 
-        return ExList([element for element in self if get_value_method(element, key) == compare_target])  # type: ignore[arg-type]
+        return ExList([element for element in self if get_value_method(element, key, *args) == compare_target])  # type: ignore[arg-type]
 
-    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any) -> ExList[T]:
+    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExList[T]:
         """
         Returns a list of objects that do not have the given key set to the given value.
 
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_target (Any): The value to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that do not have the given key set to the given value. If no objects are found or the
@@ -276,6 +293,9 @@ class ExList(list[T]):
 
             >>> ex_list_3.not_equals(Person.introduce, 'Alice is 25 years old.')
             [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
+
+            >>> ex_list_3.not_equals(Person.get_age_n_years_ago, 20, 5)
+            [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
         """
         if not self:
             return ExList()
@@ -283,17 +303,18 @@ class ExList(list[T]):
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
         if compare_target in {None, False, True}:
-            return ExList([element for element in self if get_value_method(element, key) is not compare_target])  # type: ignore[arg-type]
+            return ExList([element for element in self if get_value_method(element, key, *args) is not compare_target])  # type: ignore[arg-type]
 
-        return ExList([element for element in self if get_value_method(element, key) != compare_target])  # type: ignore[arg-type]
+        return ExList([element for element in self if get_value_method(element, key, *args) != compare_target])  # type: ignore[arg-type]
 
-    def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any]) -> ExList[T]:
+    def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to one of the given values.
 
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_targets (list): A list of values to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that have the given key set to one of the given values. If no objects are found or
@@ -316,21 +337,25 @@ class ExList(list[T]):
 
             >>> ex_list_3.in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
             [Person('Alice', 25), Person('Charlie', 35)]
+
+            >>> ex_list_3.in_(Person.get_age_n_years_ago, [20, 30], 5)
+            [Person('Alice', 25), Person('Charlie', 35)]
         """
         if not self:
             return ExList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        return ExList([element for element in self if get_value_method(element, key) in compare_targets])  # type: ignore[arg-type]
+        return ExList([element for element in self if get_value_method(element, key, *args) in compare_targets])  # type: ignore[arg-type]
 
-    def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any]) -> ExList[T]:
+    def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExList[T]:
         """
         Returns a list of objects that do not have the given key set to any of the given values.
 
         Args:
             key (FunctionType | property | str | Hashable): The key to search for.
             compare_targets (list): A list of values to compare the objects' values to.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             ExList: A list of objects that do not have the given key set to any of the given values. If no objects are
@@ -353,13 +378,16 @@ class ExList(list[T]):
 
             >>> ex_list_3.not_in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
             [Person('Bob', 30)]
+
+            >>> ex_list_3.not_in_(Person.get_age_n_years_ago, [20, 30], 5)
+            [Person('Bob', 30)]
         """
         if not self:
             return ExList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        return ExList([element for element in self if get_value_method(element, key) not in compare_targets])  # type: ignore[arg-type]
+        return ExList([element for element in self if get_value_method(element, key, *args) not in compare_targets])  # type: ignore[arg-type]
 
     def extract_duplicates(self, other: ExList[T]) -> ExList[T]:
         """
@@ -456,12 +484,13 @@ class ExList(list[T]):
         """
         return self[0]
 
-    def to_dict(self, key: FunctionType | property | str | Hashable) -> dict[Hashable, T]:
+    def to_dict(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, T]:
         """
         Converts the current object to a dictionary, using the given key as the dictionary key.
 
         Args:
             key (FunctionType | property | str | Hashable): The key to use as the dictionary key.
+            *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
             dict: A dictionary of objects, using the given key as the dictionary key.
@@ -487,20 +516,24 @@ class ExList(list[T]):
             >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30)])
             >>> ex_list_3.to_dict(Person.name)
             {'Alice': Person('Alice', 25), 'Bob': Person('Bob', 30)}
+
+            >>> ex_list_3.to_dict(Person.get_age_n_years_ago, 5)
+            {20: Person('Alice', 25), 25: Person('Bob', 30)}
         """
         if not self:
             return {}
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        return {get_value_method(element, key): element for element in self}  # type: ignore[arg-type]
+        return {get_value_method(element, key, *args): element for element in self}  # type: ignore[arg-type]
 
-    def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable]) -> dict[tuple[Any, ...], T]:
+    def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: tuple[tuple[Any, ...], ...] = tuple()) -> dict[tuple[Any, ...], T]:
         """
         Returns a dictionary of the elements in the `ExList` with complex keys.
 
         Args:
             keys (list[FunctionType | property | str] | list[Hashable]): A list of the keys for the dictionary.
+            arg_tuples (tuple[tuple[Any,...],...]): A list of tuples of the arguments. If key is a function, the arguments will be passed to the function.
 
         Returns:
             dict[tuple[Any, ...], T]: A dictionary of the elements in the `ExList` with complex keys.
@@ -508,12 +541,18 @@ class ExList(list[T]):
         Examples:
             The following example demonstrates how to use the `to_dict_with_complex_keys` method.
 
-            >>> people = ExList([Person('Alice', 30), Person('Bob', 25), Person('Charlie', 35), Person('David', 30)])
-            >>> people.to_dict_with_complex_keys([Person.name, Person.age])
+            >>> ex_list_1 = ExList([Person('Alice', 30), Person('Bob', 25), Person('Charlie', 35), Person('David', 30)])
+            >>> ex_list_1.to_dict_with_complex_keys([Person.name, Person.age])
             {('Alice', 30): Person('Alice', 30),
-            ('Bob', 25): Person('Bob', 25),
-            ('Charlie', 35): Person('Charlie', 35),
-            ('David', 30): Person('David', 30)}
+             ('Bob', 25): Person('Bob', 25),
+             ('Charlie', 35): Person('Charlie', 35),
+             ('David', 30): Person('David', 30)}
+
+            >>> ex_list_1.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,)))
+            {('Alice', 'Alice is 30 years old.', 25): Person('Alice', 30),
+             ('Bob', 'Bob is 25 years old.', 20): Person('Bob', 25),
+             ('Charlie', 'Charlie is 35 years old.', 30): Person('Charlie', 35),
+             ('David', 'David is 30 years old.', 25): Person('David', 30)}
         """
 
         if not self:
@@ -522,33 +561,36 @@ class ExList(list[T]):
         if self.__is_indexable():
             return self.__to_dict_with_complex_keys_from_indexable_object(keys)  # type: ignore[arg-type]
 
-        return self.__to_dict_with_complex_keys_from_others(keys)  # type: ignore[arg-type]
+        return self.__to_dict_with_complex_keys_from_others(keys, arg_tuples)  # type: ignore[arg-type]
 
     def __to_dict_with_complex_keys_from_indexable_object(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
         return {tuple(element[key] for key in keys): element for element in self}  # type: ignore[index]
 
-    def __to_dict_with_complex_keys_from_others(self, keys: list[FunctionType | property | str]) -> dict[tuple[Any, ...], T]:
+    def __to_dict_with_complex_keys_from_others(self, keys: list[FunctionType | property | str], arg_tuples: tuple[tuple[Any, ...]]) -> dict[tuple[Any, ...], T]:
         result: dict[tuple[Any, ...], T] = {}
 
+        if not arg_tuples:
+            arg_tuples = tuple(tuple() for _ in range(len(keys)))
+
         for element in self:
-            tupled_key: tuple[Any, ...] = self.__generate_tupled_key(keys, element)
+            tupled_key: tuple[Any, ...] = self.__generate_tupled_key(keys, element, arg_tuples)
             result[tupled_key] = element
 
         return result
 
-    def __generate_tupled_key(self, keys: list[FunctionType | property | str], element: T) -> tuple[Any, ...]:
+    def __generate_tupled_key(self, keys: list[FunctionType | property | str], element: T, arg_tuples: tuple[Any]) -> tuple[Any, ...]:
         tupled_key: tuple[Any, ...] = tuple()
 
-        for key in keys:
+        for key, arg_tuple in zip(keys, arg_tuples):
             match key:
                 case FunctionType():
-                    tupled_key += (key(element),)
+                    tupled_key += (key(element, *arg_tuple),)
 
                 case property():
                     tupled_key += (key.fget(element),)  # type: ignore[misc]
 
                 case str():
-                    tupled_key += (getattr(element, key),)
+                    tupled_key += (getattr(element, key, *arg_tuple),)
 
                 case _:
                     raise RuntimeError
