@@ -1,4 +1,4 @@
-# ex-list
+# ExList
 This library was created to improve the quality of code through list operations. It allows commonly written list comprehension operations to be called as list methods and enables lists to be treated more abstractly than the built-in `list`.
 
 Using this library reduces the number of times list comprehensions need to be written, resulting in improved overall code readability and searchability.
