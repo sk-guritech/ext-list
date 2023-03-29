@@ -75,7 +75,7 @@ class ExList(list[T]):
         return hasattr(self[0], '__getitem__')
 
     @staticmethod
-    def __get_value_by_function(element: T, func: FunctionType, *args: tuple[Any, ...]) -> Any:
+    def __get_value_by_function(element: T, func: FunctionType, *args: Any) -> Any:
         return func(element, *args)
 
     @staticmethod
@@ -87,8 +87,13 @@ class ExList(list[T]):
         return prop.fget(element)  # type: ignore[misc]
 
     @staticmethod
-    def __get_value_by_attr_name(element: T, attr_name: str, *args: tuple[Any, ...]) -> Any:
-        return getattr(element, attr_name, *args)
+    def __get_value_by_attr_name(element: T, attr_name: str, *args: Any) -> Any:
+        object = getattr(element, attr_name)
+
+        if callable(object):
+            return object(*args)
+
+        return object
 
     def __determine_get_value_method(self, key: FunctionType | property | str | Hashable) -> Callable[[T, Any], Any]:
         if self.__is_indexable():
@@ -170,7 +175,7 @@ class ExList(list[T]):
 
         super().insert(index, element)
 
-    def extract(self, key: FunctionType | property | str | Hashable, *args: tuple[Any, ...]) -> ExList[Any]:
+    def extract(self, key: FunctionType | property | str | Hashable, *args: Any) -> ExList[Any]:
         """
         Extracts and returns a list of values associated with the given key from the objects.
 
@@ -207,7 +212,7 @@ class ExList(list[T]):
 
         return ExList([get_value_method(element, key, *args) for element in self])  # type: ignore[arg-type]
 
-    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: tuple[Any, ...]) -> ExList[T]:
+    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to the given value.
 
@@ -247,7 +252,7 @@ class ExList(list[T]):
 
         return ExList([element for element in self if get_value_method(element, key, *args) == compare_target])  # type: ignore[arg-type]
 
-    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any, *args: tuple[Any, ...]) -> ExList[T]:
+    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExList[T]:
         """
         Returns a list of objects that do not have the given key set to the given value.
 
@@ -287,7 +292,7 @@ class ExList(list[T]):
 
         return ExList([element for element in self if get_value_method(element, key, *args) != compare_target])  # type: ignore[arg-type]
 
-    def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: tuple[Any, ...]) -> ExList[T]:
+    def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExList[T]:
         """
         Returns a list of objects that have the given key set to one of the given values.
 
@@ -324,7 +329,7 @@ class ExList(list[T]):
 
         return ExList([element for element in self if get_value_method(element, key, *args) in compare_targets])  # type: ignore[arg-type]
 
-    def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: tuple[Any, ...]) -> ExList[T]:
+    def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExList[T]:
         """
         Returns a list of objects that do not have the given key set to any of the given values.
 
@@ -456,7 +461,7 @@ class ExList(list[T]):
         """
         return self[0]
 
-    def to_dict(self, key: FunctionType | property | str | Hashable, *args: tuple[Any, ...]) -> dict[Hashable, T]:
+    def to_dict(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, T]:
         """
         Converts the current object to a dictionary, using the given key as the dictionary key.
 
@@ -539,7 +544,7 @@ class ExList(list[T]):
 
         return result
 
-    def __generate_tupled_key(self, keys: list[FunctionType | property | str], element: T, arg_tuples: tuple[tuple[Any, ...]]) -> tuple[Any, ...]:
+    def __generate_tupled_key(self, keys: list[FunctionType | property | str], element: T, arg_tuples: tuple[Any]) -> tuple[Any, ...]:
         tupled_key: tuple[Any, ...] = tuple()
 
         for key, arg_tuple in zip(keys, arg_tuples):
