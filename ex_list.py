@@ -541,16 +541,16 @@ class ExList(list[T]):
         Examples:
             The following example demonstrates how to use the `to_dict_with_complex_keys` method.
 
-            >>> ex_list_1 = ExList([Person('Alice', 30), Person('Bob', 25), Person('Charlie', 35), Person('David', 30)])
+            >>> ex_list_1 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
             >>> ex_list_1.to_dict_with_complex_keys([Person.name, Person.age])
-            {('Alice', 30): Person('Alice', 30),
-             ('Bob', 25): Person('Bob', 25),
+            {('Alice', 25): Person('Alice', 25),
+             ('Bob', 30): Person('Bob', 30),
              ('Charlie', 35): Person('Charlie', 35),
              ('David', 30): Person('David', 30)}
 
             >>> ex_list_1.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,)))
-            {('Alice', 'Alice is 30 years old.', 25): Person('Alice', 30),
-             ('Bob', 'Bob is 25 years old.', 20): Person('Bob', 25),
+            {('Alice', 'Alice is 25 years old.', 20): Person('Alice', 25),
+             ('Bob', 'Bob is 30 years old.', 25): Person('Bob', 30),
              ('Charlie', 'Charlie is 35 years old.', 30): Person('Charlie', 35),
              ('David', 'David is 30 years old.', 25): Person('David', 30)}
         """
