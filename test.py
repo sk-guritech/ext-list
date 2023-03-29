@@ -13,7 +13,7 @@ class Person:
     def introduce(self):
         return f'{self.name} is {self.age} years old.'
 
-    def get_age_n_years_old(self, n: int) -> int:
+    def get_age_n_years_ago(self, n: int) -> int:
         return self.age - n
 
     @ property
@@ -147,7 +147,7 @@ def test_extract_for_others():
     assert ex_list_1.extract(Person.name) == ['Alice', 'Bob', 'Charlie']
     assert ex_list_1.extract('name') == ['Alice', 'Bob', 'Charlie']
     assert ex_list_1.extract(Person.introduce) == ['Alice is 25 years old.', 'Bob is 30 years old.', 'Charlie is 35 years old.']
-    assert ex_list_1.extract(Person.get_age_n_years_old, 5) == [20, 25, 30]
+    assert ex_list_1.extract(Person.get_age_n_years_ago, 5) == [20, 25, 30]
 
 
 def test_extract_raise_key_error_by_specific_invalid_key():
@@ -172,7 +172,7 @@ def test_equals():
     assert ex_list_1.equals('a', 1) == [{'a': 1}]
     assert ex_list_2.equals('a', True) == [{'a': True}, {'a': True}]
     assert ex_list_3.equals(Person.age, 25) == [ex_list_3[0]]
-    assert ex_list_3.equals(Person.get_age_n_years_old, 20, 5) == [ex_list_3[0]]
+    assert ex_list_3.equals(Person.get_age_n_years_ago, 20, 5) == [ex_list_3[0]]
     assert ex_list_3.equals('get_age_n_years_old', 20, 5) == [ex_list_3[0]]
     assert ex_list_3.equals('age', 25) == [ex_list_3[0]]
 
@@ -199,7 +199,7 @@ def test_not_equals():
     assert ex_list_1.not_equals('a', 1) == [{'a': 2}, {'a': 3}]
     assert ex_list_2.not_equals('a', True) == [{'a': False}]
     assert ex_list_3.not_equals(Person.age, 25) == [ex_list_3[1], ex_list_3[2]]
-    assert ex_list_3.not_equals(Person.get_age_n_years_old, 20, 5) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.not_equals(Person.get_age_n_years_ago, 20, 5) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.not_equals('get_age_n_years_old', 20, 5) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.not_equals('age', 25) == [ex_list_3[1], ex_list_3[2]]
 
@@ -226,7 +226,7 @@ def test_in_():
     assert ex_list_1.in_('a', [1, 2]) == [{'a': 1}, {'a': 2}]
     assert ex_list_2.in_('a', [True]) == [{'a': True}, {'a': True}]
     assert ex_list_3.in_(Person.age, [30, 35]) == [ex_list_3[1], ex_list_3[2]]
-    assert ex_list_3.in_(Person.get_age_n_years_old, [25, 30], 5) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.in_(Person.get_age_n_years_ago, [25, 30], 5) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.in_('get_age_n_years_old', [25, 30], 5) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.in_('age', [30, 35]) == [ex_list_3[1], ex_list_3[2]]
 
@@ -253,7 +253,7 @@ def test_not_in_():
     assert ex_list_1.not_in_('a', [1, 2]) == [{'a': 3}]
     assert ex_list_2.not_in_('a', [True]) == [{'a': False}]
     assert ex_list_3.not_in_(Person.age, [30, 35]) == [ex_list_3[0]]
-    assert ex_list_3.not_in_(Person.get_age_n_years_old, [25, 30], 5) == [ex_list_3[0]]
+    assert ex_list_3.not_in_(Person.get_age_n_years_ago, [25, 30], 5) == [ex_list_3[0]]
     assert ex_list_3.not_in_('get_age_n_years_old', [25, 30], 5) == [ex_list_3[0]]
     assert ex_list_3.not_in_('age', [30, 35]) == [ex_list_3[0]]
 
@@ -319,7 +319,7 @@ def test_to_dict():
     assert ex_list_1.to_dict('a') == {1: {'a': 1}, 2: {'a': 2}, 3: {'a': 3}}
     assert ex_list_2.to_dict(0) == {1: [1, 2], 3: [3, 4], 5: [5, 6]}
     assert ex_list_3.to_dict(Person.name) == {'Alice': ex_list_3[0], 'Bob': ex_list_3[1], 'Charlie': ex_list_3[2]}
-    assert ex_list_3.to_dict(Person.get_age_n_years_old, 5) == {20: ex_list_3[0], 25: ex_list_3[1], 30: ex_list_3[2]}
+    assert ex_list_3.to_dict(Person.get_age_n_years_ago, 5) == {20: ex_list_3[0], 25: ex_list_3[1], 30: ex_list_3[2]}
     assert ex_list_3.to_dict('name') == {'Alice': ex_list_3[0], 'Bob': ex_list_3[1], 'Charlie': ex_list_3[2]}
 
 
@@ -372,7 +372,7 @@ def test_to_dict_with_complex_keys():
         ('Charlie', 'Charlie is 35 years old.', 35): ex_list_3[2],
     }
 
-    assert ex_list_3.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_old], ((), (), (5,))) == {
+    assert ex_list_3.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,))) == {
         ('Alice', 'Alice is 25 years old.', 20): ex_list_3[0],
         ('Bob', 'Bob is 30 years old.', 25): ex_list_3[1],
         ('Charlie', 'Charlie is 35 years old.', 30): ex_list_3[2],
