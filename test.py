@@ -173,7 +173,7 @@ def test_equals():
     assert ex_list_2.equals('a', True) == [{'a': True}, {'a': True}]
     assert ex_list_3.equals(Person.age, 25) == [ex_list_3[0]]
     assert ex_list_3.equals(Person.get_age_n_years_ago, 20, 5) == [ex_list_3[0]]
-    assert ex_list_3.equals('get_age_n_years_old', 20, 5) == [ex_list_3[0]]
+    assert ex_list_3.equals('get_age_n_years_ago', 20, 5) == [ex_list_3[0]]
     assert ex_list_3.equals('age', 25) == [ex_list_3[0]]
 
 
@@ -200,7 +200,7 @@ def test_not_equals():
     assert ex_list_2.not_equals('a', True) == [{'a': False}]
     assert ex_list_3.not_equals(Person.age, 25) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.not_equals(Person.get_age_n_years_ago, 20, 5) == [ex_list_3[1], ex_list_3[2]]
-    assert ex_list_3.not_equals('get_age_n_years_old', 20, 5) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.not_equals('get_age_n_years_ago', 20, 5) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.not_equals('age', 25) == [ex_list_3[1], ex_list_3[2]]
 
 
@@ -227,7 +227,7 @@ def test_in_():
     assert ex_list_2.in_('a', [True]) == [{'a': True}, {'a': True}]
     assert ex_list_3.in_(Person.age, [30, 35]) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.in_(Person.get_age_n_years_ago, [25, 30], 5) == [ex_list_3[1], ex_list_3[2]]
-    assert ex_list_3.in_('get_age_n_years_old', [25, 30], 5) == [ex_list_3[1], ex_list_3[2]]
+    assert ex_list_3.in_('get_age_n_years_ago', [25, 30], 5) == [ex_list_3[1], ex_list_3[2]]
     assert ex_list_3.in_('age', [30, 35]) == [ex_list_3[1], ex_list_3[2]]
 
 
@@ -254,7 +254,7 @@ def test_not_in_():
     assert ex_list_2.not_in_('a', [True]) == [{'a': False}]
     assert ex_list_3.not_in_(Person.age, [30, 35]) == [ex_list_3[0]]
     assert ex_list_3.not_in_(Person.get_age_n_years_ago, [25, 30], 5) == [ex_list_3[0]]
-    assert ex_list_3.not_in_('get_age_n_years_old', [25, 30], 5) == [ex_list_3[0]]
+    assert ex_list_3.not_in_('get_age_n_years_ago', [25, 30], 5) == [ex_list_3[0]]
     assert ex_list_3.not_in_('age', [30, 35]) == [ex_list_3[0]]
 
 
