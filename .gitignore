@@ -1,1 +1,4 @@
 __pycache__/*
+ex_list.egg-info/*
+tests/__pycache__/*
+dist/*
