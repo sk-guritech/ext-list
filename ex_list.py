@@ -89,7 +89,7 @@ class ExList(list[T]):
 
     @staticmethod
     def __get_value_by_property(element: T, prop: property) -> Any:
-        return prop.fget(element)  # type: ignore[misc]
+        return prop.__get__(element)  # type: ignore[misc]
 
     @staticmethod
     def __get_value_by_attr_name(element: T, attr_name: str, *args: Any) -> Any:
@@ -100,10 +100,6 @@ class ExList(list[T]):
 
         return object
 
-    @staticmethod
-    def __get_value_by_getset_descriptor(element: T, descriptor: GetSetDescriptorType) -> Any:
-        return descriptor.__get__(element)
-
     def __determine_get_value_method(self, key: FunctionType | property | str | Hashable) -> Callable[[T, Any], Any]:
         if self.__is_indexable():
             return ExList.__get_value_by_index
@@ -112,11 +108,8 @@ class ExList(list[T]):
             case FunctionType() | MethodDescriptorType():
                 return ExList.__get_value_by_function
 
-            case property():
+            case property() | GetSetDescriptorType():
                 return ExList.__get_value_by_property
-
-            case GetSetDescriptorType():
-                return ExList.__get_value_by_getset_descriptor
 
             case _:
                 return ExList.__get_value_by_attr_name
