@@ -13,6 +13,7 @@ from typing import TypeVar
 from typing_extensions import override
 
 T = TypeVar('T')
+TI = TypeVar('TI', bound=type)
 
 
 class ExList(list[T]):
@@ -590,3 +591,9 @@ class ExList(list[T]):
             tupled_key += (get_value_method(element, key, *arg_tuple),)
 
         return tupled_key
+
+    def map(self, function: FunctionType | type, *args: Any) -> ExList[Any]:
+        return ExList([function(element, *args) for element in self])
+
+    def dicts_to_instances(self: ExList[dict[str, Any]], type_: TI) -> ExList[TI]:
+        return ExList([type_(**element) for element in self])
