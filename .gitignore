@@ -3,3 +3,4 @@ ex_list.egg-info/*
 tests/__pycache__/*
 dist/*
 build/*
+*.pyc
