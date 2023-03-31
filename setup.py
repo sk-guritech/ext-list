@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as readme_md:
 
 setup(
     name='ex-list',
-    version='0.1.2',
+    version='0.1.3',
     author='Sakaguchi Ryo',
     author_email='',
     description='ExList is a Python library that improves code quality by allowing list comprehension operations to be called as methods and handling lists more abstractly than the built-in list. It reduces list comprehensions, improving code readability and searchability. Add, ExList enforces a single type iterable object, leading to a simpler program structure.',  # noqa: E501
