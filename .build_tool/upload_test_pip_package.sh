@@ -9,4 +9,4 @@ fi
 
 python setup.py sdist
 python setup.py bdist_wheel
-twine upload --repository pypi dist/*
+twine upload --repository testpypi dist/*

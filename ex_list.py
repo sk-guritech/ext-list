@@ -593,7 +593,40 @@ class ExList(list[T]):
         return tupled_key
 
     def map(self, function: FunctionType | type, *args: Any) -> ExList[Any]:
+        """
+        Apply a function or constructor to each element.
+
+        Args:
+            function (FunctionType | type): The function to apply to each element.
+            *args (Any): Additional arguments to pass to the function.
+
+        Returns:
+            ExList[Any]: A new ExList containing the mapped values.
+
+        Examples:
+            The following example demonstrates how to use the `map` method.
+
+            >>> ex_list_1 = ExList([1, 2, 3])
+            >>> ex_list_1.map(float)
+            [1.0, 2.0, 3.0]
+        """
         return ExList([function(element, *args) for element in self])
 
     def dicts_to_instances(self: ExList[dict[str, Any]], type_: TI) -> ExList[TI]:
+        """
+        Convert a list of dictionaries to a list of instances of the given class.
+
+        Args:
+            type_ (Type[TI]): The type of the instances to create.
+
+        Returns:
+            ExList[TI]: A new ExList containing the instances.
+
+        Examples:
+            The following example demonstrates how to use the `dicts_to_instances` method.
+
+            >>> ex_list_1 = ExList([{'name': 'alice', 'age': 25}, {'name': 'bob', 'age': 30}, {'name': 'charlie', 'age': 35}])
+            >>> ex_list_1.dicts_to_instances(Person)
+            [Person('alice', 25), Person('bob', 30), Person('charlie', 35)]
+        """
         return ExList([type_(**element) for element in self])
