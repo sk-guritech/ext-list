@@ -1,3 +1,7 @@
+[![PyPI version](https://badge.fury.io/py/ext-list.svg)](https://badge.fury.io/py/ext-list)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ext-list)
+![GitHub](https://img.shields.io/github/license/sk-guritech/ext-list)
+
 # ExtList
 This library was created to improve the quality of code through list operations. It allows commonly written list comprehension operations to be called as methods and enables lists to be treated more abstractly than the built-in `list`.
 
