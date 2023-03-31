@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
 def test():
-    ex_list_1 = ExList([1, 2, 3])
-    assert ex_list_1.map(float) == [1.0, 2.0, 3.0]
+    ext_list_1 = ExtList([1, 2, 3])
+    assert ext_list_1.map(float) == [1.0, 2.0, 3.0]

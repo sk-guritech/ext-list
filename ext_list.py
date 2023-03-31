@@ -16,10 +16,10 @@ T = TypeVar('T')
 TI = TypeVar('TI', bound=type)
 
 
-class ExList(list[T]):
+class ExtList(list[T]):
     """
     Note:
-        The following class is used to describe each method of ExList:
+        The following class is used to describe each method of ExtList:
 
             >>> class Person:
             ...     def __init__(self, name, age):
@@ -45,7 +45,7 @@ class ExList(list[T]):
     """
 
     def __init__(self, iterable: list[T] = []) -> None:
-        ExList.__validate_all_elements_are_same_type(iterable)
+        ExtList.__validate_all_elements_are_same_type(iterable)
         super().__init__(iterable)
 
     @staticmethod
@@ -61,9 +61,9 @@ class ExList(list[T]):
             )
 
     @staticmethod
-    def __validate_ex_list(iterable: Any) -> None:
-        if not isinstance(iterable, ExList):
-            raise TypeError(f'Expected <class \'ExList\'> but got {type(iterable)}')
+    def __validate_ext_list(iterable: Any) -> None:
+        if not isinstance(iterable, ExtList):
+            raise TypeError(f'Expected <class \'ExtList\'> but got {type(iterable)}')
 
     def __validate_same_type_element(self, element: T) -> None:
         if not isinstance(element, type(self[0])):
@@ -71,10 +71,10 @@ class ExList(list[T]):
                 f'Expected {type(self[0])} but got {type(element)}.',
             )
 
-    def __validate_same_type_ex_list(self, other: ExList[T]):
+    def __validate_same_type_ext_list(self, other: ExtList[T]):
         if not isinstance(self[0], type(other[0])):  # type: ignore[index]
             raise TypeError(
-                f'Expected ExList[{type(self[0])}] but got ExList[{type(other[0])}].',  # type: ignore[index]
+                f'Expected ExtList[{type(self[0])}] but got ExtList[{type(other[0])}].',  # type: ignore[index]
             )
 
     def __is_indexable(self) -> bool:
@@ -103,21 +103,21 @@ class ExList(list[T]):
 
     def __determine_get_value_method(self, key: FunctionType | property | str | Hashable) -> Callable[[T, Any], Any]:
         if self.__is_indexable():
-            return ExList.__get_value_by_index
+            return ExtList.__get_value_by_index
 
         match key:
             case FunctionType() | MethodDescriptorType():
-                return ExList.__get_value_by_function
+                return ExtList.__get_value_by_function
 
             case property() | GetSetDescriptorType():
-                return ExList.__get_value_by_property
+                return ExtList.__get_value_by_property
 
             case _:
-                return ExList.__get_value_by_attr_name
+                return ExtList.__get_value_by_attr_name
 
     @ override
-    def __add__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
-        self.__validate_ex_list(other)
+    def __add__(self, other: ExtList[T]) -> ExtList[T]:  # type: ignore[override]
+        self.__validate_ext_list(other)
 
         if not self:
             return other
@@ -125,13 +125,13 @@ class ExList(list[T]):
         if not other:
             return self
 
-        self.__validate_same_type_ex_list(other)
+        self.__validate_same_type_ext_list(other)
 
-        return ExList(super().__add__(other))
+        return ExtList(super().__add__(other))
 
     @ override
-    def __iadd__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
-        self.__validate_ex_list(other)
+    def __iadd__(self, other: ExtList[T]) -> ExtList[T]:  # type: ignore[override]
+        self.__validate_ext_list(other)
 
         if not self:
             super().__iadd__(other)
@@ -141,7 +141,7 @@ class ExList(list[T]):
             super().__iadd__(other)
             return self
 
-        self.__validate_same_type_ex_list(other)
+        self.__validate_same_type_ext_list(other)
 
         super().__iadd__(other)
 
@@ -158,9 +158,9 @@ class ExList(list[T]):
         super().append(element)
 
     @ override
-    def extend(self, other: ExList[T]) -> None:  # type: ignore[override]
-        if not isinstance(other, ExList):  # type: ignore
-            raise TypeError(f'Expected ExList but got {type(other)}')
+    def extend(self, other: ExtList[T]) -> None:  # type: ignore[override]
+        if not isinstance(other, ExtList):  # type: ignore
+            raise TypeError(f'Expected ExtList but got {type(other)}')
 
         if not self:
             super().extend(other)
@@ -169,7 +169,7 @@ class ExList(list[T]):
         if not other:
             return
 
-        self.__validate_same_type_ex_list(other)
+        self.__validate_same_type_ext_list(other)
 
         super().extend(other)
 
@@ -183,7 +183,7 @@ class ExList(list[T]):
 
         super().insert(index, element)
 
-    def extract(self, key: FunctionType | property | str | Hashable, *args: Any) -> ExList[Any]:
+    def extract(self, key: FunctionType | property | str | Hashable, *args: Any) -> ExtList[Any]:
         """
         Extracts and returns a list of values associated with the given key from the objects.
 
@@ -193,38 +193,38 @@ class ExList(list[T]):
             *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExList: A list of values associated with the given key. If no values are found or the object
-                is empty, an empty ExList is returned.
+            ExtList: A list of values associated with the given key. If no values are found or the object
+                is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the 'extract' method.
 
-            >>> ex_list_1 = ExList([{'a': 1}, {'a': 2}, {'a': 3}])
-            >>> ex_list_1.extract('a')
+            >>> ext_list_1 = ExtList([{'a': 1}, {'a': 2}, {'a': 3}])
+            >>> ext_list_1.extract('a')
             [1, 2, 3]
 
-            >>> ex_list_2 = ExList([[1, 2], [3, 4], [5, 6]])
-            >>> ex_list_2.extract(0)
+            >>> ext_list_2 = ExtList([[1, 2], [3, 4], [5, 6]])
+            >>> ext_list_2.extract(0)
             [1, 3, 5]
 
-            >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
-            >>> ex_list_3.extract(Person.name)
+            >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
+            >>> ext_list_3.extract(Person.name)
             ['Alice', 'Bob', 'Charlie']
 
-            >>> ex_list_3.extract(Person.introduce)
+            >>> ext_list_3.extract(Person.introduce)
             ['Alice is 25 years old.', 'Bob is 30 years old.', 'Charlie is 35 years old.']
 
-            >>> ex_list_3.extract(Person.get_age_n_years_ago, 5)
+            >>> ext_list_3.extract(Person.get_age_n_years_ago, 5)
             [20, 25, 30]
         """
         if not self:
-            return ExList()
+            return ExtList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        return ExList([get_value_method(element, key, *args) for element in self])  # type: ignore[arg-type]
+        return ExtList([get_value_method(element, key, *args) for element in self])  # type: ignore[arg-type]
 
-    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExList[T]:
+    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that have the given key set to the given value.
 
@@ -234,41 +234,41 @@ class ExList(list[T]):
             *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExList: A list of objects that have the given key set to the given value. If no objects are found or the object
-                is empty, an empty ExList is returned.
+            ExtList: A list of objects that have the given key set to the given value. If no objects are found or the object
+                is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `equals` method.
 
-            >>> ex_list_1 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
-            >>> ex_list_1.equals('age', 25)
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.equals('age', 25)
             [{'name': 'Alice', 'age': 25}]
 
-            >>> ex_list_2 = ExList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
-            >>> ex_list_2.equals('graduated', None)
+            >>> ext_list_2 = ExtList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
+            >>> ext_list_2.equals('graduated', None)
             [{'name': 'Alice', 'graduated': None}]
 
-            >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
-            >>> ex_list_3.equals(Person.age, 30)
+            >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
+            >>> ext_list_3.equals(Person.age, 30)
             [, Person('Bob', 30), Person('David', 30)]
 
-            >>> ex_list_3.equals(Person.introduce, 'Alice is 25 years old.')
+            >>> ext_list_3.equals(Person.introduce, 'Alice is 25 years old.')
             [Person('Alice', 25)]
 
-            >>> ex_list_3.equals(Person.get_age_n_years_ago, 20, 5)
+            >>> ext_list_3.equals(Person.get_age_n_years_ago, 20, 5)
             [Person('Alice', 25)]
         """
         if not self:
-            return ExList()
+            return ExtList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
         if compare_target in {None, False, True}:
-            return ExList([element for element in self if get_value_method(element, key, *args) is compare_target])  # type: ignore[arg-type]
+            return ExtList([element for element in self if get_value_method(element, key, *args) is compare_target])  # type: ignore[arg-type]
 
-        return ExList([element for element in self if get_value_method(element, key, *args) == compare_target])  # type: ignore[arg-type]
+        return ExtList([element for element in self if get_value_method(element, key, *args) == compare_target])  # type: ignore[arg-type]
 
-    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExList[T]:
+    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that do not have the given key set to the given value.
 
@@ -278,41 +278,41 @@ class ExList(list[T]):
             *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExList: A list of objects that do not have the given key set to the given value. If no objects are found or the
-                object is empty, an empty ExList is returned.
+            ExtList: A list of objects that do not have the given key set to the given value. If no objects are found or the
+                object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `not_equals` method.
 
-            >>> ex_list_1 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
-            >>> ex_list_1.not_equals('age', 25)
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.not_equals('age', 25)
             [{'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}]
 
-            >>> ex_list_2 = ExList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
-            >>> ex_list_2.not_equals('graduated', None)
+            >>> ext_list_2 = ExtList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
+            >>> ext_list_2.not_equals('graduated', None)
             [{'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}]
 
-            >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
-            >>> ex_list_3.not_equals(Person.age, 30)
+            >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
+            >>> ext_list_3.not_equals(Person.age, 30)
             [Person('Alice', 25), Person('Charlie', 35)]
 
-            >>> ex_list_3.not_equals(Person.introduce, 'Alice is 25 years old.')
+            >>> ext_list_3.not_equals(Person.introduce, 'Alice is 25 years old.')
             [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
 
-            >>> ex_list_3.not_equals(Person.get_age_n_years_ago, 20, 5)
+            >>> ext_list_3.not_equals(Person.get_age_n_years_ago, 20, 5)
             [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
         """
         if not self:
-            return ExList()
+            return ExtList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
         if compare_target in {None, False, True}:
-            return ExList([element for element in self if get_value_method(element, key, *args) is not compare_target])  # type: ignore[arg-type]
+            return ExtList([element for element in self if get_value_method(element, key, *args) is not compare_target])  # type: ignore[arg-type]
 
-        return ExList([element for element in self if get_value_method(element, key, *args) != compare_target])  # type: ignore[arg-type]
+        return ExtList([element for element in self if get_value_method(element, key, *args) != compare_target])  # type: ignore[arg-type]
 
-    def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExList[T]:
+    def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that have the given key set to one of the given values.
 
@@ -322,38 +322,38 @@ class ExList(list[T]):
             *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExList: A list of objects that have the given key set to one of the given values. If no objects are found or
-                the object is empty, an empty ExList is returned.
+            ExtList: A list of objects that have the given key set to one of the given values. If no objects are found or
+                the object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `in_` method.
 
-            >>> ex_list_1 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
-            >>> ex_list_1.in_('age', [25, 30])
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.in_('age', [25, 30])
             [{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}]
 
-            >>> ex_list_2 = ExList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
-            >>> ex_list_2.in_('graduated', [False, True])
+            >>> ext_list_2 = ExtList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
+            >>> ext_list_2.in_('graduated', [False, True])
             [{'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}]
 
-            >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
-            >>> ex_list_3.in_(Person.age, [25, 35])
+            >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
+            >>> ext_list_3.in_(Person.age, [25, 35])
             [Person(Alice, 25), Person(Charlie, 35)]
 
-            >>> ex_list_3.in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
+            >>> ext_list_3.in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
             [Person('Alice', 25), Person('Charlie', 35)]
 
-            >>> ex_list_3.in_(Person.get_age_n_years_ago, [20, 30], 5)
+            >>> ext_list_3.in_(Person.get_age_n_years_ago, [20, 30], 5)
             [Person('Alice', 25), Person('Charlie', 35)]
         """
         if not self:
-            return ExList()
+            return ExtList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        return ExList([element for element in self if get_value_method(element, key, *args) in compare_targets])  # type: ignore[arg-type]
+        return ExtList([element for element in self if get_value_method(element, key, *args) in compare_targets])  # type: ignore[arg-type]
 
-    def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExList[T]:
+    def not_in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that do not have the given key set to any of the given values.
 
@@ -363,57 +363,57 @@ class ExList(list[T]):
             *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExList: A list of objects that do not have the given key set to any of the given values. If no objects are
-                found or the object is empty, an empty ExList is returned.
+            ExtList: A list of objects that do not have the given key set to any of the given values. If no objects are
+                found or the object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `not_in_` method:
 
-            >>> ex_list_1 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
-            >>> ex_list_1.not_in_('age', [25, 30])
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.not_in_('age', [25, 30])
             [{'name': 'Charlie', 'age': 35}]
 
-            >>> ex_list_2 = ExList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
-            >>> ex_list_2.not_in_('graduated', [False, True])
+            >>> ext_list_2 = ExtList([{'name': 'Alice', 'graduated': None}, {'name': 'Bob', 'graduated': False}, {'name': 'Charlie', 'graduated': True}])
+            >>> ext_list_2.not_in_('graduated', [False, True])
             [{'name': 'Alice', 'graduated': None}]
 
-            >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
-            >>> ex_list_3.not_in_(Person.age, [25, 35])
+            >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
+            >>> ext_list_3.not_in_(Person.age, [25, 35])
             [Person(Bob, 30)]
 
-            >>> ex_list_3.not_in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
+            >>> ext_list_3.not_in_(Person.introduce, ['Alice is 25 years old.', 'Charlie is 35 years old.'])
             [Person('Bob', 30)]
 
-            >>> ex_list_3.not_in_(Person.get_age_n_years_ago, [20, 30], 5)
+            >>> ext_list_3.not_in_(Person.get_age_n_years_ago, [20, 30], 5)
             [Person('Bob', 30)]
         """
         if not self:
-            return ExList()
+            return ExtList()
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
 
-        return ExList([element for element in self if get_value_method(element, key, *args) not in compare_targets])  # type: ignore[arg-type]
+        return ExtList([element for element in self if get_value_method(element, key, *args) not in compare_targets])  # type: ignore[arg-type]
 
-    def extract_duplicates(self, other: ExList[T]) -> ExList[T]:
+    def extract_duplicates(self, other: ExtList[T]) -> ExtList[T]:
         """
         Returns a list of objects that are in both the current object and the given object.
 
         Args:
-            compare_ex_list (ExList): The object to compare the current object to.
+            compare_ext_list (ExtList): The object to compare the current object to.
 
         Returns:
-            ExList: A list of objects that are in both the current object and the given object. If no objects are found
-                or the object is empty, an empty ExList is returned.
+            ExtList: A list of objects that are in both the current object and the given object. If no objects are found
+                or the object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `extract_duplicates` method.
 
-            >>> ex_list_1 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}])
-            >>> ex_list_2 = ExList([{'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
-            >>> ex_list_1.extract_duplicates(ex_list_2)
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}])
+            >>> ext_list_2 = ExtList([{'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.extract_duplicates(ext_list_2)
             [{'name': 'Bob', 'age': 30}]
         """
-        return ExList([element for element in self if element in other])
+        return ExtList([element for element in self if element in other])
 
     def is_duplicate(self) -> bool:
         """
@@ -425,21 +425,21 @@ class ExList(list[T]):
         Examples:
             The following example demonstrates how to use the `is_duplicate` method.
 
-            >>> ex_list_1 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Alice', 'age': 25}])
-            >>> ex_list_1.is_duplicate()
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Alice', 'age': 25}])
+            >>> ext_list_1.is_duplicate()
             True
 
-            >>> ex_list_2 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
-            >>> ex_list_2.is_duplicate()
+            >>> ext_list_2 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_2.is_duplicate()
             False
         """
         if not self:
             return False
 
-        tmp_ex_list: ExList[T] = copy.deepcopy(self)
+        tmp_ext_list: ExtList[T] = copy.deepcopy(self)
 
-        for _ in range(len(tmp_ex_list)):
-            if tmp_ex_list.pop() in tmp_ex_list:
+        for _ in range(len(tmp_ext_list)):
+            if tmp_ext_list.pop() in tmp_ext_list:
                 return True
 
         return False
@@ -452,16 +452,16 @@ class ExList(list[T]):
             T or None: The first object in the current object, or `None` if the object is empty.
 
         Examples:
-            The following example demonstrates how to use the `one` method to return the first object in an ExList:
+            The following example demonstrates how to use the `one` method to return the first object in an ExtList:
 
-            >>> ex_list_1 = ExList([1, 2, 3])
-            >>> ex_list_1.one()
+            >>> ext_list_1 = ExtList([1, 2, 3])
+            >>> ext_list_1.one()
             1
 
             The following example demonstrates how to use the `one` method to return `None` when the object is empty:
 
-            >>> ex_list_2 = ExList([])
-            >>> ex_list_2.one()
+            >>> ext_list_2 = ExtList([])
+            >>> ext_list_2.one()
             None
         """
         try:
@@ -480,10 +480,10 @@ class ExList(list[T]):
             IndexError: If the object is empty.
 
         Examples:
-            The following example demonstrates how to use the `first` method to return the first object in an ExList:
+            The following example demonstrates how to use the `first` method to return the first object in an ExtList:
 
-            >>> ex_list_1 = ExList([1, 2, 3])
-            >>> ex_list_1.first()
+            >>> ext_list_1 = ExtList([1, 2, 3])
+            >>> ext_list_1.first()
             1
 
         """
@@ -501,28 +501,28 @@ class ExList(list[T]):
             dict: A dictionary of objects, using the given key as the dictionary key.
 
         Examples:
-            The following example demonstrates how to use the `to_dict` method to convert an ExList of dictionaries to a
+            The following example demonstrates how to use the `to_dict` method to convert an ExtList of dictionaries to a
             dictionary:
 
-            >>> ex_list_1 = ExList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}])
-            >>> ex_list_1.to_dict('name')
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}])
+            >>> ext_list_1.to_dict('name')
             {'Alice': {'name': 'Alice', 'age': 25}, 'Bob': {'name': 'Bob', 'age': 30}}
 
-            The following example demonstrates how to use the `to_dict` method to convert an ExList of lists to a
+            The following example demonstrates how to use the `to_dict` method to convert an ExtList of lists to a
             dictionary:
 
-            >>> ex_list_2 = ExList([['Alice', 25], ['Bob', 30]])
-            >>> ex_list_2.to_dict(0)
+            >>> ext_list_2 = ExtList([['Alice', 25], ['Bob', 30]])
+            >>> ext_list_2.to_dict(0)
             {'Alice': ['Alice', 25], 'Bob': ['Bob', 30]}
 
-            The following example demonstrates how to use the `to_dict` method to convert an ExList of objects to a
+            The following example demonstrates how to use the `to_dict` method to convert an ExtList of objects to a
             dictionary:
 
-            >>> ex_list_3 = ExList([Person('Alice', 25), Person('Bob', 30)])
-            >>> ex_list_3.to_dict(Person.name)
+            >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30)])
+            >>> ext_list_3.to_dict(Person.name)
             {'Alice': Person('Alice', 25), 'Bob': Person('Bob', 30)}
 
-            >>> ex_list_3.to_dict(Person.get_age_n_years_ago, 5)
+            >>> ext_list_3.to_dict(Person.get_age_n_years_ago, 5)
             {20: Person('Alice', 25), 25: Person('Bob', 30)}
         """
         if not self:
@@ -534,26 +534,26 @@ class ExList(list[T]):
 
     def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: tuple[tuple[Any, ...], ...] = tuple()) -> dict[tuple[Any, ...], T]:
         """
-        Returns a dictionary of the elements in the `ExList` with complex keys.
+        Returns a dictionary of the elements in the `ExtList` with complex keys.
 
         Args:
             keys (list[FunctionType | property | str] | list[Hashable]): A list of the keys for the dictionary.
             arg_tuples (tuple[tuple[Any,...],...]): A list of tuples of the arguments. If key is a function, the arguments will be passed to the function.
 
         Returns:
-            dict[tuple[Any, ...], T]: A dictionary of the elements in the `ExList` with complex keys.
+            dict[tuple[Any, ...], T]: A dictionary of the elements in the `ExtList` with complex keys.
 
         Examples:
             The following example demonstrates how to use the `to_dict_with_complex_keys` method.
 
-            >>> ex_list_1 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
-            >>> ex_list_1.to_dict_with_complex_keys([Person.name, Person.age])
+            >>> ext_list_1 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
+            >>> ext_list_1.to_dict_with_complex_keys([Person.name, Person.age])
             {('Alice', 25): Person('Alice', 25),
              ('Bob', 30): Person('Bob', 30),
              ('Charlie', 35): Person('Charlie', 35),
              ('David', 30): Person('David', 30)}
 
-            >>> ex_list_1.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,)))
+            >>> ext_list_1.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,)))
             {('Alice', 'Alice is 25 years old.', 20): Person('Alice', 25),
              ('Bob', 'Bob is 30 years old.', 25): Person('Bob', 30),
              ('Charlie', 'Charlie is 35 years old.', 30): Person('Charlie', 35),
@@ -592,7 +592,7 @@ class ExList(list[T]):
 
         return tupled_key
 
-    def map(self, function: FunctionType | type, *args: Any) -> ExList[Any]:
+    def map(self, function: FunctionType | type, *args: Any) -> ExtList[Any]:
         """
         Apply a function or constructor to each element.
 
@@ -601,18 +601,18 @@ class ExList(list[T]):
             *args (Any): Additional arguments to pass to the function.
 
         Returns:
-            ExList[Any]: A new ExList containing the mapped values.
+            ExtList[Any]: A new ExtList containing the mapped values.
 
         Examples:
             The following example demonstrates how to use the `map` method.
 
-            >>> ex_list_1 = ExList([1, 2, 3])
-            >>> ex_list_1.map(float)
+            >>> ext_list_1 = ExtList([1, 2, 3])
+            >>> ext_list_1.map(float)
             [1.0, 2.0, 3.0]
         """
-        return ExList([function(element, *args) for element in self])
+        return ExtList([function(element, *args) for element in self])
 
-    def dicts_to_instances(self: ExList[dict[str, Any]], type_: TI) -> ExList[TI]:
+    def dicts_to_instances(self: ExtList[dict[str, Any]], type_: TI) -> ExtList[TI]:
         """
         Convert a list of dictionaries to a list of instances of the given class.
 
@@ -620,13 +620,13 @@ class ExList(list[T]):
             type_ (Type[TI]): The type of the instances to create.
 
         Returns:
-            ExList[TI]: A new ExList containing the instances.
+            ExtList[TI]: A new ExtList containing the instances.
 
         Examples:
             The following example demonstrates how to use the `dicts_to_instances` method.
 
-            >>> ex_list_1 = ExList([{'name': 'alice', 'age': 25}, {'name': 'bob', 'age': 30}, {'name': 'charlie', 'age': 35}])
-            >>> ex_list_1.dicts_to_instances(Person)
+            >>> ext_list_1 = ExtList([{'name': 'alice', 'age': 25}, {'name': 'bob', 'age': 30}, {'name': 'charlie', 'age': 35}])
+            >>> ext_list_1.dicts_to_instances(Person)
             [Person('alice', 25), Person('bob', 30), Person('charlie', 35)]
         """
-        return ExList([type_(**element) for element in self])
+        return ExtList([type_(**element) for element in self])

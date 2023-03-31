@@ -2,20 +2,20 @@ from __future__ import annotations
 
 import pytest
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
 def test_raises_type_error_by_assign_invalid_object():
-    ex_list_1 = ExList([1, 2, 3])
+    ext_list_1 = ExtList([1, 2, 3])
     normal_list_1 = [4]
 
     with pytest.raises(TypeError):
-        ex_list_1.append(normal_list_1)
+        ext_list_1.append(normal_list_1)
 
 
 def test_raises_type_error_by_assign_different_type():
-    ex_list_1 = ExList([1, 2, 3])
-    ex_list_2 = ExList(['4', '5', '6'])
+    ext_list_1 = ExtList([1, 2, 3])
+    ext_list_2 = ExtList(['4', '5', '6'])
 
     with pytest.raises(TypeError):
-        ex_list_1.append(ex_list_2)
+        ext_list_1.append(ext_list_2)
