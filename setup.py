@@ -7,18 +7,18 @@ with open('README.md', encoding='utf-8') as readme_md:
 
 setup(
     name='ex-list',
-    version='0.1.3',
+    version='0.1.4',
     author='Sakaguchi Ryo',
-    author_email='',
-    description='ExList is a Python library that improves code quality by allowing list comprehension operations to be called as methods and handling lists more abstractly than the built-in list. It reduces list comprehensions, improving code readability and searchability. Add, ExList enforces a single type iterable object, leading to a simpler program structure.',  # noqa: E501
+    author_email='sakaguchi@sk-techfirm.com',
+    description='This is a utility library that extends Python\'s list operations.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/GuriTech/exlist',
+    url='https://github.com/sk-guritech/ex-list',
     project_urls={
-        'Bug Tracker': 'https://github.com/GuriTech/exlist/issues',
+        'Bug Tracker': 'https://github.com/sk-guritech/ex-list/issues',
     },
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',

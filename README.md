@@ -1,9 +1,9 @@
 # ExList
-This library was created to improve the quality of code through list operations. It allows commonly written list comprehension operations to be called as list methods and enables lists to be treated more abstractly than the built-in `list`.
+This library was created to improve the quality of code through list operations. It allows commonly written list comprehension operations to be called as methods and enables lists to be treated more abstractly than the built-in `list`.
 
 Using this library reduces the number of times list comprehensions need to be written, resulting in improved overall code readability and searchability.
 
-Additionally, `ExList` ensures that it is an `Iterable` object of a single type, which imposes a constraint to only use lists of a single type. This constraint ultimately leads to a simpler program structure.
+Additionally, `ExList` ensures that it is an `Iterable` object of a **single type**, which imposes a constraint to only use lists of a single type. This constraint ultimately leads to a simpler program structure.
 
 Note: This library currently supports Python3.10+
 
