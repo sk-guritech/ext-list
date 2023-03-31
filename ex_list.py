@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import copy
 from types import FunctionType
+from types import GetSetDescriptorType
+from types import MethodDescriptorType
 from typing import Any
 from typing import Callable
 from typing import Hashable
@@ -98,17 +100,26 @@ class ExList(list[T]):
 
         return object
 
+    @staticmethod
+    def __get_value_by_getset_descriptor(element: T, descriptor: GetSetDescriptorType) -> Any:
+        return descriptor.__get__(element)
+
     def __determine_get_value_method(self, key: FunctionType | property | str | Hashable) -> Callable[[T, Any], Any]:
         if self.__is_indexable():
             return ExList.__get_value_by_index
 
-        if isinstance(key, FunctionType):
-            return ExList.__get_value_by_function
+        match key:
+            case FunctionType() | MethodDescriptorType():
+                return ExList.__get_value_by_function
 
-        if isinstance(key, property):
-            return ExList.__get_value_by_property
+            case property():
+                return ExList.__get_value_by_property
 
-        return ExList.__get_value_by_attr_name
+            case GetSetDescriptorType():
+                return ExList.__get_value_by_getset_descriptor
+
+            case _:
+                return ExList.__get_value_by_attr_name
 
     @ override
     def __add__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
