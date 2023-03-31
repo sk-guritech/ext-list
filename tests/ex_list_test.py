@@ -141,6 +141,13 @@ def test_extract_for_list():
     assert ex_list_1.extract(1) == [2, 4, 6]
 
 
+def test_extract_for_builtin_object():
+    ex_list_1 = ExList([1, 2, 3])
+
+    assert ex_list_1.extract(int.bit_length) == [1, 2, 2]
+    assert ex_list_1.extract(int.real) == [1, 2, 3]
+
+
 def test_extract_for_others():
     ex_list_1 = ExList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35)])
 

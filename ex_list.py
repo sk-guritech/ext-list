@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import copy
 from types import FunctionType
+from types import GetSetDescriptorType
+from types import MethodDescriptorType
 from typing import Any
 from typing import Callable
 from typing import Hashable
@@ -11,6 +13,7 @@ from typing import TypeVar
 from typing_extensions import override
 
 T = TypeVar('T')
+TI = TypeVar('TI', bound=type)
 
 
 class ExList(list[T]):
@@ -87,7 +90,7 @@ class ExList(list[T]):
 
     @staticmethod
     def __get_value_by_property(element: T, prop: property) -> Any:
-        return prop.fget(element)  # type: ignore[misc]
+        return prop.__get__(element)  # type: ignore[misc]
 
     @staticmethod
     def __get_value_by_attr_name(element: T, attr_name: str, *args: Any) -> Any:
@@ -102,13 +105,15 @@ class ExList(list[T]):
         if self.__is_indexable():
             return ExList.__get_value_by_index
 
-        if isinstance(key, FunctionType):
-            return ExList.__get_value_by_function
+        match key:
+            case FunctionType() | MethodDescriptorType():
+                return ExList.__get_value_by_function
 
-        if isinstance(key, property):
-            return ExList.__get_value_by_property
+            case property() | GetSetDescriptorType():
+                return ExList.__get_value_by_property
 
-        return ExList.__get_value_by_attr_name
+            case _:
+                return ExList.__get_value_by_attr_name
 
     @ override
     def __add__(self, other: ExList[T]) -> ExList[T]:  # type: ignore[override]
@@ -582,17 +587,13 @@ class ExList(list[T]):
         tupled_key: tuple[Any, ...] = tuple()
 
         for key, arg_tuple in zip(keys, arg_tuples):
-            match key:
-                case FunctionType():
-                    tupled_key += (key(element, *arg_tuple),)
-
-                case property():
-                    tupled_key += (key.fget(element),)  # type: ignore[misc]
-
-                case str():
-                    tupled_key += (getattr(element, key, *arg_tuple),)
-
-                case _:
-                    raise RuntimeError
+            get_value_method = self.__determine_get_value_method(key)
+            tupled_key += (get_value_method(element, key, *arg_tuple),)
 
         return tupled_key
+
+    def map(self, function: FunctionType | type, *args: Any) -> ExList[Any]:
+        return ExList([function(element, *args) for element in self])
+
+    def dicts_to_instances(self: ExList[dict[str, Any]], type_: TI) -> ExList[TI]:
+        return ExList([type_(**element) for element in self])
