@@ -8,7 +8,9 @@ Additionally, `ExList` ensures that it is an `Iterable` object of a **single typ
 Note: This library currently supports Python3.10+
 
 ## Installation
-(I will make it available for installation via pip later.)
+```
+pip install ex-list
+```
 
 ## Examples
 Below are some examples of features of this library.
@@ -101,7 +103,7 @@ typing_extensions
 ```
 
 ## License
-[MIT license](LICENSE)
+[MIT license](https://github.com/sk-guritech/ex-list/blob/master/LICENSE)
 
 ## Author
 Sakaguchi Ryo ([@GuriTech](https://twitter.com/GuriTech))
