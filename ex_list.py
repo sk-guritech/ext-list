@@ -593,17 +593,7 @@ class ExList(list[T]):
         tupled_key: tuple[Any, ...] = tuple()
 
         for key, arg_tuple in zip(keys, arg_tuples):
-            match key:
-                case FunctionType():
-                    tupled_key += (key(element, *arg_tuple),)
-
-                case property():
-                    tupled_key += (key.fget(element),)  # type: ignore[misc]
-
-                case str():
-                    tupled_key += (getattr(element, key, *arg_tuple),)
-
-                case _:
-                    raise RuntimeError
+            get_value_method = self.__determine_get_value_method(key)
+            tupled_key += (get_value_method(element, key, *arg_tuple),)
 
         return tupled_key
