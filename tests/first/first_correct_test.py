@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
 def test():
-    ex_list_1 = ExList([0, 1])
+    ext_list_1 = ExtList([0, 1])
 
-    assert ex_list_1.first() == 0
+    assert ext_list_1.first() == 0

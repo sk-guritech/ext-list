@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
 def test():
-    ex_list_1 = ExList([1, 2, 3])
+    ext_list_1 = ExtList([1, 2, 3])
 
-    ex_list_1.insert(0, 0)
-    assert ex_list_1 == [0, 1, 2, 3]
+    ext_list_1.insert(0, 0)
+    assert ext_list_1 == [0, 1, 2, 3]

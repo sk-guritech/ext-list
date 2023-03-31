@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
 def test():
-    ex_list_1 = ExList([1, 2, 3])
-    ex_list_2 = ExList([4, 5, 6])
+    ext_list_1 = ExtList([1, 2, 3])
+    ext_list_2 = ExtList([4, 5, 6])
 
-    ex_list_1 += ex_list_2
+    ext_list_1 += ext_list_2
 
-    assert ex_list_1 == [1, 2, 3, 4, 5, 6]
-    assert ex_list_2 == [4, 5, 6]
+    assert ext_list_1 == [1, 2, 3, 4, 5, 6]
+    assert ext_list_2 == [4, 5, 6]

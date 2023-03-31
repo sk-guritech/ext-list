@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
-def test_raise_index_error_by_reference_empty_ex_list():
-    ex_list_1 = ExList()
+def test_raise_index_error_by_reference_empty_ext_list():
+    ext_list_1 = ExtList()
     with pytest.raises(IndexError):
-        ex_list_1[0]
+        ext_list_1[0]

@@ -6,16 +6,16 @@ with open('README.md', encoding='utf-8') as readme_md:
     long_description = readme_md.read()
 
 setup(
-    name='ex-list',
+    name='ext-list',
     version='0.1.6',
     author='Sakaguchi Ryo',
     author_email='sakaguchi@sk-techfirm.com',
     description='This is a utility library that extends Python\'s list operations.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/sk-guritech/ex-list',
+    url='https://github.com/sk-guritech/ext-list',
     project_urls={
-        'Bug Tracker': 'https://github.com/sk-guritech/ex-list/issues',
+        'Bug Tracker': 'https://github.com/sk-guritech/ext-list/issues',
     },
     classifiers=[
         'Development Status :: 4 - Beta',

@@ -1,18 +1,18 @@
 from __future__ import annotations
 
-from ex_list import ExList
+from ext_list import ExtList
 from tests.conftest import Person
 
 
 def test():
-    ex_list_1 = ExList([1, 2, 3, 3])
-    ex_list_2 = ExList([1, 2, 3, 4])
-    ex_list_3 = ExList([Person('alice', 25), Person('alice', 25)])
+    ext_list_1 = ExtList([1, 2, 3, 3])
+    ext_list_2 = ExtList([1, 2, 3, 4])
+    ext_list_3 = ExtList([Person('alice', 25), Person('alice', 25)])
 
     bob = Person('bob', 30)
-    ex_list_4 = ExList([bob, bob])
+    ext_list_4 = ExtList([bob, bob])
 
-    assert ex_list_1.is_duplicate() is True
-    assert ex_list_2.is_duplicate() is False
-    assert ex_list_3.is_duplicate() is False
-    assert ex_list_4.is_duplicate() is True
+    assert ext_list_1.is_duplicate() is True
+    assert ext_list_2.is_duplicate() is False
+    assert ext_list_3.is_duplicate() is False
+    assert ext_list_4.is_duplicate() is True

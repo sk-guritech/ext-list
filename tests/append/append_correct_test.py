@@ -1,18 +1,18 @@
 from __future__ import annotations
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
 def test():
-    ex_list_1 = ExList([1, 2, 3])
-    ex_list_1.append(4)
+    ext_list_1 = ExtList([1, 2, 3])
+    ext_list_1.append(4)
 
-    assert ex_list_1 == [1, 2, 3, 4]
+    assert ext_list_1 == [1, 2, 3, 4]
 
-    ex_list_2 = ExList()
-    ex_list_2.append(1)
-    assert ex_list_2 == [1]
+    ext_list_2 = ExtList()
+    ext_list_2.append(1)
+    assert ext_list_2 == [1]
 
-    ex_list_3 = ExList()
-    ex_list_3.append(None)
-    assert ex_list_3 == [None]
+    ext_list_3 = ExtList()
+    ext_list_3.append(None)
+    assert ext_list_3 == [None]

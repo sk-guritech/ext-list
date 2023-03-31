@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from ex_list import ExList
+from ext_list import ExtList
 
 
 def test():
-    ex_list_1 = ExList([0, 1])
-    assert ex_list_1.one() == 0
+    ext_list_1 = ExtList([0, 1])
+    assert ext_list_1.one() == 0
 
-    ex_list_2 = ExList([])
-    assert ex_list_2.one() is None
+    ext_list_2 = ExtList([])
+    assert ext_list_2.one() is None
