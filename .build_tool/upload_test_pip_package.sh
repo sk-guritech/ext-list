@@ -1,6 +1,7 @@
 #!/bin/bash
 cd /workspaces/ex-list
-pytest tests/
+
+tox
 
 if [ $? -ne 0 ]; then
     echo "pytest failed"
