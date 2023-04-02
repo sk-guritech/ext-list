@@ -19,7 +19,7 @@ setup(
     },
     classifiers=[
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Development Status :: 4 - Beta',
+        'DEVELOPMENT STATUS :: 5 - PRODUCTION/STABLE',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'NATURAL LANGUAGE :: ENGLISH',
