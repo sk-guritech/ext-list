@@ -9,7 +9,6 @@ Using this library reduces the number of times list comprehensions need to be wr
 
 Additionally, `ExtList` ensures that it is an `Iterable` object of a **single type**, which imposes a constraint to only use lists of a single type. This constraint ultimately leads to a simpler program structure.
 
-Note: This library currently supports Python3.10+
 
 ## Installation
 ```
@@ -107,7 +106,7 @@ typing_extensions
 ```
 
 ## License
-[MIT license](https://github.com/sk-guritech/ex-list/blob/master/LICENSE)
+[MIT license](https://github.com/sk-guritech/ext-list/blob/master/LICENSE)
 
 ## Author
 Sakaguchi Ryo ([@GuriTech](https://twitter.com/GuriTech))
