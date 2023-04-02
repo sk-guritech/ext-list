@@ -27,6 +27,6 @@ setup(
     ],
     keywords=['list', 'comprehension', 'iterable', 'code quality'],
     packages=['.'],
-    python_requires='>=3.10',
+    python_requires='>=3.7',
     install_requires=['typing_extensions'],
 )

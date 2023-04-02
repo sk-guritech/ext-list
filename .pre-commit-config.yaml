@@ -49,9 +49,3 @@ repos:
         - --exclude
         - __init__.py
         - --remove-duplicate-keys
-
--   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.1.1
-    hooks:
-    -   id: mypy
-        additional_dependencies: [types-all]

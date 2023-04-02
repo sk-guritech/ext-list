@@ -7,7 +7,7 @@ from types import MethodDescriptorType
 from typing import Any
 from typing import Callable
 from typing import Hashable
-from typing import SupportsIndex
+from typing import List
 from typing import TypeVar
 
 from typing_extensions import override
@@ -16,7 +16,7 @@ T = TypeVar('T')
 TI = TypeVar('TI', bound=type)
 
 
-class ExtList(list[T]):
+class ExtList(List[T]):
     """
     Note:
         The following class is used to describe each method of ExtList:
@@ -85,7 +85,7 @@ class ExtList(list[T]):
         return func(element, *args)
 
     @staticmethod
-    def __get_value_by_index(element: T, index: SupportsIndex | Hashable) -> Any:
+    def __get_value_by_index(element: T, index: Hashable | Hashable) -> Any:
         return element[index]  # type: ignore
 
     @staticmethod
@@ -105,15 +105,13 @@ class ExtList(list[T]):
         if self.__is_indexable():
             return ExtList.__get_value_by_index
 
-        match key:
-            case FunctionType() | MethodDescriptorType():
-                return ExtList.__get_value_by_function
+        if isinstance(key, FunctionType) or isinstance(key, MethodDescriptorType):
+            return ExtList.__get_value_by_function
 
-            case property() | GetSetDescriptorType():
-                return ExtList.__get_value_by_property
+        if isinstance(key, property) or isinstance(key, GetSetDescriptorType):
+            return ExtList.__get_value_by_property
 
-            case _:
-                return ExtList.__get_value_by_attr_name
+        return ExtList.__get_value_by_attr_name
 
     @ override
     def __add__(self, other: ExtList[T]) -> ExtList[T]:  # type: ignore[override]
@@ -174,7 +172,7 @@ class ExtList(list[T]):
         super().extend(other)
 
     @ override
-    def insert(self, index: SupportsIndex, element: T) -> None:
+    def insert(self, index: Hashable, element: T) -> None:
         if not self:
             super().insert(index, element)
             return
@@ -537,11 +535,11 @@ class ExtList(list[T]):
         Returns a dictionary of the elements in the `ExtList` with complex keys.
 
         Args:
-            keys (list[FunctionType | property | str] | list[Hashable]): A list of the keys for the dictionary.
-            arg_tuples (tuple[tuple[Any,...],...]): A list of tuples of the arguments. If key is a function, the arguments will be passed to the function.
+            keys (List[FunctionType | property | str] | List[Hashable]): A list of the keys for the dictionary.
+            arg_tuples (Tuple[Tuple[Any,...],...]): A list of tuples of the arguments. If key is a function, the arguments will be passed to the function.
 
         Returns:
-            dict[tuple[Any, ...], T]: A dictionary of the elements in the `ExtList` with complex keys.
+            Dict[Tuple[Any, ...], T]: A dictionary of the elements in the `ExtList` with complex keys.
 
         Examples:
             The following example demonstrates how to use the `to_dict_with_complex_keys` method.
