@@ -34,7 +34,7 @@ setup(
         'Programming Language :: Python :: 3.12',
     ],
     keywords=['list', 'comprehension', 'iterable', 'code quality'],
-    packages=['.'],
+    packages=['ext_list'],
     python_requires='>=3.7',
     install_requires=['typing_extensions'],
 )
