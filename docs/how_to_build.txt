@@ -1,0 +1,5 @@
+$ pwd
+/workspace/ext-list
+$ sphinx-quickstart docs
+$ sphinx-apidoc -e -f -o ./docs/ .
+$ sphinx-build ./docs/ ./docs/_build
