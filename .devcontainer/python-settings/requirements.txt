@@ -8,3 +8,5 @@ setuptools
 wheel
 typing_extensions
 tox
+sphinx
+fuso
