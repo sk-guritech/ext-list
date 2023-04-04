@@ -96,9 +96,7 @@ _Note: In the following examples, the `Person` class is defined as follows._
     ('Bob', 30): Person('Bob', 25)}
     ```
 
-See the docs for more examples. (under constructed ...)
-
-_**If you want to see more examples immediately, please check out the Examples section in each method docstring.**_
+See the **[Docs: ExtList](https://sk-guritech.github.io/ext-list/)** for more examples !
 
 ## requirements
 ```
