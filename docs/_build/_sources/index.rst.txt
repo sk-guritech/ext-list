@@ -10,6 +10,8 @@ Welcome to ExtList's documentation!
 
 .. include:: reference.rst
 
+.. include:: development.rst
+
 Indices and tables
 ------------------
 
@@ -20,3 +22,4 @@ Indices and tables
 
    quickstart
    reference
+   development
