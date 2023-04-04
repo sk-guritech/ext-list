@@ -3,18 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ext-list's documentation!
+Welcome to ExtList's documentation!
 ====================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. include:: quickstart.rst
 
-   modules
+.. include:: reference.rst
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+.. toctree::
+   :hidden:
+
+   quickstart
+   reference

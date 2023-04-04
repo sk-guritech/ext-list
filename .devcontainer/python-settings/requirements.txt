@@ -9,4 +9,4 @@ wheel
 typing_extensions
 tox
 sphinx
-sphinx_rtd_theme
+fuso

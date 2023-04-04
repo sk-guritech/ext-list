@@ -10,7 +10,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../'))
 
-project = 'ext-list'
+project = 'ExtList'
 copyright = '2023, Sakaguchi Ryo (@GuriTech)'
 author = 'Sakaguchi Ryo (@GuriTech)'
 release = '1.0.0'
@@ -19,7 +19,6 @@ release = '1.0.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon']
-autodoc_default_flags = ['members', 'undoc-members', 'show-inheritance', 'private-members']
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -27,6 +26,5 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
-
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'furo'
 html_static_path = ['_static']

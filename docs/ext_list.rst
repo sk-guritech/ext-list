@@ -1,10 +1,6 @@
-ext\_list package
+ExtList
 =================
 
-Module contents
----------------
-
-.. automodule:: ext_list
+.. autoclass:: ext_list.ExtList
    :members:
    :undoc-members:
-   :show-inheritance:
