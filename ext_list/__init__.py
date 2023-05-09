@@ -628,3 +628,19 @@ class ExtList(List[T]):
             [Person('alice', 25), Person('bob', 30), Person('charlie', 35)]
         """
         return ExtList([type_(**element) for element in self])
+
+    def group_by_key(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, ExtList[T]]:
+        result: dict[Hashable, ExtList[T]] = {}
+
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
+
+        for element in self:
+            group_key: Hashable = get_value_method(element, key, *args)
+
+            if group_key in result:
+                result[group_key].append(element)
+
+            else:
+                result[group_key] = ExtList([element])
+
+        return result
