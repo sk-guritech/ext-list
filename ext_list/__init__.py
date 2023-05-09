@@ -630,6 +630,21 @@ class ExtList(List[T]):
         return ExtList([type_(**element) for element in self])
 
     def group_by_key(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, ExtList[T]]:
+        """Groups the objects of the list by a specified key.
+
+        Args:
+            key (FunctionType | property | str | Hashable): The key to group the objects by. This can be
+                a function, property, string, or hashable object.
+            *args (Any): Additional arguments to pass to the key function or property.
+
+        Returns:
+            dict[Hashable, ExtList[T]]: A dictionary of lists, where the keys are the result of applying the
+                key function or property to the objects of the list, and the values are lists of objects
+                with the same key.
+
+        Raises:
+            TypeError: If the key is not a function, property, string, or hashable object.
+        """
         result: dict[Hashable, ExtList[T]] = {}
 
         get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
