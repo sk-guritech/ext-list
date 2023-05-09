@@ -310,6 +310,170 @@ class ExtList(List[T]):
 
         return ExtList([element for element in self if get_value_method(element, key, *args) != compare_target])  # type: ignore[arg-type]
 
+    def greater(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+        """
+        Return a list of objects that are greater than the specified compare_target, when the
+        object is passed through the provided key function, property or hashable key.
+
+        Args:
+            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
+                compare_target, when given an instance of the class as input. Can be a function, a property or a
+                hashable object.
+            compare_target (Any): The value to compare against.
+            *args (Any): Additional arguments to be passed to the key function.
+
+        Returns:
+            List[T]: A list of objects that are greater than the compare_target, when the
+                object is passed through the provided key.
+
+        Raises:
+            None
+
+        Examples:
+            The following example demonstrates how to use the `greater` method.
+
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.greater('age', 30)
+            [{'name': 'Charlie', 'age': 35}]
+
+            >>> ext_list_2 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
+            >>> ext_list_2.greater(Person.age, 30)
+            [Person('Charlie', 35)]
+
+            >>> ext_list_2.greater(Person.get_age_n_years_ago, 25, 5)
+            [Person('Charlie', 35)]
+        """
+
+        if not self:
+            return ExtList()
+
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
+
+        return ExtList([element for element in self if get_value_method(element, key, *args) > compare_target])
+
+    def greater_or_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+        """
+        Return a list of objects that are greater than or equal the specified compare_target, when the
+        object is passed through the provided key function, property or hashable key.
+
+        Args:
+            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
+                compare_target, when given an instance of the class as input. Can be a function, a property or a
+                hashable object.
+            compare_target (Any): The value to compare against.
+            *args (Any): Additional arguments to be passed to the key function.
+
+        Returns:
+            List[T]: A list of objects that are greater than or equal the compare_target, when the
+                object is passed through the provided key.
+
+        Raises:
+            None
+
+        Examples:
+            The following example demonstrates how to use the `greater_or_equal` method.
+
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.greater_or_equal('age', 30)
+            [{'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}]
+
+            >>> ext_list_2 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
+            >>> ext_list_2.greater_or_equal(Person.age, 30)
+            [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
+
+            >>> ext_list_2.greater_or_equal(Person.get_age_n_years_ago, 25, 5)
+            [Person('Bob', 30), Person('Charlie', 35), Person('David', 30)]
+        """
+
+        if not self:
+            return ExtList()
+
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
+
+        return ExtList([element for element in self if get_value_method(element, key, *args) >= compare_target])
+
+    def less(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+        """
+        Return a list of objects that are less than the specified compare_target, when the
+        object is passed through the provided key function, property or hashable key.
+
+        Args:
+            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
+                compare_target, when given an instance of the class as input. Can be a function, a property or a
+                hashable object.
+            compare_target (Any): The value to compare against.
+            *args (Any): Additional arguments to be passed to the key function.
+
+        Returns:
+            List[T]: A list of objects that are less than the compare_target, when the
+                object is passed through the provided key.
+
+        Raises:
+            None
+
+        Examples:
+            The following example demonstrates how to use the `less` method.
+
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.less('age', 30)
+            [{'name': 'Alice', 'age': 25}]
+
+            >>> ext_list_2 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
+            >>> ext_list_2.less(Person.age, 30)
+            [Person('Alice', 25)]
+
+            >>> ext_list_2.less(Person.get_age_n_years_ago, 25, 5)
+            [Person('Alice', 25)]
+        """
+
+        if not self:
+            return ExtList()
+
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
+
+        return ExtList([element for element in self if get_value_method(element, key, *args) < compare_target])
+
+    def less_or_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+        """
+        Return a list of objects that are less than or equal the specified compare_target, when the
+        object is passed through the provided key function, property or hashable key.
+
+        Args:
+            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
+                compare_target, when given an instance of the class as input. Can be a function, a property or a
+                hashable object.
+            compare_target (Any): The value to compare against.
+            *args (Any): Additional arguments to be passed to the key function.
+
+        Returns:
+            List[T]: A list of objects that are less than or equal the compare_target, when the
+                object is passed through the provided key.
+
+        Raises:
+            None
+
+        Examples:
+            The following example demonstrates how to use the `less_or_equal` method.
+
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 35}])
+            >>> ext_list_1.less_or_equal('age', 30)
+            [{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}]
+
+            >>> ext_list_2 = ExtList([Person('Alice', 25), Person('Bob', 30), Person('Charlie', 35), Person('David', 30)])
+            >>> ext_list_2.less_or_equal(Person.age, 30)
+            [Person('Alice', 25), Person('Bob', 30), Person('David', 30)]
+
+            >>> ext_list_2.less_or_equal(Person.get_age_n_years_ago, 25, 5)
+            [Person('Alice', 25), Person('Bob', 30), Person('David', 30)]
+        """
+
+        if not self:
+            return ExtList()
+
+        get_value_method: Callable[[T, Any], Any] = self.__determine_get_value_method(key)
+
+        return ExtList([element for element in self if get_value_method(element, key, *args) <= compare_target])
+
     def in_(self, key: FunctionType | property | str | Hashable, compare_targets: list[Any], *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that have the given key set to one of the given values.
