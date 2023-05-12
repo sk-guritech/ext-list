@@ -530,6 +530,39 @@ class ExtList(List[T]):
 
         return {get_value_method(element, key, *args): element for element in self}  # type: ignore[arg-type]
 
+    def to_dict_list(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str, Any]]:
+        if not self:
+            return ExtList()
+
+        if self.__is_indexable():
+            return ExtList([{key: element[key] for key in keys} for element in self])  # type: ignore[attr-defined]
+
+        result: ExtList[dict[Hashable, Any]] = ExtList()
+
+        if not arg_tuples:
+            arg_tuples = list(tuple() for _ in range(len(keys)))
+
+        for element in self:
+            row = {}
+
+            for arg_tuple, key in zip(arg_tuples, keys):
+                get_value_method = self.__determine_get_value_method(key)
+
+                if isinstance(key, property) or isinstance(key, GetSetDescriptorType):
+                    dict_key: str = key.fget.__name__  # type: ignore[attr-defined]
+
+                elif isinstance(key, FunctionType) or isinstance(key, MethodDescriptorType):
+                    dict_key = key.__name__
+
+                else:
+                    dict_key = key
+
+                row[dict_key] = get_value_method(element, key, *arg_tuple)
+
+            result.append(row)
+
+        return result
+
     def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: tuple[tuple[Any, ...], ...] = tuple()) -> dict[tuple[Any, ...], T]:
         """
         Returns a dictionary of the elements in the `ExtList` with complex keys.
