@@ -642,8 +642,13 @@ class ExtList(List[T]):
                 key function or property to the objects of the list, and the values are lists of objects
                 with the same key.
 
-        Raises:
-            TypeError: If the key is not a function, property, string, or hashable object.
+        Examples:
+            The following example demonstrates how to use the `dicts_to_instances` method.
+
+            >>> ext_list_1 = ExtList([{'name': 'alice', 'age': 25}, {'name': 'bob', 'age': 30}, {'name': 'charlie', 'age': 35}, {'name': 'david', 'age': 30}])
+            >>> ext_list_1.group_by_key('age')
+            {25: [{'name': 'alice', 'age': 25}], 30: [{'name': 'bob', 'age': 30}, {'name': 'david', 'age': 30}], 35: [{'name': 'charlie', 'age': 35}]}
+
         """
         result: dict[Hashable, ExtList[T]] = {}
 
