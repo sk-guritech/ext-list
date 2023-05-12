@@ -222,7 +222,7 @@ class ExtList(List[T]):
 
         return ExtList([get_value_method(element, key, *args) for element in self])  # type: ignore[arg-type]
 
-    def equals(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def equal(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that have the given key set to the given value.
 
@@ -266,7 +266,7 @@ class ExtList(List[T]):
 
         return ExtList([element for element in self if get_value_method(element, key, *args) == compare_target])  # type: ignore[arg-type]
 
-    def not_equals(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def not_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that do not have the given key set to the given value.
 
