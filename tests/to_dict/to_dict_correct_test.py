@@ -24,7 +24,7 @@ def test():
 def test_reference_getset_descriptor():
     ext_list_1 = ExtList([1, 2, 3])
 
-    assert ext_list_1.extract(int.real) == [1, 2, 3]
+    assert ext_list_1.to_dict(int.real) == {1: 1, 2: 2, 3: 3}
 
 
 def test_reference_method_descriptor():
