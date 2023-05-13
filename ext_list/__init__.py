@@ -531,6 +531,43 @@ class ExtList(List[T]):
         return {get_value_method(element, key, *args): element for element in self}  # type: ignore[arg-type]
 
     def to_dict_list(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str | Hashable, Any]]:
+        """
+        Converts the elements of the object into a list of dictionaries, where each dictionary contains the specified keys
+        and their corresponding values from the elements.
+
+        Args:
+            keys (list[FunctionType | property | str | Hashable]): A list of keys to include in the dictionaries. Each key can
+                be a function, property, string, or hashable object.
+            arg_tuples (list[tuple[Any, ...]], optional): A list of argument tuples. Each tuple contains the arguments to be
+                passed to the corresponding key function or property. Defaults to an empty list.
+
+        Returns:
+            ExtList[dict[str | Hashable, Any]]: A list of dictionaries, where each dictionary represents an element and contains
+            the specified keys and their corresponding values.
+
+        Examples:
+            The following example demonstrates how to use the `to_dict_list` method to convert an ExtList of dictionaries to a list of
+            dictionary contain specified keys:
+
+            >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}])
+            >>> ext_list_1.to_dict_list(['name'])
+            [{'name': 'Alice'}, {'name': 'Bob'}]
+
+            The following example demonstrates how to use the `to_dict` method to convert an ExtList of lists to a list of
+            dictionary contain specified keys:
+
+            >>> ext_list_2 = ExtList([['Alice', 25], ['Bob', 30]])
+            >>> ext_list_2.to_dict_list([0])
+            [{0: 'Alice'}, {0: 'Bob'}]
+
+            The following example demonstrates how to use the `to_dict` method to convert an ExtList of objects to a list of
+            dictionary contain specified keys:
+
+            >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30)])
+            >>> ext_list_3.to_dict_list([Person.name, Person.get_age_n_years_ago], [(), (5,)])
+            [{'name': 'Alice', 'get_age_n_years_ago': 20}, {'name': 'Bob', 'get_age_n_years_ago': 25}]
+
+        """
         if not self:
             return ExtList()
 
