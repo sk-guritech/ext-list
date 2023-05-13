@@ -11,7 +11,6 @@ from typing import List
 from typing import TypeVar
 
 from typing_extensions import override
-
 T = TypeVar('T')
 TI = TypeVar('TI', bound=type)
 
@@ -912,5 +911,40 @@ class ExtList(List[T]):
 
             else:
                 result[group_key] = ExtList([element])
+
+        return result
+
+    def rename_keys(self, rename_keys: dict[Hashable, Hashable]) -> ExtList[T]:
+        """
+        Renames the keys in the elements based on the provided mapping dictionary.
+
+        Args:
+            rename_keys (dict[Hashable, Hashable]): A dictionary that maps the keys to be renamed. The keys in the dictionary
+                represent the original keys, while the corresponding values represent the new keys.
+
+        Returns:
+            ExtList[T]: A list of elements with the renamed keys.
+
+        Raises:
+            TypeError: If the object is not indexable.
+
+        Examples:
+            >>> ext_list = ExtList([{'name': 'alice', 'age': 25}, {'name': 'bob', 'age': 30}])
+            >>> ext_list.rename_keys({'name': 'Name', 'age': 'Age'})
+            [{'Name': 'alice', 'Age': 25}, {'Name': 'bob', 'Age': 30}]
+        """
+        if not self:
+            return ExtList()
+
+        if not self.__is_indexable():
+            raise TypeError
+
+        result: ExtList[T] = ExtList()
+
+        for element in copy.deepcopy(self):
+            for from_key, to_key in rename_keys.items():
+                element[to_key] = element.pop(from_key)  # type: ignore[attr-defined]
+
+            result.append(element)  # type: ignore[assignment]
 
         return result
