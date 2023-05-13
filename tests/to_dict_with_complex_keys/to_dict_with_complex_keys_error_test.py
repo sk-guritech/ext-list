@@ -33,4 +33,4 @@ def test_raise_type_error_by_assign_too_many_argument():
     ext_list_1 = ExtList([alice])
 
     with pytest.raises(TypeError):
-        ext_list_1.to_dict_with_complex_keys([Person.introduce], ((0,),))
+        ext_list_1.to_dict_with_complex_keys([Person.introduce], [(0,)])
