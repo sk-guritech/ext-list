@@ -780,7 +780,7 @@ class ExtList(List[T]):
 
         return result
 
-    def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: tuple[tuple[Any, ...], ...] = tuple()) -> dict[tuple[Any, ...], T]:
+    def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> dict[tuple[Any, ...], T]:
         """
         Returns a dictionary of the elements in the `ExtList` with complex keys.
 
@@ -801,7 +801,7 @@ class ExtList(List[T]):
              ('Charlie', 35): Person('Charlie', 35),
              ('David', 30): Person('David', 30)}
 
-            >>> ext_list_1.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,)))
+            >>> ext_list_1.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], [(), (), (5,)])
             {('Alice', 'Alice is 25 years old.', 20): Person('Alice', 25),
              ('Bob', 'Bob is 30 years old.', 25): Person('Bob', 30),
              ('Charlie', 'Charlie is 35 years old.', 30): Person('Charlie', 35),
@@ -819,11 +819,11 @@ class ExtList(List[T]):
     def __to_dict_with_complex_keys_from_indexable_object(self, keys: list[Hashable]) -> dict[tuple[Any, ...], T]:
         return {tuple(element[key] for key in keys): element for element in self}  # type: ignore[index]
 
-    def __to_dict_with_complex_keys_from_others(self, keys: list[FunctionType | property | str], arg_tuples: tuple[tuple[Any, ...]]) -> dict[tuple[Any, ...], T]:
+    def __to_dict_with_complex_keys_from_others(self, keys: list[FunctionType | property | str], arg_tuples: list[tuple[Any, ...]]) -> dict[tuple[Any, ...], T]:
         result: dict[tuple[Any, ...], T] = {}
 
         if not arg_tuples:
-            arg_tuples = tuple(tuple() for _ in range(len(keys)))
+            arg_tuples = list(tuple() for _ in range(len(keys)))
 
         for element in self:
             tupled_key: tuple[Any, ...] = self.__generate_tupled_key(keys, element, arg_tuples)
@@ -831,7 +831,7 @@ class ExtList(List[T]):
 
         return result
 
-    def __generate_tupled_key(self, keys: list[FunctionType | property | str], element: T, arg_tuples: tuple[Any]) -> tuple[Any, ...]:
+    def __generate_tupled_key(self, keys: list[FunctionType | property | str], element: T, arg_tuples: list[tuple[Any, ...]]) -> tuple[Any, ...]:
         tupled_key: tuple[Any, ...] = tuple()
 
         for key, arg_tuple in zip(keys, arg_tuples):

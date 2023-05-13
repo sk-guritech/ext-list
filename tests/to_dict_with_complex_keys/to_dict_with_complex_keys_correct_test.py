@@ -48,13 +48,13 @@ def test_to_dict_with_complex_keys():
         ('charlie', 'charlie is 35 years old.', 35): charlie,
     }
 
-    assert ext_list_3.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], ((), (), (5,))) == {
+    assert ext_list_3.to_dict_with_complex_keys(['name', Person.introduce, Person.get_age_n_years_ago], [(), (), (5,)]) == {
         ('alice', 'alice is 25 years old.', 20): alice,
         ('bob', 'bob is 30 years old.', 25): bob,
         ('charlie', 'charlie is 35 years old.', 30): charlie,
     }
 
-    assert ext_list_3.to_dict_with_complex_keys(['name', 'introduce', 'get_age_n_years_ago'], ((), (), (5,))) == {
+    assert ext_list_3.to_dict_with_complex_keys(['name', 'introduce', 'get_age_n_years_ago'], [(), (), (5,)]) == {
         ('alice', 'alice is 25 years old.', 20): alice,
         ('bob', 'bob is 30 years old.', 25): bob,
         ('charlie', 'charlie is 35 years old.', 30): charlie,
