@@ -530,36 +530,52 @@ class ExtList(List[T]):
 
         return {get_value_method(element, key, *args): element for element in self}  # type: ignore[arg-type]
 
-    def to_dict_list(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str, Any]]:
+    def to_dict_list(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str | Hashable, Any]]:
         if not self:
             return ExtList()
 
         if self.__is_indexable():
-            return ExtList([{key: element[key] for key in keys} for element in self])  # type: ignore[attr-defined]
+            return self.__to_dict_list_from_indexable_object(keys)
 
-        result: ExtList[dict[Hashable, Any]] = ExtList()
+        result: ExtList[dict[str | Hashable, Any]] = self.__to_dict_list_from_others(keys, arg_tuples)
 
+        return result
+
+    def __to_dict_list_from_indexable_object(self, keys: list[Hashable]) -> ExtList[dict[str | Hashable, Any]]:
+        return ExtList([{key: element[key] for key in keys} for element in self])   # type: ignore[attr-defined]
+
+    def __to_dict_list_from_others(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]]) -> ExtList[dict[str | Hashable, Any]]:
         if not arg_tuples:
             arg_tuples = list(tuple() for _ in range(len(keys)))
 
+        result: ExtList[dict[str | Hashable, Any]] = ExtList()
+
         for element in self:
-            row = {}
-
-            for arg_tuple, key in zip(arg_tuples, keys):
-                get_value_method = self.__determine_get_value_method(key)
-
-                if isinstance(key, property) or isinstance(key, GetSetDescriptorType):
-                    dict_key: str = key.fget.__name__  # type: ignore[attr-defined]
-
-                elif isinstance(key, FunctionType) or isinstance(key, MethodDescriptorType):
-                    dict_key = key.__name__
-
-                else:
-                    dict_key = key
-
-                row[dict_key] = get_value_method(element, key, *arg_tuple)
+            row: dict[str | Hashable, Any] = self.__generate_dict_from_specified_keys(keys, arg_tuples, element)
 
             result.append(row)
+
+        return result
+
+    def __generate_dict_from_specified_keys(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]], element: T) -> dict[str | Hashable, Any]:
+        result: dict[str | Hashable, Any] = {}
+
+        for arg_tuple, key in zip(arg_tuples, keys):
+            get_value_method = self.__determine_get_value_method(key)
+
+            if isinstance(key, property):
+                dict_key: str | Hashable = key.fget.__name__  # type: ignore[attr-defined]
+
+            elif isinstance(key, FunctionType) or isinstance(key, MethodDescriptorType) or isinstance(key, GetSetDescriptorType):
+                dict_key = key.__name__
+
+            elif isinstance(key, str):
+                dict_key = key
+
+            else:
+                dict_key = key
+
+            result[dict_key] = get_value_method(element, key, *arg_tuple)  # type: ignore[assignment]
 
         return result
 
