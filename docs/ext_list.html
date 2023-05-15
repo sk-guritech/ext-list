@@ -261,8 +261,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ext_list.ExtList.equals">
-<span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.equals" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ext_list.ExtList.equal">
+<span class="sig-name descname"><span class="pre">equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.equal" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a list of objects that have the given key set to the given value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -420,6 +420,133 @@ the callable will be executed and its result will be returned.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.greater">
+<span class="sig-name descname"><span class="pre">greater</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.greater" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a list of objects that are greater than the specified compare_target, when the
+object is passed through the provided key function, property or hashable key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
+compare_target, when given an instance of the class as input. Can be a function, a property or a
+hashable object.</p></li>
+<li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of objects that are greater than the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[T]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>None</strong> – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The following example demonstrates how to use the <cite>greater</cite> method.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[{&#39;name&#39;: &#39;Charlie&#39;, &#39;age&#39;: 35}]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([</span><span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[Person(&#39;Charlie&#39;, 35)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[Person(&#39;Charlie&#39;, 35)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.greater_or_equal">
+<span class="sig-name descname"><span class="pre">greater_or_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.greater_or_equal" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a list of objects that are greater than or equal the specified compare_target, when the
+object is passed through the provided key function, property or hashable key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
+compare_target, when given an instance of the class as input. Can be a function, a property or a
+hashable object.</p></li>
+<li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of objects that are greater than or equal the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[T]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>None</strong> – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The following example demonstrates how to use the <cite>greater_or_equal</cite> method.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">greater_or_equal</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[{&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 30}, {&#39;name&#39;: &#39;Charlie&#39;, &#39;age&#39;: 35}]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([</span><span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">greater_or_equal</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[Person(&#39;Bob&#39;, 30), Person(&#39;Charlie&#39;, 35), Person(&#39;David&#39;, 30)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">greater_or_equal</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[Person(&#39;Bob&#39;, 30), Person(&#39;Charlie&#39;, 35), Person(&#39;David&#39;, 30)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.group_by_key">
+<span class="sig-name descname"><span class="pre">group_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.group_by_key" title="Permalink to this definition">#</a></dt>
+<dd><p>Groups the objects of the list by a specified key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to group the objects by. This can be
+a function, property, string, or hashable object.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to pass to the key function or property.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dictionary of lists, where the keys are the result of applying the</dt><dd><p>key function or property to the objects of the list, and the values are lists of objects
+with the same key.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[Hashable, <a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The following example demonstrates how to use the <cite>dicts_to_instances</cite> method.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;david&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">group_by_key</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">)</span>
+<span class="go">{25: [{&#39;name&#39;: &#39;alice&#39;, &#39;age&#39;: 25}], 30: [{&#39;name&#39;: &#39;bob&#39;, &#39;age&#39;: 30}, {&#39;name&#39;: &#39;david&#39;, &#39;age&#39;: 30}], 35: [{&#39;name&#39;: &#39;charlie&#39;, &#39;age&#39;: 35}]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.in_">
 <span class="sig-name descname"><span class="pre">in_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.in_" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a list of objects that have the given key set to one of the given values.</p>
@@ -502,6 +629,100 @@ the callable will be executed and its result will be returned.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.less">
+<span class="sig-name descname"><span class="pre">less</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.less" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a list of objects that are less than the specified compare_target, when the
+object is passed through the provided key function, property or hashable key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
+compare_target, when given an instance of the class as input. Can be a function, a property or a
+hashable object.</p></li>
+<li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of objects that are less than the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[T]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>None</strong> – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The following example demonstrates how to use the <cite>less</cite> method.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[{&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 25}]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([</span><span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[Person(&#39;Alice&#39;, 25)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[Person(&#39;Alice&#39;, 25)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.less_or_equal">
+<span class="sig-name descname"><span class="pre">less_or_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.less_or_equal" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a list of objects that are less than or equal the specified compare_target, when the
+object is passed through the provided key function, property or hashable key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
+compare_target, when given an instance of the class as input. Can be a function, a property or a
+hashable object.</p></li>
+<li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of objects that are less than or equal the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[T]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>None</strong> – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The following example demonstrates how to use the <cite>less_or_equal</cite> method.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">less_or_equal</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[{&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 25}, {&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 30}]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([</span><span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">less_or_equal</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">[Person(&#39;Alice&#39;, 25), Person(&#39;Bob&#39;, 30), Person(&#39;David&#39;, 30)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">less_or_equal</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[Person(&#39;Alice&#39;, 25), Person(&#39;Bob&#39;, 30), Person(&#39;David&#39;, 30)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.map">
 <span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.map" title="Permalink to this definition">#</a></dt>
 <dd><p>Apply a function or constructor to each element.</p>
@@ -529,8 +750,8 @@ the callable will be executed and its result will be returned.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ext_list.ExtList.not_equals">
-<span class="sig-name descname"><span class="pre">not_equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.not_equals" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ext_list.ExtList.not_equal">
+<span class="sig-name descname"><span class="pre">not_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.not_equal" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a list of objects that do not have the given key set to the given value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -656,6 +877,33 @@ the callable will be executed and its result will be returned.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.rename_keys">
+<span class="sig-name descname"><span class="pre">rename_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rename_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.rename_keys" title="Permalink to this definition">#</a></dt>
+<dd><p>Renames the keys in the elements based on the provided mapping dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rename_keys</strong> (<em>dict</em><em>[</em><em>Hashable</em><em>, </em><em>Hashable</em><em>]</em>) – A dictionary that maps the keys to be renamed. The keys in the dictionary
+represent the original keys, while the corresponding values represent the new keys.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of elements with the renamed keys.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If the object is not indexable.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list</span><span class="o">.</span><span class="n">rename_keys</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="s1">&#39;Age&#39;</span><span class="p">})</span>
+<span class="go">[{&#39;Name&#39;: &#39;alice&#39;, &#39;Age&#39;: 25}, {&#39;Name&#39;: &#39;bob&#39;, &#39;Age&#39;: 30}]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.to_dict" title="Permalink to this definition">#</a></dt>
 <dd><p>Converts the current object to a dictionary, using the given key as the dictionary key.</p>
@@ -702,8 +950,54 @@ dictionary:</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.to_dict_list">
+<span class="sig-name descname"><span class="pre">to_dict_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_tuples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.to_dict_list" title="Permalink to this definition">#</a></dt>
+<dd><p>Converts the elements of the object into a list of dictionaries, where each dictionary contains the specified keys
+and their corresponding values from the elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys</strong> (<em>list</em><em>[</em><em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em><em>]</em>) – A list of keys to include in the dictionaries. Each key can
+be a function, property, string, or hashable object.</p></li>
+<li><p><strong>arg_tuples</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list of argument tuples. Each tuple contains the arguments to be
+passed to the corresponding key function or property. Defaults to an empty list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries, where each dictionary represents an element and contains
+the specified keys and their corresponding values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[dict[str | Hashable, Any]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The following example demonstrates how to use the <cite>to_dict_list</cite> method to convert an ExtList of dictionaries to a list of
+dictionary contain specified keys:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">to_dict_list</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+<span class="go">[{&#39;name&#39;: &#39;Alice&#39;}, {&#39;name&#39;: &#39;Bob&#39;}]</span>
+</pre></div>
+</div>
+<p>The following example demonstrates how to use the <cite>to_dict</cite> method to convert an ExtList of lists to a list of
+dictionary contain specified keys:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">to_dict_list</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">[{0: &#39;Alice&#39;}, {0: &#39;Bob&#39;}]</span>
+</pre></div>
+</div>
+<p>The following example demonstrates how to use the <cite>to_dict</cite> method to convert an ExtList of objects to a list of
+dictionary contain specified keys:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_3</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([</span><span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_3</span><span class="o">.</span><span class="n">to_dict_list</span><span class="p">([</span><span class="n">Person</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">],</span> <span class="p">[(),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,)])</span>
+<span class="go">[{&#39;name&#39;: &#39;Alice&#39;, &#39;get_age_n_years_ago&#39;: 20}, {&#39;name&#39;: &#39;Bob&#39;, &#39;get_age_n_years_ago&#39;: 25}]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.to_dict_with_complex_keys">
-<span class="sig-name descname"><span class="pre">to_dict_with_complex_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_tuples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.to_dict_with_complex_keys" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_dict_with_complex_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_tuples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.to_dict_with_complex_keys" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a dictionary of the elements in the <cite>ExtList</cite> with complex keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -729,7 +1023,7 @@ dictionary:</p>
 <span class="go"> (&#39;David&#39;, 30): Person(&#39;David&#39;, 30)}</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">to_dict_with_complex_keys</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">introduce</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">],</span> <span class="p">((),</span> <span class="p">(),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,)))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">to_dict_with_complex_keys</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">introduce</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">],</span> <span class="p">[(),</span> <span class="p">(),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,)])</span>
 <span class="go">{(&#39;Alice&#39;, &#39;Alice is 25 years old.&#39;, 20): Person(&#39;Alice&#39;, 25),</span>
 <span class="go"> (&#39;Bob&#39;, &#39;Bob is 30 years old.&#39;, 25): Person(&#39;Bob&#39;, 30),</span>
 <span class="go"> (&#39;Charlie&#39;, &#39;Charlie is 35 years old.&#39;, 30): Person(&#39;Charlie&#39;, 35),</span>
@@ -808,19 +1102,26 @@ dictionary:</p>
 <li><a class="reference internal" href="#ext_list.ExtList"><code class="docutils literal notranslate"><span class="pre">ExtList</span></code></a><ul>
 <li><a class="reference internal" href="#ext_list.ExtList.append"><code class="docutils literal notranslate"><span class="pre">ExtList.append()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.dicts_to_instances"><code class="docutils literal notranslate"><span class="pre">ExtList.dicts_to_instances()</span></code></a></li>
-<li><a class="reference internal" href="#ext_list.ExtList.equals"><code class="docutils literal notranslate"><span class="pre">ExtList.equals()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.equal"><code class="docutils literal notranslate"><span class="pre">ExtList.equal()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.extend"><code class="docutils literal notranslate"><span class="pre">ExtList.extend()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.extract"><code class="docutils literal notranslate"><span class="pre">ExtList.extract()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.extract_duplicates"><code class="docutils literal notranslate"><span class="pre">ExtList.extract_duplicates()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.first"><code class="docutils literal notranslate"><span class="pre">ExtList.first()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.greater"><code class="docutils literal notranslate"><span class="pre">ExtList.greater()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.greater_or_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.greater_or_equal()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.group_by_key"><code class="docutils literal notranslate"><span class="pre">ExtList.group_by_key()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.in_"><code class="docutils literal notranslate"><span class="pre">ExtList.in_()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.insert"><code class="docutils literal notranslate"><span class="pre">ExtList.insert()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.is_duplicate"><code class="docutils literal notranslate"><span class="pre">ExtList.is_duplicate()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.less"><code class="docutils literal notranslate"><span class="pre">ExtList.less()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.less_or_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.less_or_equal()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.map"><code class="docutils literal notranslate"><span class="pre">ExtList.map()</span></code></a></li>
-<li><a class="reference internal" href="#ext_list.ExtList.not_equals"><code class="docutils literal notranslate"><span class="pre">ExtList.not_equals()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.not_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.not_equal()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.not_in_"><code class="docutils literal notranslate"><span class="pre">ExtList.not_in_()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.one"><code class="docutils literal notranslate"><span class="pre">ExtList.one()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.rename_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.rename_keys()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.to_dict"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.to_dict_list"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict_list()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.to_dict_with_complex_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict_with_complex_keys()</span></code></a></li>
 </ul>
 </li>
