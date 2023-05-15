@@ -155,7 +155,7 @@ class ExtList(List[T]):
 
         Returns:
             ExtList[T]: A list of objects that are in both the current object and the given object. If no objects are found
-                or the object is empty, an empty ExtList is returned.
+            or the object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `extract_duplicates` method.
@@ -240,7 +240,7 @@ class ExtList(List[T]):
 
         Returns:
             ExtList[T]: A list of objects that have the given key set to the given value. If no objects are found or the object
-                is empty, an empty ExtList is returned.
+            is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `equals` method.
@@ -272,12 +272,14 @@ class ExtList(List[T]):
         Args:
             key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
+
             compare_target (Any): The value to compare the objects' values to.
+
             *args (Any): If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExtList[T]: A list of objects that do not have the given key set to the given value. If no objects are found or the
-                object is empty, an empty ExtList is returned.
+            ExtList[T]: A list of objects that do not have the given key set to the given value.
+            If no objects are found or the object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `not_equals` method.
@@ -315,7 +317,7 @@ class ExtList(List[T]):
 
         Returns:
             List[T]: A list of objects that are greater than the compare_target, when the
-                object is passed through the provided key.
+            object is passed through the provided key.
 
         Examples:
             The following example demonstrates how to use the `greater` method.
@@ -346,7 +348,7 @@ class ExtList(List[T]):
 
         Returns:
             List[T]: A list of objects that are greater than or equal the compare_target, when the
-                object is passed through the provided key.
+            object is passed through the provided key.
 
         Examples:
             The following example demonstrates how to use the `greater_or_equal` method.
@@ -377,7 +379,7 @@ class ExtList(List[T]):
 
         Returns:
             List[T]: A list of objects that are less than the compare_target, when the
-                object is passed through the provided key.
+            object is passed through the provided key.
 
         Examples:
             The following example demonstrates how to use the `less` method.
@@ -408,7 +410,7 @@ class ExtList(List[T]):
 
         Returns:
             List[T]: A list of objects that are less than or equal the compare_target, when the
-                object is passed through the provided key.
+            object is passed through the provided key.
 
         Examples:
             The following example demonstrates how to use the `less_or_equal` method.
@@ -438,7 +440,7 @@ class ExtList(List[T]):
 
         Returns:
             ExtList[T]: A list of objects that have the given key set to one of the given values. If no objects are found or
-                the object is empty, an empty ExtList is returned.
+            the object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `in_` method.
@@ -475,7 +477,7 @@ class ExtList(List[T]):
 
         Returns:
             ExtList[T]: A list of objects that do not have the given key set to any of the given values. If no objects are
-                found or the object is empty, an empty ExtList is returned.
+            found or the object is empty, an empty ExtList is returned.
 
         Examples:
             The following example demonstrates how to use the `not_in_` method:
@@ -643,8 +645,8 @@ class ExtList(List[T]):
 
         Returns:
             dict[Hashable, ExtList[T]]: A dictionary of lists, where the keys are the result of applying the
-                key function or property to the objects of the list, and the values are lists of objects
-                with the same key.
+            key function or property to the objects of the list, and the values are lists of objects
+            with the same key.
 
         Examples:
             The following example demonstrates how to use the `dicts_to_instances` method.
