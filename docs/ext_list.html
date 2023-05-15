@@ -267,9 +267,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to search for.</p></li>
+<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare the objects’ values to.</p></li>
-<li><p><strong>Any</strong> (<em>*args</em>) – If key is a function, the arguments will be passed to the function.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – If key is a function, the arguments will be passed to the function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -280,7 +281,7 @@
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -325,18 +326,14 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to extract values for. If the key is function,
 the callable will be executed and its result will be returned.</p></li>
-<li><p><strong>Any</strong> (<em>*args</em>) – If key is a function, the arguments will be passed to the function.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – If key is a function, the arguments will be passed to the function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of values associated with the given key. If no values are found or the object</dt><dd><p>is empty, an empty ExtList is returned.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of values associated with the given key.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[Any]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -372,7 +369,7 @@ the callable will be executed and its result will be returned.</p></li>
 <dd><p>Returns a list of objects that are in both the current object and the given object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>compare_ext_list</strong> (<a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><em>ExtList</em></a>) – The object to compare the current object to.</p>
+<dd class="field-odd"><p><strong>compare_ext_list</strong> (<a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><em>ExtList</em></a><em>[</em><em>T</em><em>]</em>) – The object to compare the current object to.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
@@ -382,7 +379,7 @@ the callable will be executed and its result will be returned.</p></li>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -427,11 +424,10 @@ object is passed through the provided key function, property or hashable key.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
-compare_target, when given an instance of the class as input. Can be a function, a property or a
-hashable object.</p></li>
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – If key is a function, the arguments will be passed to the function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -443,9 +439,6 @@ hashable object.</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>None</strong> – </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -474,9 +467,8 @@ object is passed through the provided key function, property or hashable key.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
-compare_target, when given an instance of the class as input. Can be a function, a property or a
-hashable object.</p></li>
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
 <li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
 </ul>
@@ -490,9 +482,6 @@ hashable object.</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>None</strong> – </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -553,7 +542,8 @@ with the same key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to search for.</p></li>
+<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_targets</strong> (<em>list</em>) – A list of values to compare the objects’ values to.</p></li>
 <li><p><strong>Any</strong> (<em>*args</em>) – If key is a function, the arguments will be passed to the function.</p></li>
 </ul>
@@ -566,7 +556,7 @@ with the same key.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -636,9 +626,8 @@ object is passed through the provided key function, property or hashable key.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
-compare_target, when given an instance of the class as input. Can be a function, a property or a
-hashable object.</p></li>
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
 <li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
 </ul>
@@ -652,9 +641,6 @@ hashable object.</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>None</strong> – </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -683,9 +669,8 @@ object is passed through the provided key function, property or hashable key.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – A callable that returns the value to compare against the
-compare_target, when given an instance of the class as input. Can be a function, a property or a
-hashable object.</p></li>
+<li><p><strong>key</strong> (<em>Union</em><em>[</em><em>FunctionType</em><em>, </em><em>property</em><em>, </em><em>Hashable</em><em>]</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare against.</p></li>
 <li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to be passed to the key function.</p></li>
 </ul>
@@ -699,9 +684,6 @@ hashable object.</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>None</strong> – </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -729,8 +711,8 @@ hashable object.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>function</strong> (<em>FunctionType</em><em> | </em><em>type</em>) – The function to apply to each element.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to pass to the function.</p></li>
+<li><p><strong>function</strong> (<em>FunctionType</em><em> | </em><em>type</em>) – The function or type to apply to each element.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments to pass to the function or type.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -756,9 +738,10 @@ hashable object.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to search for.</p></li>
+<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_target</strong> (<em>Any</em>) – The value to compare the objects’ values to.</p></li>
-<li><p><strong>Any</strong> (<em>*args</em>) – If key is a function, the arguments will be passed to the function.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – If key is a function, the arguments will be passed to the function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -769,7 +752,7 @@ hashable object.</p></li>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -806,9 +789,10 @@ hashable object.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to search for.</p></li>
+<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to compare values for. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>compare_targets</strong> (<em>list</em>) – A list of values to compare the objects’ values to.</p></li>
-<li><p><strong>Any</strong> (<em>*args</em>) – If key is a function, the arguments will be passed to the function.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – If key is a function, the arguments will be passed to the function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -819,7 +803,7 @@ hashable object.</p></li>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -879,14 +863,14 @@ hashable object.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.rename_keys">
 <span class="sig-name descname"><span class="pre">rename_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rename_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.rename_keys" title="Permalink to this definition">#</a></dt>
-<dd><p>Renames the keys in the elements based on the provided mapping dictionary.</p>
+<dd><p>Renames the keys in the objects based on the provided mapping dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>rename_keys</strong> (<em>dict</em><em>[</em><em>Hashable</em><em>, </em><em>Hashable</em><em>]</em>) – A dictionary that maps the keys to be renamed. The keys in the dictionary
 represent the original keys, while the corresponding values represent the new keys.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of elements with the renamed keys.</p>
+<dd class="field-even"><p>A list of objects with the renamed keys.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
@@ -910,7 +894,8 @@ represent the original keys, while the corresponding values represent the new ke
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to use as the dictionary key.</p></li>
+<li><p><strong>key</strong> (<em>FunctionType</em><em> | </em><em>property</em><em> | </em><em>str</em><em> | </em><em>Hashable</em>) – The key to use as the dictionary key. If the key is function,
+the callable will be executed and its result will be returned.</p></li>
 <li><p><strong>Any</strong> (<em>*args</em>) – If key is a function, the arguments will be passed to the function.</p></li>
 </ul>
 </dd>
@@ -918,26 +903,21 @@ represent the original keys, while the corresponding values represent the new ke
 <dd class="field-even"><p>A dictionary of objects, using the given key as the dictionary key.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p>dict[Hashable, T]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>The following example demonstrates how to use the <cite>to_dict</cite> method to convert an ExtList of dictionaries to a
-dictionary:</p>
+<p>The following example demonstrates how to use the <cite>to_dict</cite> method.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
 <span class="go">{&#39;Alice&#39;: {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 25}, &#39;Bob&#39;: {&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 30}}</span>
 </pre></div>
 </div>
-<p>The following example demonstrates how to use the <cite>to_dict</cite> method to convert an ExtList of lists to a
-dictionary:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="go">{&#39;Alice&#39;: [&#39;Alice&#39;, 25], &#39;Bob&#39;: [&#39;Bob&#39;, 30]}</span>
 </pre></div>
 </div>
-<p>The following example demonstrates how to use the <cite>to_dict</cite> method to convert an ExtList of objects to a
-dictionary:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_3</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([</span><span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_3</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="go">{&#39;Alice&#39;: Person(&#39;Alice&#39;, 25), &#39;Bob&#39;: Person(&#39;Bob&#39;, 30)}</span>
@@ -952,8 +932,8 @@ dictionary:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.to_dict_list">
 <span class="sig-name descname"><span class="pre">to_dict_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_tuples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.to_dict_list" title="Permalink to this definition">#</a></dt>
-<dd><p>Converts the elements of the object into a list of dictionaries, where each dictionary contains the specified keys
-and their corresponding values from the elements.</p>
+<dd><p>Converts the objects into a list of dictionaries, where each dictionary contains the specified keys
+and their corresponding values from the object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -972,22 +952,17 @@ the specified keys and their corresponding values.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>The following example demonstrates how to use the <cite>to_dict_list</cite> method to convert an ExtList of dictionaries to a list of
-dictionary contain specified keys:</p>
+<p>The following example demonstrates how to use the <cite>to_dict_list</cite> method.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_1</span><span class="o">.</span><span class="n">to_dict_list</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
 <span class="go">[{&#39;name&#39;: &#39;Alice&#39;}, {&#39;name&#39;: &#39;Bob&#39;}]</span>
 </pre></div>
 </div>
-<p>The following example demonstrates how to use the <cite>to_dict</cite> method to convert an ExtList of lists to a list of
-dictionary contain specified keys:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_2</span><span class="o">.</span><span class="n">to_dict_list</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
 <span class="go">[{0: &#39;Alice&#39;}, {0: &#39;Bob&#39;}]</span>
 </pre></div>
 </div>
-<p>The following example demonstrates how to use the <cite>to_dict</cite> method to convert an ExtList of objects to a list of
-dictionary contain specified keys:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_3</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([</span><span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list_3</span><span class="o">.</span><span class="n">to_dict_list</span><span class="p">([</span><span class="n">Person</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">get_age_n_years_ago</span><span class="p">],</span> <span class="p">[(),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,)])</span>
 <span class="go">[{&#39;name&#39;: &#39;Alice&#39;, &#39;get_age_n_years_ago&#39;: 20}, {&#39;name&#39;: &#39;Bob&#39;, &#39;get_age_n_years_ago&#39;: 25}]</span>
@@ -998,7 +973,7 @@ dictionary contain specified keys:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.to_dict_with_complex_keys">
 <span class="sig-name descname"><span class="pre">to_dict_with_complex_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_tuples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.to_dict_with_complex_keys" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns a dictionary of the elements in the <cite>ExtList</cite> with complex keys.</p>
+<dd><p>Returns a dictionary of the objects in the <cite>ExtList</cite> with complex keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1007,7 +982,7 @@ dictionary contain specified keys:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary of the elements in the <cite>ExtList</cite> with complex keys.</p>
+<dd class="field-even"><p>A dictionary of the objects in the <cite>ExtList</cite> with complex keys.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict[Tuple[Any, …], T]</p>
