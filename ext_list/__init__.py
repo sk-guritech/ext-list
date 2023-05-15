@@ -152,11 +152,10 @@ class ExtList(List[T]):
         Args:
             key (FunctionType | property | str | Hashable): The key to extract values for. If the key is function,
                 the callable will be executed and its result will be returned.
-            *args Any: If key is a function, the arguments will be passed to the function.
+            *args (Any): If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExtList: A list of values associated with the given key. If no values are found or the object
-                is empty, an empty ExtList is returned.
+            ExtList[Any]: A list of values associated with the given key.
 
         Examples:
             The following example demonstrates how to use the 'extract' method.
@@ -191,12 +190,13 @@ class ExtList(List[T]):
         Returns a list of objects that have the given key set to the given value.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare the objects' values to.
-            *args Any: If key is a function, the arguments will be passed to the function.
+            *args (Any): If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExtList: A list of objects that have the given key set to the given value. If no objects are found or the object
+            ExtList[T]: A list of objects that have the given key set to the given value. If no objects are found or the object
                 is empty, an empty ExtList is returned.
 
         Examples:
@@ -235,12 +235,13 @@ class ExtList(List[T]):
         Returns a list of objects that do not have the given key set to the given value.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare the objects' values to.
-            *args Any: If key is a function, the arguments will be passed to the function.
+            *args (Any): If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExtList: A list of objects that do not have the given key set to the given value. If no objects are found or the
+            ExtList[T]: A list of objects that do not have the given key set to the given value. If no objects are found or the
                 object is empty, an empty ExtList is returned.
 
         Examples:
@@ -280,11 +281,10 @@ class ExtList(List[T]):
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
-                compare_target, when given an instance of the class as input. Can be a function, a property or a
-                hashable object.
+            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
-            *args (Any): Additional arguments to be passed to the key function.
+            *args (Any): If key is a function, the arguments will be passed to the function.
 
         Returns:
             List[T]: A list of objects that are greater than the compare_target, when the
@@ -318,9 +318,8 @@ class ExtList(List[T]):
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
-                compare_target, when given an instance of the class as input. Can be a function, a property or a
-                hashable object.
+            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
             *args (Any): Additional arguments to be passed to the key function.
 
@@ -356,9 +355,8 @@ class ExtList(List[T]):
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
-                compare_target, when given an instance of the class as input. Can be a function, a property or a
-                hashable object.
+            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
             *args (Any): Additional arguments to be passed to the key function.
 
@@ -394,9 +392,8 @@ class ExtList(List[T]):
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): A callable that returns the value to compare against the
-                compare_target, when given an instance of the class as input. Can be a function, a property or a
-                hashable object.
+            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
             *args (Any): Additional arguments to be passed to the key function.
 
@@ -431,12 +428,13 @@ class ExtList(List[T]):
         Returns a list of objects that have the given key set to one of the given values.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_targets (list): A list of values to compare the objects' values to.
             *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExtList: A list of objects that have the given key set to one of the given values. If no objects are found or
+            ExtList[T]: A list of objects that have the given key set to one of the given values. If no objects are found or
                 the object is empty, an empty ExtList is returned.
 
         Examples:
@@ -472,12 +470,13 @@ class ExtList(List[T]):
         Returns a list of objects that do not have the given key set to any of the given values.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to search for.
+            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+                the callable will be executed and its result will be returned.
             compare_targets (list): A list of values to compare the objects' values to.
-            *args Any: If key is a function, the arguments will be passed to the function.
+            *args (Any): If key is a function, the arguments will be passed to the function.
 
         Returns:
-            ExtList: A list of objects that do not have the given key set to any of the given values. If no objects are
+            ExtList[T]: A list of objects that do not have the given key set to any of the given values. If no objects are
                 found or the object is empty, an empty ExtList is returned.
 
         Examples:
@@ -513,10 +512,10 @@ class ExtList(List[T]):
         Returns a list of objects that are in both the current object and the given object.
 
         Args:
-            compare_ext_list (ExtList): The object to compare the current object to.
+            compare_ext_list (ExtList[T]): The object to compare the current object to.
 
         Returns:
-            ExtList: A list of objects that are in both the current object and the given object. If no objects are found
+            ExtList[T]: A list of objects that are in both the current object and the given object. If no objects are found
                 or the object is empty, an empty ExtList is returned.
 
         Examples:
@@ -608,29 +607,23 @@ class ExtList(List[T]):
         Converts the current object to a dictionary, using the given key as the dictionary key.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to use as the dictionary key.
+            key (FunctionType | property | str | Hashable): The key to use as the dictionary key. If the key is function,
+                the callable will be executed and its result will be returned.
             *args Any: If key is a function, the arguments will be passed to the function.
 
         Returns:
-            dict: A dictionary of objects, using the given key as the dictionary key.
+            dict[Hashable, T]: A dictionary of objects, using the given key as the dictionary key.
 
         Examples:
-            The following example demonstrates how to use the `to_dict` method to convert an ExtList of dictionaries to a
-            dictionary:
+            The following example demonstrates how to use the `to_dict` method.
 
             >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}])
             >>> ext_list_1.to_dict('name')
             {'Alice': {'name': 'Alice', 'age': 25}, 'Bob': {'name': 'Bob', 'age': 30}}
 
-            The following example demonstrates how to use the `to_dict` method to convert an ExtList of lists to a
-            dictionary:
-
             >>> ext_list_2 = ExtList([['Alice', 25], ['Bob', 30]])
             >>> ext_list_2.to_dict(0)
             {'Alice': ['Alice', 25], 'Bob': ['Bob', 30]}
-
-            The following example demonstrates how to use the `to_dict` method to convert an ExtList of objects to a
-            dictionary:
 
             >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30)])
             >>> ext_list_3.to_dict(Person.name)
@@ -662,22 +655,15 @@ class ExtList(List[T]):
             the specified keys and their corresponding values.
 
         Examples:
-            The following example demonstrates how to use the `to_dict_list` method to convert an ExtList of dictionaries to a list of
-            dictionary contain specified keys:
+            The following example demonstrates how to use the `to_dict_list` method.
 
             >>> ext_list_1 = ExtList([{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}])
             >>> ext_list_1.to_dict_list(['name'])
             [{'name': 'Alice'}, {'name': 'Bob'}]
 
-            The following example demonstrates how to use the `to_dict` method to convert an ExtList of lists to a list of
-            dictionary contain specified keys:
-
             >>> ext_list_2 = ExtList([['Alice', 25], ['Bob', 30]])
             >>> ext_list_2.to_dict_list([0])
             [{0: 'Alice'}, {0: 'Bob'}]
-
-            The following example demonstrates how to use the `to_dict` method to convert an ExtList of objects to a list of
-            dictionary contain specified keys:
 
             >>> ext_list_3 = ExtList([Person('Alice', 25), Person('Bob', 30)])
             >>> ext_list_3.to_dict_list([Person.name, Person.get_age_n_years_ago], [(), (5,)])
@@ -797,8 +783,8 @@ class ExtList(List[T]):
         Apply a function or constructor to each element.
 
         Args:
-            function (FunctionType | type): The function to apply to each element.
-            *args (Any): Additional arguments to pass to the function.
+            function (FunctionType | type): The function or type to apply to each element.
+            *args (Any): Additional arguments to pass to the function or type.
 
         Returns:
             ExtList[Any]: A new ExtList containing the mapped values.
