@@ -10,9 +10,9 @@ def test():
     assert ext_list_1 == [1, 2, 3, 4]
 
     ext_list_2 = ExtList()
-    ext_list_2.append(1)
+    ext_list_2.append(1)  # type: ignore
     assert ext_list_2 == [1]
 
     ext_list_3 = ExtList()
-    ext_list_3.append(None)
+    ext_list_3.append(None)  # type: ignore
     assert ext_list_3 == [None]
