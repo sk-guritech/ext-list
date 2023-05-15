@@ -11,7 +11,7 @@ from ext_list import base
 T = TypeVar('T')
 
 
-def extract(elements: list[T], key: FunctionType | property | str | Hashable, *args: Any) -> list[Any]:
+def extract(elements: list[T], key: FunctionType | property | str | Hashable, *args: Any) -> list[Any]:  # type: ignore
     if not elements:
         return []
 
@@ -24,7 +24,7 @@ def extract_duplicates(elements: list[T], other: list[T]) -> list[T]:
     return [element for element in elements if element in other]
 
 
-def is_duplicate(elements: list[T]) -> bool:
+def is_duplicate(elements: list[T]) -> bool:  # type: ignore
     if not elements:
         return False
 

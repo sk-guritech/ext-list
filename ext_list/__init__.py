@@ -4,6 +4,7 @@ from types import FunctionType
 from typing import Any
 from typing import Hashable
 from typing import List
+from typing import SupportsIndex
 from typing import TypeVar
 
 from typing_extensions import override
@@ -103,7 +104,7 @@ class ExtList(List[T]):
         super().extend(other)
 
     @ override
-    def insert(self, index: Hashable, element: T) -> None:
+    def insert(self, index: SupportsIndex, element: T) -> None:
         if not self:
             super().insert(index, element)
             return

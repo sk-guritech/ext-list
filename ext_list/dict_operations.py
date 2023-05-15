@@ -113,7 +113,7 @@ def dicts_to_instances(elements: list[dict[str, Any]], type_: TI) -> list[TI]:
     return [type_(**element) for element in elements]  # type: ignore[assignment]
 
 
-def group_by_key(ext_list_type: EXT_LIST, elements: list[T], key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, EXT_LIST]:
+def group_by_key(ext_list_type: EXT_LIST, elements: list[T], key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, EXT_LIST]:  # type: ignore
     result: dict[Hashable, EXT_LIST] = {}
 
     get_value_method: Callable[[T, Any], Any] = base.determine_get_value_method(elements, key)
