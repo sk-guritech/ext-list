@@ -7,8 +7,6 @@ This library was created to improve the quality of code through list operations.
 
 Using this library reduces the number of times list comprehensions need to be written, resulting in improved overall code readability and searchability.
 
-Additionally, `ExtList` ensures that it is an `Iterable` object of a **single type**, which imposes a constraint to only use lists of a single type. This constraint ultimately leads to a simpler program structure.
-
 
 ## Installation
 ```
