@@ -3,10 +3,10 @@ from __future__ import annotations
 from types import FunctionType
 from typing import Any
 from typing import Hashable
-from typing import SupportsIndex
 from typing import TypeVar
 
 from typing_extensions import override
+from typing_extensions import SupportsIndex  # type: ignore
 
 from ext_list.dict_operations import _DictOperation
 from ext_list.list_operations import _ListOperation
