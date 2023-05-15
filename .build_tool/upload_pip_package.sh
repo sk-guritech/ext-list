@@ -1,5 +1,6 @@
 #!/bin/bash
-cd /workspaces/ex-list
+cd $(dirname $0)
+cd /workspaces/ext-list
 
 tox
 
