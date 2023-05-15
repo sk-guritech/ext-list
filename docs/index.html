@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ExtList" href="ext_list.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Quickstart" href="quickstart.html" />
 
     <!-- Generated with Sphinx 6.1.3 and Furo 2023.03.27 -->
         <title>ExtList 1.0.0 documentation</title>
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -155,12 +155,12 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="ext_list.html">ExtList</a></li>
-</ul>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="ext_list.html">ExtList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_operation.html">_OperatorOperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_operation.html">_DictOperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_operation.html">_ListOperation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
@@ -192,7 +192,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -200,69 +200,82 @@
         <article role="main">
           <section id="welcome-to-extlist-s-documentation">
 <h1>Welcome to ExtList’s documentation!<a class="headerlink" href="#welcome-to-extlist-s-documentation" title="Permalink to this heading">#</a></h1>
-<section id="quickstart">
-<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>Intall ExtList from pip.</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ext-list
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Import module</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ext_list</span> <span class="kn">import</span> <span class="n">ExtList</span>
-</pre></div>
-</div>
-</section>
-<section id="reference">
-<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ext_list.html">ExtList</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ext_list.html#ext_list.ExtList"><code class="docutils literal notranslate"><span class="pre">ExtList</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.append"><code class="docutils literal notranslate"><span class="pre">ExtList.append()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.dicts_to_instances"><code class="docutils literal notranslate"><span class="pre">ExtList.dicts_to_instances()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.equal"><code class="docutils literal notranslate"><span class="pre">ExtList.equal()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.extend"><code class="docutils literal notranslate"><span class="pre">ExtList.extend()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.extract"><code class="docutils literal notranslate"><span class="pre">ExtList.extract()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.extract_duplicates"><code class="docutils literal notranslate"><span class="pre">ExtList.extract_duplicates()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.first"><code class="docutils literal notranslate"><span class="pre">ExtList.first()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.greater"><code class="docutils literal notranslate"><span class="pre">ExtList.greater()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.greater_or_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.greater_or_equal()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.group_by_key"><code class="docutils literal notranslate"><span class="pre">ExtList.group_by_key()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.in_"><code class="docutils literal notranslate"><span class="pre">ExtList.in_()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.insert"><code class="docutils literal notranslate"><span class="pre">ExtList.insert()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.is_duplicate"><code class="docutils literal notranslate"><span class="pre">ExtList.is_duplicate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.less"><code class="docutils literal notranslate"><span class="pre">ExtList.less()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.less_or_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.less_or_equal()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.map"><code class="docutils literal notranslate"><span class="pre">ExtList.map()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.not_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.not_equal()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.not_in_"><code class="docutils literal notranslate"><span class="pre">ExtList.not_in_()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.one"><code class="docutils literal notranslate"><span class="pre">ExtList.one()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.rename_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.rename_keys()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.to_dict"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.to_dict_list"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict_list()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList.to_dict_with_complex_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict_with_complex_keys()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ext_list.html">ExtList</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ext_list.html#ext_list.ExtList"><code class="docutils literal notranslate"><span class="pre">ExtList</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.append"><code class="docutils literal notranslate"><span class="pre">ExtList.append()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.dicts_to_instances"><code class="docutils literal notranslate"><span class="pre">ExtList.dicts_to_instances()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.equal"><code class="docutils literal notranslate"><span class="pre">ExtList.equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.extend"><code class="docutils literal notranslate"><span class="pre">ExtList.extend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.extract"><code class="docutils literal notranslate"><span class="pre">ExtList.extract()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.extract_duplicates"><code class="docutils literal notranslate"><span class="pre">ExtList.extract_duplicates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.first"><code class="docutils literal notranslate"><span class="pre">ExtList.first()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.greater"><code class="docutils literal notranslate"><span class="pre">ExtList.greater()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.greater_or_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.greater_or_equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.group_by_key"><code class="docutils literal notranslate"><span class="pre">ExtList.group_by_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.in_"><code class="docutils literal notranslate"><span class="pre">ExtList.in_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.insert"><code class="docutils literal notranslate"><span class="pre">ExtList.insert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.is_duplicate"><code class="docutils literal notranslate"><span class="pre">ExtList.is_duplicate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.less"><code class="docutils literal notranslate"><span class="pre">ExtList.less()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.less_or_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.less_or_equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.map"><code class="docutils literal notranslate"><span class="pre">ExtList.map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.not_equal"><code class="docutils literal notranslate"><span class="pre">ExtList.not_equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.not_in_"><code class="docutils literal notranslate"><span class="pre">ExtList.not_in_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.one"><code class="docutils literal notranslate"><span class="pre">ExtList.one()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.rename_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.rename_keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.to_dict"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.to_dict_list"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_list.html#ext_list.ExtList.to_dict_with_complex_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.to_dict_with_complex_keys()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="operator_operation.html">_OperatorOperation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.equal"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.greater"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.greater()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.greater_or_equal"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.greater_or_equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.in_"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.in_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.less"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.less()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.less_or_equal"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.less_or_equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.not_equal"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.not_equal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.not_in_"><code class="docutils literal notranslate"><span class="pre">_OperatorOperation.not_in_()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dict_operation.html">_DictOperation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dict_operation.html#ext_list._DictOperation"><code class="docutils literal notranslate"><span class="pre">_DictOperation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dict_operation.html#ext_list._DictOperation.dicts_to_instances"><code class="docutils literal notranslate"><span class="pre">_DictOperation.dicts_to_instances()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dict_operation.html#ext_list._DictOperation.group_by_key"><code class="docutils literal notranslate"><span class="pre">_DictOperation.group_by_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dict_operation.html#ext_list._DictOperation.rename_keys"><code class="docutils literal notranslate"><span class="pre">_DictOperation.rename_keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dict_operation.html#ext_list._DictOperation.to_dict"><code class="docutils literal notranslate"><span class="pre">_DictOperation.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dict_operation.html#ext_list._DictOperation.to_dict_list"><code class="docutils literal notranslate"><span class="pre">_DictOperation.to_dict_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dict_operation.html#ext_list._DictOperation.to_dict_with_complex_keys"><code class="docutils literal notranslate"><span class="pre">_DictOperation.to_dict_with_complex_keys()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="list_operation.html">_ListOperation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="list_operation.html#ext_list._ListOperation"><code class="docutils literal notranslate"><span class="pre">_ListOperation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="list_operation.html#ext_list._ListOperation.extract"><code class="docutils literal notranslate"><span class="pre">_ListOperation.extract()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_operation.html#ext_list._ListOperation.extract_duplicates"><code class="docutils literal notranslate"><span class="pre">_ListOperation.extract_duplicates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_operation.html#ext_list._ListOperation.first"><code class="docutils literal notranslate"><span class="pre">_ListOperation.first()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_operation.html#ext_list._ListOperation.is_duplicate"><code class="docutils literal notranslate"><span class="pre">_ListOperation.is_duplicate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_operation.html#ext_list._ListOperation.map"><code class="docutils literal notranslate"><span class="pre">_ListOperation.map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_operation.html#ext_list._ListOperation.one"><code class="docutils literal notranslate"><span class="pre">_ListOperation.one()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</div>
-</section>
-<section id="development">
-<h2>Development<a class="headerlink" href="#development" title="Permalink to this heading">#</a></h2>
-<p><a class="reference external" href="https://github.com/sk-guritech/ext-list">sk-guritech/ext-list</a></p>
-</section>
-<section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
 </ul>
-<div class="toctree-wrapper compound">
 </div>
-</section>
 </section>
 
         </article>
@@ -270,12 +283,12 @@
       <footer>
 
         <div class="related-pages">
-          <a class="next-page" href="ext_list.html">
+          <a class="next-page" href="quickstart.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">ExtList</div>
+                <div class="title">Quickstart</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -305,30 +318,8 @@
 
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
 
-
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Welcome to ExtList’s documentation!</a><ul>
-<li><a class="reference internal" href="#quickstart">Quickstart</a></li>
-<li><a class="reference internal" href="#reference">Reference</a></li>
-<li><a class="reference internal" href="#development">Development</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
 
 
     </aside>

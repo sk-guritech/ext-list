@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Quickstart" href="quickstart.html" /><link rel="prev" title="Welcome to ExtList’s documentation!" href="index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="_OperatorOperation" href="operator_operation.html" /><link rel="prev" title="Reference" href="reference.html" />
 
     <!-- Generated with Sphinx 6.1.3 and Furo 2023.03.27 -->
         <title>ExtList - ExtList 1.0.0 documentation</title>
@@ -155,12 +155,12 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ExtList</a></li>
-</ul>
-<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="reference.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">ExtList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_operation.html">_OperatorOperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_operation.html">_DictOperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_operation.html">_ListOperation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
@@ -258,6 +258,7 @@
 <span class="go">[Person(&#39;alice&#39;, 25), Person(&#39;bob&#39;, 30), Person(&#39;charlie&#39;, 35)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.dicts_to_instances" title="ext_list._DictOperation.dicts_to_instances"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.dicts_to_instances()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -274,11 +275,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that have the given key set to the given value. If no objects are found or the object</dt><dd><p>is empty, an empty ExtList is returned.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that have the given key set to the given value. If no objects are found or the object
+is empty, an empty ExtList is returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
@@ -309,6 +307,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Alice&#39;, 25)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.equal" title="ext_list._OperatorOperation.equal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.equal()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -361,6 +360,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[20, 25, 30]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="list_operation.html#ext_list._ListOperation.extract" title="ext_list._ListOperation.extract"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_ListOperation.extract()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -372,11 +372,8 @@ the callable will be executed and its result will be returned.</p></li>
 <dd class="field-odd"><p><strong>compare_ext_list</strong> (<a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><em>ExtList</em></a><em>[</em><em>T</em><em>]</em>) – The object to compare the current object to.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that are in both the current object and the given object. If no objects are found</dt><dd><p>or the object is empty, an empty ExtList is returned.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that are in both the current object and the given object. If no objects are found
+or the object is empty, an empty ExtList is returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
@@ -390,6 +387,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[{&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 30}]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="list_operation.html#ext_list._ListOperation.extract_duplicates" title="ext_list._ListOperation.extract_duplicates"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_ListOperation.extract_duplicates()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -414,6 +412,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">1</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="list_operation.html#ext_list._ListOperation.first" title="ext_list._ListOperation.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_ListOperation.first()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -431,11 +430,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that are greater than the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that are greater than the compare_target, when the
+object is passed through the provided key.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
@@ -457,6 +453,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Charlie&#39;, 35)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.greater" title="ext_list._OperatorOperation.greater"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.greater()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -474,11 +471,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that are greater than or equal the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that are greater than or equal the compare_target, when the
+object is passed through the provided key.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
@@ -500,6 +494,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Bob&#39;, 30), Person(&#39;Charlie&#39;, 35), Person(&#39;David&#39;, 30)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.greater_or_equal" title="ext_list._OperatorOperation.greater_or_equal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.greater_or_equal()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -515,12 +510,9 @@ a function, property, string, or hashable object.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A dictionary of lists, where the keys are the result of applying the</dt><dd><p>key function or property to the objects of the list, and the values are lists of objects
+<dd class="field-even"><p>A dictionary of lists, where the keys are the result of applying the
+key function or property to the objects of the list, and the values are lists of objects
 with the same key.</p>
-</dd>
-</dl>
-</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict[Hashable, <a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]]</p>
@@ -533,11 +525,12 @@ with the same key.</p>
 <span class="go">{25: [{&#39;name&#39;: &#39;alice&#39;, &#39;age&#39;: 25}], 30: [{&#39;name&#39;: &#39;bob&#39;, &#39;age&#39;: 30}, {&#39;name&#39;: &#39;david&#39;, &#39;age&#39;: 30}], 35: [{&#39;name&#39;: &#39;charlie&#39;, &#39;age&#39;: 35}]}</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.group_by_key" title="ext_list._DictOperation.group_by_key"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.group_by_key()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.in_">
-<span class="sig-name descname"><span class="pre">in_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.in_" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">in_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.in_" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a list of objects that have the given key set to one of the given values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -549,11 +542,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that have the given key set to one of the given values. If no objects are found or</dt><dd><p>the object is empty, an empty ExtList is returned.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that have the given key set to one of the given values. If no objects are found or
+the object is empty, an empty ExtList is returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
@@ -584,11 +574,12 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Alice&#39;, 25), Person(&#39;Charlie&#39;, 35)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.in_" title="ext_list._OperatorOperation.in_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.in_()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.insert">
-<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ext_list.ExtList.insert" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ext_list.ExtList.insert" title="Permalink to this definition">#</a></dt>
 <dd><p>Insert object before index.</p>
 </dd></dl>
 
@@ -616,6 +607,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">False</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="list_operation.html#ext_list._ListOperation.is_duplicate" title="ext_list._ListOperation.is_duplicate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_ListOperation.is_duplicate()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -633,11 +625,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that are less than the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that are less than the compare_target, when the
+object is passed through the provided key.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
@@ -659,6 +648,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Alice&#39;, 25)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.less" title="ext_list._OperatorOperation.less"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.less()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -676,11 +666,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that are less than or equal the compare_target, when the</dt><dd><p>object is passed through the provided key.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that are less than or equal the compare_target, when the
+object is passed through the provided key.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[T]</p>
@@ -702,6 +689,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Alice&#39;, 25), Person(&#39;Bob&#39;, 30), Person(&#39;David&#39;, 30)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.less_or_equal" title="ext_list._OperatorOperation.less_or_equal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.less_or_equal()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -729,6 +717,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[1.0, 2.0, 3.0]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="list_operation.html#ext_list._ListOperation.map" title="ext_list._ListOperation.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_ListOperation.map()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -745,11 +734,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that do not have the given key set to the given value. If no objects are found or the</dt><dd><p>object is empty, an empty ExtList is returned.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that do not have the given key set to the given value.
+If no objects are found or the object is empty, an empty ExtList is returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
@@ -780,11 +766,12 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Bob&#39;, 30), Person(&#39;Charlie&#39;, 35), Person(&#39;David&#39;, 30)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.not_equal" title="ext_list._OperatorOperation.not_equal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.not_equal()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ext_list.ExtList.not_in_">
-<span class="sig-name descname"><span class="pre">not_in_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.not_in_" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">not_in_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FunctionType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">property</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Hashable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.not_in_" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a list of objects that do not have the given key set to any of the given values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -796,11 +783,8 @@ the callable will be executed and its result will be returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A list of objects that do not have the given key set to any of the given values. If no objects are</dt><dd><p>found or the object is empty, an empty ExtList is returned.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A list of objects that do not have the given key set to any of the given values. If no objects are
+found or the object is empty, an empty ExtList is returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList">ExtList</a>[T]</p>
@@ -831,6 +815,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">[Person(&#39;Bob&#39;, 30)]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="operator_operation.html#ext_list._OperatorOperation.not_in_" title="ext_list._OperatorOperation.not_in_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_OperatorOperation.not_in_()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -858,6 +843,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">None</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="list_operation.html#ext_list._ListOperation.one" title="ext_list._ListOperation.one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_ListOperation.one()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -885,6 +871,7 @@ represent the original keys, while the corresponding values represent the new ke
 <span class="go">[{&#39;Name&#39;: &#39;alice&#39;, &#39;Age&#39;: 25}, {&#39;Name&#39;: &#39;bob&#39;, &#39;Age&#39;: 30}]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.rename_keys" title="ext_list._DictOperation.rename_keys"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.rename_keys()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -927,6 +914,7 @@ the callable will be executed and its result will be returned.</p></li>
 <span class="go">{20: Person(&#39;Alice&#39;, 25), 25: Person(&#39;Bob&#39;, 30)}</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.to_dict" title="ext_list._DictOperation.to_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.to_dict()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -968,6 +956,7 @@ the specified keys and their corresponding values.</p>
 <span class="go">[{&#39;name&#39;: &#39;Alice&#39;, &#39;get_age_n_years_ago&#39;: 20}, {&#39;name&#39;: &#39;Bob&#39;, &#39;get_age_n_years_ago&#39;: 25}]</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.to_dict_list" title="ext_list._DictOperation.to_dict_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.to_dict_list()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1005,6 +994,7 @@ the specified keys and their corresponding values.</p>
 <span class="go"> (&#39;David&#39;, &#39;David is 30 years old.&#39;, 25): Person(&#39;David&#39;, 30)}</span>
 </pre></div>
 </div>
+<p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.to_dict_with_complex_keys" title="ext_list._DictOperation.to_dict_with_complex_keys"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.to_dict_with_complex_keys()</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1016,23 +1006,23 @@ the specified keys and their corresponding values.</p>
       <footer>
 
         <div class="related-pages">
-          <a class="next-page" href="quickstart.html">
+          <a class="next-page" href="operator_operation.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Quickstart</div>
+                <div class="title">_OperatorOperation</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="reference.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
 
-                <div class="title">Home</div>
+                <div class="title">Reference</div>
 
               </div>
             </a>
