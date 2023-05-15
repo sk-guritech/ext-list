@@ -44,40 +44,15 @@ class ExtList(List[T]):
     """
 
     def __init__(self, iterable: list[T] = []) -> None:
-        ExtList.__validate_all_elements_are_same_type(iterable)
         super().__init__(iterable)
-
-    @staticmethod
-    def __validate_all_elements_are_same_type(iterable: list[Any]) -> None:
-        if not iterable:
-            return
-
-        allowed_type: Any = type(iterable[0])
-
-        if not all(isinstance(element, allowed_type) for element in iterable):
-            raise TypeError(
-                'Expected all elements to be of the same type.',
-            )
 
     @staticmethod
     def __validate_ext_list(iterable: Any) -> None:
         if not isinstance(iterable, ExtList):
             raise TypeError(f'Expected <class \'ExtList\'> but got {type(iterable)}')
 
-    def __validate_same_type_element(self, element: T) -> None:
-        if not isinstance(element, type(self[0])):
-            raise TypeError(
-                f'Expected {type(self[0])} but got {type(element)}.',
-            )
-
-    def __validate_same_type_ext_list(self, other: ExtList[T]):
-        if not isinstance(self[0], type(other[0])):  # type: ignore[index]
-            raise TypeError(
-                f'Expected ExtList[{type(self[0])}] but got ExtList[{type(other[0])}].',  # type: ignore[index]
-            )
-
     def __is_indexable(self) -> bool:
-        return hasattr(self[0], '__getitem__')
+        return all(hasattr(element, '__getitem__') for element in self)
 
     @staticmethod
     def __get_value_by_function(element: T, func: FunctionType, *args: Any) -> Any:
@@ -122,8 +97,6 @@ class ExtList(List[T]):
         if not other:
             return self
 
-        self.__validate_same_type_ext_list(other)
-
         return ExtList(super().__add__(other))
 
     @ override
@@ -138,8 +111,6 @@ class ExtList(List[T]):
             super().__iadd__(other)
             return self
 
-        self.__validate_same_type_ext_list(other)
-
         super().__iadd__(other)
 
         return self
@@ -149,8 +120,6 @@ class ExtList(List[T]):
         if not self:
             super().append(element)
             return
-
-        self.__validate_same_type_element(element)
 
         super().append(element)
 
@@ -166,8 +135,6 @@ class ExtList(List[T]):
         if not other:
             return
 
-        self.__validate_same_type_ext_list(other)
-
         super().extend(other)
 
     @ override
@@ -175,8 +142,6 @@ class ExtList(List[T]):
         if not self:
             super().insert(index, element)
             return
-
-        self.__validate_same_type_element(element)
 
         super().insert(index, element)
 
