@@ -4,21 +4,8 @@
    contain the root `toctree` directive.
 
 Welcome to ExtList's documentation!
-====================================
-
-.. include:: quickstart.rst
-
-.. include:: reference.rst
-
-.. include:: development.rst
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-
+===================================
 .. toctree::
-   :hidden:
 
    quickstart
    reference
