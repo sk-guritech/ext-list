@@ -290,9 +290,6 @@ class ExtList(List[T]):
             List[T]: A list of objects that are greater than the compare_target, when the
                 object is passed through the provided key.
 
-        Raises:
-            None
-
         Examples:
             The following example demonstrates how to use the `greater` method.
 
@@ -330,9 +327,6 @@ class ExtList(List[T]):
         Returns:
             List[T]: A list of objects that are greater than or equal the compare_target, when the
                 object is passed through the provided key.
-
-        Raises:
-            None
 
         Examples:
             The following example demonstrates how to use the `greater_or_equal` method.
@@ -372,9 +366,6 @@ class ExtList(List[T]):
             List[T]: A list of objects that are less than the compare_target, when the
                 object is passed through the provided key.
 
-        Raises:
-            None
-
         Examples:
             The following example demonstrates how to use the `less` method.
 
@@ -412,9 +403,6 @@ class ExtList(List[T]):
         Returns:
             List[T]: A list of objects that are less than or equal the compare_target, when the
                 object is passed through the provided key.
-
-        Raises:
-            None
 
         Examples:
             The following example demonstrates how to use the `less_or_equal` method.
@@ -660,8 +648,8 @@ class ExtList(List[T]):
 
     def to_dict_list(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str | Hashable, Any]]:
         """
-        Converts the elements of the object into a list of dictionaries, where each dictionary contains the specified keys
-        and their corresponding values from the elements.
+        Converts the objects into a list of dictionaries, where each dictionary contains the specified keys
+        and their corresponding values from the object.
 
         Args:
             keys (list[FunctionType | property | str | Hashable]): A list of keys to include in the dictionaries. Each key can
@@ -746,14 +734,14 @@ class ExtList(List[T]):
 
     def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> dict[tuple[Any, ...], T]:
         """
-        Returns a dictionary of the elements in the `ExtList` with complex keys.
+        Returns a dictionary of the objects in the `ExtList` with complex keys.
 
         Args:
             keys (List[FunctionType | property | str] | List[Hashable]): A list of the keys for the dictionary.
             arg_tuples (Tuple[Tuple[Any,...],...]): A list of tuples of the arguments. If key is a function, the arguments will be passed to the function.
 
         Returns:
-            Dict[Tuple[Any, ...], T]: A dictionary of the elements in the `ExtList` with complex keys.
+            Dict[Tuple[Any, ...], T]: A dictionary of the objects in the `ExtList` with complex keys.
 
         Examples:
             The following example demonstrates how to use the `to_dict_with_complex_keys` method.
@@ -881,14 +869,14 @@ class ExtList(List[T]):
 
     def rename_keys(self, rename_keys: dict[Hashable, Hashable]) -> ExtList[T]:
         """
-        Renames the keys in the elements based on the provided mapping dictionary.
+        Renames the keys in the objects based on the provided mapping dictionary.
 
         Args:
             rename_keys (dict[Hashable, Hashable]): A dictionary that maps the keys to be renamed. The keys in the dictionary
                 represent the original keys, while the corresponding values represent the new keys.
 
         Returns:
-            ExtList[T]: A list of elements with the renamed keys.
+            ExtList[T]: A list of objects with the renamed keys.
 
         Raises:
             TypeError: If the object is not indexable.
