@@ -21,6 +21,8 @@ release = '1.0.0'
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon']
 
+napoleon_use_admonition_for_examples = True
+
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
@@ -44,3 +46,7 @@ html_theme_options = {
         },
     ],
 }
+
+html_css_files = [
+    'custom.css',
+]

@@ -13,7 +13,7 @@
       "--ignore=E111, E114, E402, E501"
     ],
 
-    "python.formatting.provider": "autopep8",
+    "python.formatting.provider": "none",
     "python.formatting.autopep8Args": [
       "--indent-size=4",
       "--max-line-length",
@@ -26,5 +26,6 @@
       "editor.formatOnSave": true,
       "editor.formatOnPaste": false,
       "editor.formatOnType": false,
+      "editor.defaultFormatter": "ms-python.autopep8",
     },
   }
