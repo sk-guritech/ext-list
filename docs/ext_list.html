@@ -1038,6 +1038,41 @@ represent the original keys, while the corresponding values represent the new ke
 <p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.rename_keys" title="ext_list._DictOperation.rename_keys"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.rename_keys()</span></code></a>.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="ext_list.ExtList.map_for_keys">
+<span class="sig-name descname"><span class="pre">map_for_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ext_list.ExtList" title="ext_list.ExtList"><span class="pre">ExtList</span></a><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ext_list.ExtList.map_for_keys" title="Permalink to this definition">#</a></dt>
+<dd><p>Applies a function to specific keys of each element in the dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys</strong> (<em>list</em><em>[</em><em>Hashable</em><em>]</em>) – A list of hashable keys to apply the function to.</p></li>
+<li><p><strong>function</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>type</em>) – The function or type to apply to the keys.
+It should accept the value of each key as the first argument, followed by optional args.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Optional arguments to be passed to the function along with each key’s value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of ExtList containing the modified dictionaries.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – If the dictionary is not indexable.</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>The following example demonstrates how to use the <cite>map_for_keys</cite> method.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list</span> <span class="o">=</span> <span class="n">ExtList</span><span class="p">([{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ext_list</span><span class="o">.</span><span class="n">map_for_keys</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: 11, &#39;b&#39;: 12, &#39;c&#39;: 3}</span>
+</pre></div>
+</div>
+</div>
+<p>Overrides <a class="reference internal" href="dict_operation.html#ext_list._DictOperation.map_for_keys" title="ext_list._DictOperation.map_for_keys"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_DictOperation.map_for_keys()</span></code></a>.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -1129,6 +1164,7 @@ represent the original keys, while the corresponding values represent the new ke
 <li><a class="reference internal" href="#ext_list.ExtList.dicts_to_instances"><code class="docutils literal notranslate"><span class="pre">ExtList.dicts_to_instances()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.group_by_key"><code class="docutils literal notranslate"><span class="pre">ExtList.group_by_key()</span></code></a></li>
 <li><a class="reference internal" href="#ext_list.ExtList.rename_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.rename_keys()</span></code></a></li>
+<li><a class="reference internal" href="#ext_list.ExtList.map_for_keys"><code class="docutils literal notranslate"><span class="pre">ExtList.map_for_keys()</span></code></a></li>
 </ul>
 </li>
 </ul>
