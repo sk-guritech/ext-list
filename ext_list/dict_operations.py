@@ -141,6 +141,23 @@ class _DictOperation(List[T]):
             for from_key, to_key in rename_keys.items():
                 element[to_key] = element.pop(from_key)  # type: ignore[attr-defined]
 
-            result.append(element)  # type: ignore[assignment]
+            result.append(element)
+
+        return result
+
+    def map_for_keys(self, keys: list[Hashable], function: Callable[[Any], Any] | type, *args: Any) -> _DictOperation[dict[Any, Any]]:
+        if not self:
+            return _DictOperation()
+
+        if not base.is_indexable(self):
+            raise TypeError
+
+        result: _DictOperation[T] = _DictOperation()
+
+        for element in copy.deepcopy(self):
+            for key in keys:
+                element[key] = function(element[key], *args)  # type: ignore[attr-defined]
+
+            result.append(element)
 
         return result
