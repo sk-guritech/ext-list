@@ -7,6 +7,7 @@ This library was created to improve the quality of code through list operations.
 
 Using this library reduces the number of times list comprehensions need to be written, resulting in improved overall code readability and searchability.
 
+More information -> **[Docs: ExtList](https://sk-guritech.github.io/ext-list/)**
 
 ## Installation
 ```

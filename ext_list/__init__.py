@@ -2,15 +2,16 @@ from __future__ import annotations
 
 from types import FunctionType
 from typing import Any
+from typing import Callable
 from typing import Hashable
 from typing import TypeVar
 
 from typing_extensions import override
 from typing_extensions import SupportsIndex  # type: ignore
 
-from ext_list.dict_operations import _DictOperation
-from ext_list.list_operations import _ListOperation
-from ext_list.operator_operations import _OperatorOperation
+from ext_list.dict_operations import _DictOperation  # type: ignore
+from ext_list.list_operations import _ListOperation  # type: ignore
+from ext_list.operator_operations import _OperatorOperation  # type: ignore
 
 T = TypeVar('T')
 TI = TypeVar('TI', bound=type)
@@ -733,3 +734,34 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         Overrides :meth:`_DictOperation.rename_keys`.
         """
         return self.__class__(super().rename_keys(rename_keys))
+
+    @override
+    def map_for_keys(self, keys: list[Hashable], function: Callable[[Any], Any] | type, *args: Any) -> ExtList[dict[Any, Any]]:
+        """
+        Applies a function to specific keys of each element in the dictionary.
+
+        Args:
+            keys (list[Hashable]): A list of hashable keys to apply the function to.
+            function (Callable[[Any], Any] | type): The function or type to apply to the keys.
+                It should accept the value of each key as the first argument, followed by optional args.
+            *args (Any): Optional arguments to be passed to the function along with each key's value.
+
+        Returns:
+            An instance of ExtList containing the modified dictionaries.
+
+        Raises:
+            TypeError: If the dictionary is not indexable.
+
+        Example:
+            The following example demonstrates how to use the `map_for_keys` method.
+
+            >>> ext_list = ExtList([{'a': 1, 'b': 2, 'c': 3}])
+            >>> keys = ['a', 'b']
+            >>> function = lambda x, y: x + y
+            >>> args = (10,)
+            >>> ext_list.map_for_keys(keys, function, *args)
+            {'a': 11, 'b': 12, 'c': 3}
+
+        Overrides :meth:`_DictOperation.map_for_keys`.
+        """
+        return ExtList(super().map_for_keys(keys, function, *args))
