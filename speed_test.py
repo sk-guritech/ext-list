@@ -242,9 +242,9 @@ if __name__ == '__main__':
 
     # DictOperations
     to_dict_test(targets)  # 0.512 / 0.345
-    # to_dict_list_test(dict_targets)  # 1.25 / 0.264
+    to_dict_list_test(dict_targets)  # 1.25 / 0.264
     dicts_to_instances_test(dict_targets)  # 1.29 / 1.30
     group_by_key_test(int_targets)  # 1.20 / NA
     rename_keys_test(dict_targets)  # 1.16 / 0.269
-    # map_for_keys_test(dict_targets)  # 11.4 / 0.382
-    # to_dict_with_complex_keys_test(dict_targets)  # 2.09 / 0.442
+    map_for_keys_test(dict_targets)  # 1.98 / 0.350
+    to_dict_with_complex_keys_test(dict_targets)  # 2.09 / 0.442
