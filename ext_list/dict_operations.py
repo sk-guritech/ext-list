@@ -169,6 +169,16 @@ class _DictOperation(List[T]):  # type: ignore
         return self.__class__([__swap_keys(element, rename_keys) for element in copied_elements])
 
     def map_for_keys(self, keys: list[Hashable], function: Callable[[Any], Any] | type, *args: Any) -> Iterable[dict[Any, Any]]:
+        def __copy_objects() -> Iterable[Any]:
+            if isinstance(self[0], dict):
+                return [dict(element) for element in self]  # type: ignore[assignment]
+
+            elif isinstance(self[0], list):
+                return [list(element) for element in self]  # type: ignore[assignment]
+
+            else:
+                return copy.deepcopy(list(self))
+
         if not self:
             return self.__class__()
 
@@ -177,7 +187,7 @@ class _DictOperation(List[T]):  # type: ignore
 
         result: Iterable[dict[Any, Any]] = self.__class__()
 
-        for element in copy.deepcopy(self):
+        for element in __copy_objects():
             for key in keys:
                 element[key] = function(element[key], *args)  # type: ignore[attr-defined]
 
