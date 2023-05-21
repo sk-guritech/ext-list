@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import copy
 from types import GetSetDescriptorType
 from typing import Any
 from typing import Callable
@@ -36,16 +35,7 @@ class _ListOperation(List[T]):  # type: ignore
         return self.__class__([element for element in self if element in other])
 
     def is_duplicate(self) -> bool:
-        if not self:
-            return False
-
-        tmp_ext_list: list[T] = copy.deepcopy(self)
-
-        for _ in range(len(tmp_ext_list)):
-            if tmp_ext_list.pop() in tmp_ext_list:
-                return True
-
-        return False
+        return (len(self) - len(set(self))) > 0
 
     def one(self) -> T | None:
         try:
