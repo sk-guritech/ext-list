@@ -141,21 +141,32 @@ class _DictOperation(List[T]):  # type: ignore
         return result
 
     def rename_keys(self, rename_keys: dict[Hashable, Hashable]) -> Iterable[T]:
+        def __copy_objects() -> Iterable[Any]:
+            if isinstance(self[0], dict):
+                return [dict(element) for element in self]  # type: ignore[assignment]
+
+            elif isinstance(self[0], list):
+                return [list(element) for element in self]  # type: ignore[assignment]
+
+            else:
+                return copy.deepcopy(list(self))
+
+        def __swap_keys(element: T, rename_keys: dict[Hashable, Hashable]):
+            for from_key, to_key in rename_keys.items():
+                element[to_key] = element[from_key]  # type: ignore[attr-defined]
+                del element[from_key]  # type: ignore[assignment]
+
+            return element
+
         if not self:
             return self.__class__()
 
         if not base.is_indexable(self):
             raise TypeError
 
-        result: Iterable[T] = self.__class__()
+        copied_elements = __copy_objects()
 
-        for element in copy.deepcopy(self):
-            for from_key, to_key in rename_keys.items():
-                element[to_key] = element.pop(from_key)  # type: ignore[attr-defined]
-
-            result.append(element)
-
-        return result
+        return self.__class__([__swap_keys(element, rename_keys) for element in copied_elements])
 
     def map_for_keys(self, keys: list[Hashable], function: Callable[[Any], Any] | type, *args: Any) -> Iterable[dict[Any, Any]]:
         if not self:
