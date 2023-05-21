@@ -13,6 +13,20 @@ class A:
         return self.__value
 
 
+class B:
+    def __init__(self, value: int, name: str):
+        self.__value = value % 700
+        self.__name = name
+
+    @property
+    def value(self) -> str:
+        return self.__value
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+
 def equal_test(targets):
     def list_comprehension(targets: ExtList[A]):
         return [target for target in targets if target.value == 300]
@@ -158,10 +172,10 @@ def to_dict_test(targets):
 
 def dicts_to_instances_test(dict_targets):
     def list_comprehension(dict_targets):
-        return [A(**target) for target in dict_targets]
+        return [B(**target) for target in dict_targets]
 
     def use_ext_list(dict_targets):
-        return dict_targets.dicts_to_instances(A)
+        return dict_targets.dicts_to_instances(B)
 
     list_comprehension(dict_targets)
     use_ext_list(dict_targets)
