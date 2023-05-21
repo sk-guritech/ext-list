@@ -147,7 +147,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_ListOperation.extract`.
         """
-        return self.__class__(super().extract(key, *args))
+        return super().extract(key, *args)  # type: ignore[assignment]
 
     @ override
     def extract_duplicates(self, other: ExtList[T]) -> ExtList[T]:  # type: ignore
@@ -171,7 +171,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_ListOperation.extract_duplicates`.
         """
-        return self.__class__(super().extract_duplicates(other))
+        return super().extract_duplicates(other)  # type: ignore[assignment]
 
     @override
     def is_duplicate(self) -> bool:
@@ -262,7 +262,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_ListOperation.map`.
         """
-        return self.__class__(super().map(function, *args))
+        return super().map(function, *args)  # type: ignore[assignment]
 
     @override
     def equal(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
@@ -302,7 +302,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.equal`.
         """
-        return self.__class__(super().equal(key, compare_target, *args))
+        return super().equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def not_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
@@ -344,7 +344,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.not_equal`.
         """
-        return self.__class__(super().not_equal(key, compare_target, *args))
+        return super().not_equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def greater(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
@@ -378,7 +378,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.greater`.
         """
-        return self.__class__(super().greater(key, compare_target, *args))
+        return super().greater(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def greater_or_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
@@ -412,7 +412,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.greater_or_equal`.
         """
-        return self.__class__(super().greater_or_equal(key, compare_target, *args))
+        return super().greater_or_equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def less(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
@@ -446,7 +446,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.less`.
         """
-        return self.__class__(super().less(key, compare_target, *args))
+        return super().less(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def less_or_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
@@ -480,7 +480,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.less_or_equal`.
         """
-        return self.__class__(super().less_or_equal(key, compare_target, *args))
+        return super().less_or_equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def in_(self, key: FunctionType | property | str | Hashable, compare_target: list[Any], *args: Any) -> ExtList[T]:
@@ -520,7 +520,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.in_`.
         """
-        return self.__class__(super().in_(key, compare_target, *args))
+        return super().in_(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def not_in_(self, key: FunctionType | property | str | Hashable, compare_target: list[Any], *args: Any) -> ExtList[T]:
@@ -560,7 +560,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_OperatorOperation.not_in_`.
         """
-        return self.__class__(super().not_in_(key, compare_target, *args))
+        return super().not_in_(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
     def to_dict(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, T]:
@@ -595,7 +595,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_DictOperation.to_dict`.
         """
-        return super().to_dict(key, *args)
+        return super().to_dict(key, *args)  # type: ignore[assignment]
 
     @override
     def to_dict_list(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str | Hashable, Any]]:
@@ -630,7 +630,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_DictOperation.to_dict_list`.
         """
-        return self.__class__(super().to_dict_list(keys, arg_tuples))
+        return super().to_dict_list(keys, arg_tuples)  # type: ignore[assignment]
 
     @override
     def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> dict[tuple[Any, ...], T]:
@@ -684,7 +684,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_DictOperation.dicts_to_instances`.
         """
-        return self.__class__(super().dicts_to_instances(type_))
+        return super().dicts_to_instances(type_)  # type: ignore[assignment]
 
     @override
     def group_by_key(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, ExtList[T]]:  # type: ignore[override]
@@ -733,7 +733,7 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_DictOperation.rename_keys`.
         """
-        return self.__class__(super().rename_keys(rename_keys))
+        return super().rename_keys(rename_keys)  # type: ignore[assignment]
 
     @override
     def map_for_keys(self, keys: list[Hashable], function: Callable[[Any], Any] | type, *args: Any) -> ExtList[dict[Any, Any]]:
@@ -764,4 +764,4 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
 
         Overrides :meth:`_DictOperation.map_for_keys`.
         """
-        return ExtList(super().map_for_keys(keys, function, *args))
+        return super().map_for_keys(keys, function, *args)  # type: ignore[assignment]

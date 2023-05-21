@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import copy
-from types import FunctionType
+from types import GetSetDescriptorType
 from typing import Any
 from typing import Callable
 from typing import Hashable
+from typing import Iterable
 from typing import List
 from typing import TypeVar
 
@@ -12,16 +13,26 @@ from ext_list import base
 T = TypeVar('T')
 
 
-class _ListOperation(List[T]):
-    def extract(self, key: FunctionType | property | str | Hashable, *args: Any) -> _ListOperation[Any]:
+class _ListOperation(List[T]):  # type: ignore
+    def extract(self, key: Callable[[T, Any], Any] | property | str | Hashable, *args: Any) -> Iterable[Any]:
         if not self:
-            return _ListOperation([])
+            return self.__class__()
 
-        get_value_method: Callable[[T, Any], Any] = base.determine_get_value_method(self, key)
+        if base.is_indexable(self):
+            return self.__class__([element[key] for element in self])  # type: ignore[attr-defined]
 
-        return _ListOperation([get_value_method(element, key, *args) for element in self])
+        if isinstance(key, str):
+            key = getattr(type(self[0]), key)
 
-    def extract_duplicates(self, other: _ListOperation[T]) -> _ListOperation[T]:
+        if callable(key):
+            return self.__class__([key(element, *args) for element in self])
+
+        if isinstance(key, property) or isinstance(key, GetSetDescriptorType):
+            return self.__class__([key.__get__(element) for element in self])
+
+        raise KeyError
+
+    def extract_duplicates(self, other: Iterable[T]) -> Iterable[T]:
         return self.__class__([element for element in self if element in other])
 
     def is_duplicate(self) -> bool:
@@ -46,5 +57,5 @@ class _ListOperation(List[T]):
     def first(self) -> T:
         return self[0]
 
-    def map(self, function: FunctionType | type, *args: Any) -> _ListOperation[Any]:
+    def map(self, function: Callable[[T, Any], Any] | type, *args: Any) -> Iterable[Any]:
         return self.__class__([function(element, *args) for element in self])
