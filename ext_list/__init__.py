@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from types import FunctionType
 from typing import Any
 from typing import Callable
 from typing import Hashable
@@ -112,12 +111,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         super().insert(index, element)
 
     @ override
-    def extract(self, key: FunctionType | property | str | Hashable, *args: Any) -> ExtList[Any]:
+    def extract(self, key: Callable[[T, Any], Any] | property | str | Hashable, *args: Any) -> ExtList[Any]:
         """
         Extracts and returns a list of values associated with the given key from the objects.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to extract values for. If the key is function,
+            key (Callable[[T, Any], Any] | property | str | Hashable): The key to extract values for. If the key is function,
                 the callable will be executed and its result will be returned.
             *args (Any): If key is a function, the arguments will be passed to the function.
 
@@ -242,12 +241,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().first()
 
     @override
-    def map(self, function: FunctionType | type, *args: Any) -> ExtList[Any]:
+    def map(self, function: Callable[[T, Any], Any] | type, *args: Any) -> ExtList[Any]:
         """
         Apply a function or constructor to each element.
 
         Args:
-            function (FunctionType | type): The function or type to apply to each element.
+            function (Callable[[T, Any], Any] | type): The function or type to apply to each element.
             *args (Any): Additional arguments to pass to the function or type.
 
         Returns:
@@ -265,12 +264,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().map(function, *args)  # type: ignore[assignment]
 
     @override
-    def equal(self, key: FunctionType | property | str | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def equal(self, key: Callable[[T, Any], Any] | property | str | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that have the given key set to the given value.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+            key (Callable[[T, Any], Any] | property | str | Hashable): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare the objects' values to.
             *args (Any): If key is a function, the arguments will be passed to the function.
@@ -305,12 +304,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def not_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def not_equal(self, key: Callable[[T, Any], Any] | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that do not have the given key set to the given value.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+            key (Callable[[T, Any], Any] | property | str | Hashable): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
 
             compare_target (Any): The value to compare the objects' values to.
@@ -347,13 +346,13 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().not_equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def greater(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def greater(self, key: Callable[[T, Any], Any] | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Return a list of objects that are greater than the specified compare_target, when the
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+            key (Union[Callable[[T, Any], Any], property, Hashable]): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
             *args (Any): If key is a function, the arguments will be passed to the function.
@@ -381,13 +380,13 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().greater(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def greater_or_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def greater_or_equal(self, key: Callable[[T, Any], Any] | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Return a list of objects that are greater than or equal the specified compare_target, when the
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+            key (Union[Callable[[T, Any], Any], property, Hashable]): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
             *args (Any): Additional arguments to be passed to the key function.
@@ -415,13 +414,13 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().greater_or_equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def less(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def less(self, key: Callable[[T, Any], Any] | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Return a list of objects that are less than the specified compare_target, when the
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+            key (Union[Callable[[T, Any], Any], property, Hashable]): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
             *args (Any): Additional arguments to be passed to the key function.
@@ -449,13 +448,13 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().less(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def less_or_equal(self, key: FunctionType | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
+    def less_or_equal(self, key: Callable[[T, Any], Any] | property | Hashable, compare_target: Any, *args: Any) -> ExtList[T]:
         """
         Return a list of objects that are less than or equal the specified compare_target, when the
         object is passed through the provided key function, property or hashable key.
 
         Args:
-            key (Union[FunctionType, property, Hashable]): The key to compare values for. If the key is function,
+            key (Union[Callable[[T, Any], Any], property, Hashable]): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
             compare_target (Any): The value to compare against.
             *args (Any): Additional arguments to be passed to the key function.
@@ -483,12 +482,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().less_or_equal(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def in_(self, key: FunctionType | property | str | Hashable, compare_target: list[Any], *args: Any) -> ExtList[T]:
+    def in_(self, key: Callable[[T, Any], Any] | property | str | Hashable, compare_target: list[Any], *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that have the given key set to one of the given values.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+            key (Callable[[T, Any], Any] | property | str | Hashable): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
             compare_targets (list): A list of values to compare the objects' values to.
             *args Any: If key is a function, the arguments will be passed to the function.
@@ -523,12 +522,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().in_(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def not_in_(self, key: FunctionType | property | str | Hashable, compare_target: list[Any], *args: Any) -> ExtList[T]:
+    def not_in_(self, key: Callable[[T, Any], Any] | property | str | Hashable, compare_target: list[Any], *args: Any) -> ExtList[T]:
         """
         Returns a list of objects that do not have the given key set to any of the given values.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to compare values for. If the key is function,
+            key (Callable[[T, Any], Any] | property | str | Hashable): The key to compare values for. If the key is function,
                 the callable will be executed and its result will be returned.
             compare_targets (list): A list of values to compare the objects' values to.
             *args (Any): If key is a function, the arguments will be passed to the function.
@@ -563,12 +562,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().not_in_(key, compare_target, *args)  # type: ignore[assignment]
 
     @override
-    def to_dict(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, T]:
+    def to_dict(self, key: Callable[[T, Any], Any] | property | str | Hashable, *args: Any) -> dict[Hashable, T]:
         """
         Converts the current object to a dictionary, using the given key as the dictionary key.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to use as the dictionary key. If the key is function,
+            key (Callable[[T, Any], Any] | property | str | Hashable): The key to use as the dictionary key. If the key is function,
                 the callable will be executed and its result will be returned.
             *args Any: If key is a function, the arguments will be passed to the function.
 
@@ -598,13 +597,13 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().to_dict(key, *args)  # type: ignore[assignment]
 
     @override
-    def to_dict_list(self, keys: list[FunctionType | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str | Hashable, Any]]:
+    def to_dict_list(self, keys: list[Callable[[T, Any], Any] | property | str | Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> ExtList[dict[str | Hashable, Any]]:
         """
         Converts the objects into a list of dictionaries, where each dictionary contains the specified keys
         and their corresponding values from the object.
 
         Args:
-            keys (list[FunctionType | property | str | Hashable]): A list of keys to include in the dictionaries. Each key can
+            keys (list[Callable[[T, Any], Any] | property | str | Hashable]): A list of keys to include in the dictionaries. Each key can
                 be a function, property, string, or hashable object.
             arg_tuples (list[tuple[Any, ...]], optional): A list of argument tuples. Each tuple contains the arguments to be
                 passed to the corresponding key function or property. Defaults to an empty list.
@@ -633,12 +632,12 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().to_dict_list(keys, arg_tuples)  # type: ignore[assignment]
 
     @override
-    def to_dict_with_complex_keys(self, keys: list[FunctionType | property | str] | list[Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> dict[tuple[Any, ...], T]:
+    def to_dict_with_complex_keys(self, keys: list[Callable[[T, Any], Any] | property | str] | list[Hashable], arg_tuples: list[tuple[Any, ...]] = []) -> dict[tuple[Any, ...], T]:
         """
         Returns a dictionary of the objects in the `ExtList` with complex keys.
 
         Args:
-            keys (List[FunctionType | property | str] | List[Hashable]): A list of the keys for the dictionary.
+            keys (List[Callable[[T, Any], Any] | property | str] | List[Hashable]): A list of the keys for the dictionary.
             arg_tuples (Tuple[Tuple[Any,...],...]): A list of tuples of the arguments. If key is a function, the arguments will be passed to the function.
 
         Returns:
@@ -687,11 +686,11 @@ class ExtList(_ListOperation[T], _OperatorOperation[T], _DictOperation[T]):
         return super().dicts_to_instances(type_)  # type: ignore[assignment]
 
     @override
-    def group_by_key(self, key: FunctionType | property | str | Hashable, *args: Any) -> dict[Hashable, ExtList[T]]:  # type: ignore[override]
+    def group_by_key(self, key: Callable[[T, Any], Any] | property | str | Hashable, *args: Any) -> dict[Hashable, ExtList[T]]:  # type: ignore[override]
         """Groups the objects of the list by a specified key.
 
         Args:
-            key (FunctionType | property | str | Hashable): The key to group the objects by. This can be
+            key (Callable[[T, Any], Any] | property | str | Hashable): The key to group the objects by. This can be
                 a function, property, string, or hashable object.
             *args (Any): Additional arguments to pass to the key function or property.
 

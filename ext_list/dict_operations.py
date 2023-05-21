@@ -17,7 +17,7 @@ T = TypeVar('T')
 TI = TypeVar('TI')
 
 
-class _DictOperation(List[T]):
+class _DictOperation(List[T]):  # type: ignore
     def to_dict(self, key: Callable[[T, Any], Any] | property | str | Hashable, *args: Any) -> dict[Hashable, T]:
         if not self:
             return {}
