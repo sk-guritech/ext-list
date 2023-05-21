@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as readme_md:
 
 setup(
     name='ext-list',
-    version='1.1.0',
+    version='1.1.1',
     author='Sakaguchi Ryo',
     author_email='sakaguchi@sk-techfirm.com',
     description='This is a utility library that extends Python\'s list operations.',
