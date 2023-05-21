@@ -6,3 +6,4 @@ build/*
 *.pyc
 *.tar.gz
 .tox/*
+profiling.stats

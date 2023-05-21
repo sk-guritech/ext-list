@@ -6,7 +6,7 @@ typing_extensions
 twine
 setuptools
 wheel
-typing_extensions
 tox
 sphinx
 fuso
+snakeviz
