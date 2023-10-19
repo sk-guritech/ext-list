@@ -91,8 +91,8 @@ _Note: In the following examples, the `Person` class is defined as follows._
     ```
     >>> persons = ExtList([Person('Alice', 25), Person('Bob', 30)])
     >>> persons.to_dict_with_complex_keys([Person.name, Person.age])
-    {('Alice', 25): Person('Alice', 30),
-    ('Bob', 30): Person('Bob', 25)}
+    {('Alice', 25): Person('Alice', 25),
+    ('Bob', 30): Person('Bob', 30)}
     ```
 
 See the **[Docs: ExtList](https://sk-guritech.github.io/ext-list/)** for more examples !
